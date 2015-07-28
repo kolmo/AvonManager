@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fdd29b9015454315a300a6326c5afb68" Name="Diagramm1">
+        <EntityTypeShape EntityType="AvonDbModel.Artikel" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.ArtikelVarianten" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Bestelldetail" Width="1.5" PointX="10.25" PointY="15.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="AvonDbModel.Bestellstatus" Width="1.5" PointX="5.75" PointY="15.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="AvonDbModel.Bestellung" Width="1.5" PointX="8" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Entitaeten" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Hefte" Width="1.5" PointX="8.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Hefte_x_Kunden" Width="1.5" PointX="11" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Kategorien" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Kunden" Width="1.5" PointX="5.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Markierungen" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AvonDbModel.Serien" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="AvonDbModel.FK_Artikel_Serien" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_ArtikelVarianten_Artikel" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK__Bestelldetails__0000000000000046" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Bestellung_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Bestellung_Kunden" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Entitaeten" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Hefte_x_Kunden_Hefte" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Hefte_x_Kunden_Kunden" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.FK_Serien_Serien" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.Kategorien_x_Artikel" ManuallyRouted="false" />
+        <AssociationConnector Association="AvonDbModel.Markierungen_x_Artikel" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

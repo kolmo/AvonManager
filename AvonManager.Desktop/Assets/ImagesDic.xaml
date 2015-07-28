@@ -1,0 +1,66 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Styles für die Logos -->
+    <Style x:Key="LogoImageBaseStyle" TargetType="Image">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+    </Style>
+    <Style x:Key="ArtikelLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/Artikel.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Artikel verwalten"/>
+    </Style>
+    <Style x:Key="HefteLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/HefteLogo.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Hefte verwalten"/>
+    </Style>
+    <Style x:Key="KundenLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/KundenLogo.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Kunden verwalten"/>
+    </Style>
+    <Style x:Key="KategorieLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/Kategorie.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Kategorien verwalten"/>
+    </Style>
+    <Style x:Key="SerienLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/SerienLogo.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Serien verwalten"/>
+    </Style>
+    <Style x:Key="BestellungLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/BestellungLogo.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Bestellungen verwalten"/>
+    </Style>
+    <Style x:Key="SaveImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/SaveIcon.png"/>
+    </Style>
+    <Style x:Key="CancelImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/AbbruchIcon.png"/>
+    </Style>
+    <Style x:Key="FilterImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/Filter.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Filter setzen"/>
+    </Style>
+    <Style x:Key="FilterLoeschImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/FilterLoesch.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Filter löschen"/>
+    </Style>
+    <Style x:Key="FindImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/Find_VS.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Suchen"/>
+    </Style>
+    <Style x:Key="InaktivImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/Inaktiv.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Inaktiv"/>
+    </Style>
+    <Style x:Key="SendToBestellungImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/ResultstoText_9948.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Zur Bestellung hinzufügen"/>
+    </Style>
+    <Style x:Key="InfoImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Desktop;component/Assets/Images/info.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Information"/>
+    </Style>
+
+</ResourceDictionary>

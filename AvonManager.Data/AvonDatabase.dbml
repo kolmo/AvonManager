@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AvDBase" Class="AvonDatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=AvDBase;Integrated Security=True" SettingsObjectName="AvonManager.Data.Properties.Settings" SettingsPropertyName="AvDBaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Artikel" Member="Artikels">
+    <Type Name="Artikel">
+      <Column Name="ArtikelId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Artikelname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Artikelbeschreibung" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ArtikelNr" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Inhalt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Einzelpreis" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Lagerbestand" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SerienId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Bild" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Artikel_ArtikelVarianten" Member="ArtikelVariantens" ThisKey="ArtikelId" OtherKey="ArtikelId" Type="ArtikelVarianten" />
+      <Association Name="Artikel_Markierungen_x_Artikel" Member="Markierungen_x_Artikels" ThisKey="ArtikelId" OtherKey="ArtikelId" Type="Markierungen_x_Artikel" />
+      <Association Name="Serien_Artikel" Member="Serien" ThisKey="SerienId" OtherKey="SerienId" Type="Serien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ArtikelVarianten" Member="ArtikelVariantens">
+    <Type Name="ArtikelVarianten">
+      <Column Name="VariantenId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ArtikelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ArtikelNr" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Variante" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Lagerbestand" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Einzelpreis" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="Artikel_ArtikelVarianten" Member="Artikel" ThisKey="ArtikelId" OtherKey="ArtikelId" Type="Artikel" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kunden" Member="Kundens">
+    <Type Name="Kunden">
+      <Column Name="KundenId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Vorname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Nachname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Adresse" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Ort" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Postleitzahl" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="EmailAdresse" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TelefonPrivat" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="TelefonBeruflich" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MobilesTelefon" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Faxnummer" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Geburtsdatum" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Anmerkungen" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="BekommtHeft" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Bild" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Inaktiv" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kategorien" Member="Kategoriens">
+    <Type Name="Kategorien">
+      <Column Name="KategorieId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Reihenfolge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Markierungen_x_Artikel" Member="Markierungen_x_Artikels">
+    <Type Name="Markierungen_x_Artikel">
+      <Column Name="MarkierungId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ArtikelId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Artikel_Markierungen_x_Artikel" Member="Artikel" ThisKey="ArtikelId" OtherKey="ArtikelId" Type="Artikel" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Markierungen_Markierungen_x_Artikel" Member="Markierungen" ThisKey="MarkierungId" OtherKey="MarkierungId" Type="Markierungen" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Markierungen" Member="Markierungens">
+    <Type Name="Markierungen">
+      <Column Name="MarkierungId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EntitaetId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Titel" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="FarbeARGB" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Markierungen_Markierungen_x_Artikel" Member="Markierungen_x_Artikels" ThisKey="MarkierungId" OtherKey="MarkierungId" Type="Markierungen_x_Artikel" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Serien" Member="Seriens">
+    <Type Name="Serien">
+      <Column Name="SerienId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Parent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Reihenfolge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Serien_Artikel" Member="Artikels" ThisKey="SerienId" OtherKey="SerienId" Type="Artikel" />
+      <Association Name="Serien_Serien" Member="Seriens" ThisKey="SerienId" OtherKey="Parent" Type="Serien" />
+      <Association Name="Serien_Serien" Member="Serien1" ThisKey="Parent" OtherKey="SerienId" Type="Serien" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

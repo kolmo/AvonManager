@@ -1,0 +1,359 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:helper="clr-namespace:AvonManager.Helpers"
+        xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+>
+    <helper:CollectionToCountConverter x:Key="CollectionConverter"/>
+    <helper:ColorToIntegerConverter x:Key="C2IConverter"/>
+    <helper:IntegerToBrushConverter x:Key="I2BrushConverter"/>
+    <!--Spezielle Stile-->
+    <!-- EXPRESSION DARK VALUES -->
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    <Style x:Key="DingbatsFontStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/AvonManager;component/Fonts/BRDB1RT0.TTF#PT Dingbats 1"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+    <SolidColorBrush x:Key="TextBrush" Color="#FFFFFFFF" />
+    <Color x:Key="TextColor">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="HeftItemBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="KundenItemBrush" Color="Transparent"/>
+
+    <Style x:Key="FilterButtonStyle" TargetType="ButtonBase">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Image Style="{StaticResource FilterImage}" Height="30"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PurePictureButtonStyle" TargetType="Button">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Frame"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DisabledVisualElement"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0" Stroke="#FFF7D7DC" StrokeThickness="2"/>
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Ellipse x:Name="DisabledVisualElement" Fill="#FFFFFFFF" IsHitTestVisible="false" Opacity="0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KatPicStyle" TargetType="Image">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="MaxHeight" Value="150"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+    </Style>
+    <!--Hintergrundkreise für Logos-->
+    <Style x:Key="LogoBackgroundCircleBase" TargetType="Ellipse">
+        <Setter Property="Height" Value="120"/>
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Stroke" Value="{x:Null}"/>
+    </Style>
+    <Style x:Key="ArtikelLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+        <Setter Property="Fill" Value="BurlyWood"/>
+    </Style>
+    <Style x:Key="BestellungLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+        <Setter Property="Fill" Value="Goldenrod"/>
+    </Style>
+    <Style x:Key="HefteLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+        <Setter Property="Fill" Value="{StaticResource HeftItemBrush}"/>
+    </Style>
+    <Style x:Key="KundenLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+        <Setter Property="Fill" Value="{StaticResource KundenItemBrush}"/>
+    </Style>
+
+    <!--Border-Styles-->
+    <Style x:Key="AvonBorderBaseStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="7"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="3"/>
+    </Style>
+    <Style x:Key="SerienBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="KategorienBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="ArtikelBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <!--Farbe #DEB887-->
+    </Style>
+    <Style x:Key="VariantenBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="HeftListBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="HeftItemBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="{StaticResource HeftItemBrush}"/>
+    </Style>
+    <Style x:Key="KundenBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="KundenDetailsBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="BestellungBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style x:Key="ButtonLabelStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+    <Style x:Key="KachelHeaderStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="ExtraBold"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    <Style x:Key="KachelTextStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    <Style x:Key="KachelGridStyle" TargetType="Grid">
+        <Setter Property="Margin" Value="3"/>
+    </Style>
+    <DataTemplate DataType="web:Artikel">
+        <Border Background="{Binding Path=BackgroundBrush}" Padding="3" CornerRadius="5">
+            <Grid  
+               Style="{StaticResource KachelGridStyle}" ToolTipService.ToolTip="{Binding Path=Artikelname}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Path=Serienname}" Style="{StaticResource KachelHeaderStyle}"/>
+                <TextBlock Grid.Row="1" Text="{Binding Path=Artikelname}"  Style="{StaticResource KachelTextStyle}"
+                       Foreground="{Binding Path=ForegroundBrush}"/>
+                <Grid Grid.Row="2">
+                    <ItemsControl ItemsSource="{Binding Path=Varianten}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Style="{StaticResource PurePictureButtonStyle}" Padding="3" Command="{Binding Path=DataContext.SelectArtikelOrVariant, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                            CommandParameter="{Binding}">
+                                        <Ellipse Fill="Black" Width="10" Height="10"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Button>
+                                    <TextBlock Grid.Column="1" Text="{Binding Path=ArtikelNr}" MinWidth="50" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Path=Variante}" VerticalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate DataType="web:Hefte">
+        <Grid Background="#FF89890B"  Style="{StaticResource KachelGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock  Text="H" Style="{StaticResource KachelHeaderStyle}"/>
+            <TextBlock Grid.Row="1" Text="{Binding Path=Titel}" Style="{StaticResource KachelTextStyle}"/>
+            <TextBlock Grid.Row="2" Text="{Binding Path=Jahr}" Style="{StaticResource KachelTextStyle}"/>
+        </Grid>
+    </DataTemplate>
+    <Style x:Key="KachelListboxStyle" TargetType="ListBox">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="DefaultLabelStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="3"/>
+    </Style>
+    <Style x:Key="DefaultHeaderStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style x:Key="HeftImageStyle" TargetType="Image">
+        <Setter Property="Height" Value="300"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <!--List Styles-->
+    <Style x:Key="MarkierungsSpotListStyle" TargetType="ItemsControl">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=Markierungen.FarbeARGB, Converter={StaticResource I2BrushConverter}}"
+                        ToolTipService.ToolTip="{Binding Path=Markierungen.Titel}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="AvonListBaseStyle" TargetType="ListBox">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SerienListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource AvonListBaseStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="3" Text="{Binding Path=Name}" FontSize="14"/>
+                        <Image Grid.Column="1" Margin="10,0" MaxHeight="20" Source="{Binding Path=Logo, Converter={StaticResource ByteToImageConverter}}" Stretch="Uniform"/>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="KategorienListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource AvonListBaseStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3" Text="{Binding Path=Name}" FontSize="14"/>
+                        </StackPanel>
+                        <Image Grid.Column="1" Margin="10,0" MaxHeight="20" Source="{Binding Path=Logo, Converter={StaticResource ByteToImageConverter}}" Stretch="Uniform"/>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="VariantenListBoxStyle" TargetType="ListBox">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3" Text="{Binding Path=ArtikelNr}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="KundenListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource AvonListBaseStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3" Text="{Binding Path=DisplayName}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HefteListBoxStyle" TargetType="ListBox"  BasedOn="{StaticResource AvonListBaseStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Style="{StaticResource HeftItemBorderStyle}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" MaxWidth="70"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Margin="3" Text="{Binding Path=Titel}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left"/>
+                                <TextBlock Margin="3" Text="{Binding Path=Jahr}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <Image Grid.Column="1"  Margin="3" Width="50" Source="{Binding Path=Bild, Converter={StaticResource ByteToImageConverter}}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BestellungListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource AvonListBaseStyle}">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="3" Text="{Binding Path=Kunde.DisplayName}"/>
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal">
+                            <TextBlock Margin="3" Text="{Binding Path=Datum, StringFormat=d, ConverterCulture=de-DE}"/>
+                            <TextBlock Margin="3" Text="{Binding Path=Bestelldetails, StringFormat='({0})', Converter={StaticResource CollectionConverter}}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>

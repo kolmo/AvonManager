@@ -1,0 +1,23 @@
+﻿<Application x:Class="AvonManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:viewModels="clr-namespace:AvonManager.ViewModels" 
+    xmlns:helpers="clr-namespace:AvonManager.Helpers"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Cosmo/Styles.xaml"/>
+                <!--<ResourceDictionary Source="Assets/Cosmo/CoreStyles.xaml"/>-->
+                <ResourceDictionary Source="Assets/Cosmo/SDKStyles.xaml"/>
+                <ResourceDictionary Source="Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <helpers:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
+            <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <helpers:BooleanToVisibilityConverter x:Key="BooleanToCollapsedConverter" Inverted="True"/>
+            <helpers:BooleanToTextConverter x:Key="BooleanToTextConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

@@ -1,0 +1,30 @@
+<Window x:Class="AvonManager.ErrorWindow" 
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      >
+
+    <Grid x:Name="LayoutRoot" Width="540">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="IntroductoryText" Grid.Row="0" Margin="0" Text="Unbekannter Fehler. Nähere Informationen erhalten Sie von Ihrem Administrator."/>
+
+        <StackPanel x:Name="ContentStackPanel" Grid.Row="2" Margin="0,6,0,0">
+
+            <TextBlock x:Name="LabelText" TextWrapping="Wrap" Margin="0,0,0,2" Text="Fehlerdetails"/>
+            <TextBox x:Name="ErrorTextBox" Height="90" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" VerticalAlignment="Top" />
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="CancelButton" Padding="20,3" HorizontalAlignment="Right" Margin="2" TabIndex="0" Content="Abbruch" Click="CancelButton_Click" Visibility="Collapsed" />
+            <Button x:Name="OKButton" Click="OKButton_Click" Padding="20,3" HorizontalAlignment="Right" Margin="2" TabIndex="1" Content="OK"/>
+        </StackPanel>
+
+    </Grid>
+
+</Window>

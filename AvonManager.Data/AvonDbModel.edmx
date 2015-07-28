@@ -1,0 +1,945 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AvonDbModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AvonDbModelStoreContainer">
+          <EntitySet Name="Artikel" EntityType="AvonDbModel.Store.Artikel" store:Type="Tables" />
+          <EntitySet Name="ArtikelVarianten" EntityType="AvonDbModel.Store.ArtikelVarianten" store:Type="Tables" />
+          <EntitySet Name="Bestelldetails" EntityType="AvonDbModel.Store.Bestelldetails" store:Type="Tables" />
+          <EntitySet Name="Bestellstatus" EntityType="AvonDbModel.Store.Bestellstatus" store:Type="Tables" />
+          <EntitySet Name="Bestellung" EntityType="AvonDbModel.Store.Bestellung" store:Type="Tables" />
+          <EntitySet Name="Entitaeten" EntityType="AvonDbModel.Store.Entitaeten" store:Type="Tables" />
+          <EntitySet Name="Hefte" EntityType="AvonDbModel.Store.Hefte" store:Type="Tables" />
+          <EntitySet Name="Hefte_x_Kunden" EntityType="AvonDbModel.Store.Hefte_x_Kunden" store:Type="Tables" />
+          <EntitySet Name="Kategorien" EntityType="AvonDbModel.Store.Kategorien" store:Type="Tables" />
+          <EntitySet Name="Kategorien_x_Artikel" EntityType="AvonDbModel.Store.Kategorien_x_Artikel" store:Type="Tables" />
+          <EntitySet Name="Kunden" EntityType="AvonDbModel.Store.Kunden" store:Type="Tables" />
+          <EntitySet Name="Markierungen" EntityType="AvonDbModel.Store.Markierungen" store:Type="Tables" />
+          <EntitySet Name="Markierungen_x_Artikel" EntityType="AvonDbModel.Store.Markierungen_x_Artikel" store:Type="Tables" />
+          <EntitySet Name="Serien" EntityType="AvonDbModel.Store.Serien" store:Type="Tables" />
+          <AssociationSet Name="FK__Bestelldetails__0000000000000046" Association="AvonDbModel.Store.FK__Bestelldetails__0000000000000046">
+            <End Role="Bestellung" EntitySet="Bestellung" />
+            <End Role="Bestelldetails" EntitySet="Bestelldetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artikel" Association="AvonDbModel.Store.FK_Artikel">
+            <End Role="Artikel" EntitySet="Artikel" />
+            <End Role="Kategorien_x_Artikel" EntitySet="Kategorien_x_Artikel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artikel_Serien" Association="AvonDbModel.Store.FK_Artikel_Serien">
+            <End Role="Serien" EntitySet="Serien" />
+            <End Role="Artikel" EntitySet="Artikel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Artikel1" Association="AvonDbModel.Store.FK_Artikel1">
+            <End Role="Artikel" EntitySet="Artikel" />
+            <End Role="Markierungen_x_Artikel" EntitySet="Markierungen_x_Artikel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtikelVarianten_Artikel" Association="AvonDbModel.Store.FK_ArtikelVarianten_Artikel">
+            <End Role="Artikel" EntitySet="Artikel" />
+            <End Role="ArtikelVarianten" EntitySet="ArtikelVarianten" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bestellung_Kunden" Association="AvonDbModel.Store.FK_Bestellung_Kunden">
+            <End Role="Kunden" EntitySet="Kunden" />
+            <End Role="Bestellung" EntitySet="Bestellung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bestellung_Status" Association="AvonDbModel.Store.FK_Bestellung_Status">
+            <End Role="Bestellstatus" EntitySet="Bestellstatus" />
+            <End Role="Bestellung" EntitySet="Bestellung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entitaeten" Association="AvonDbModel.Store.FK_Entitaeten">
+            <End Role="Entitaeten" EntitySet="Entitaeten" />
+            <End Role="Markierungen" EntitySet="Markierungen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hefte_x_Kunden_Hefte" Association="AvonDbModel.Store.FK_Hefte_x_Kunden_Hefte">
+            <End Role="Hefte" EntitySet="Hefte" />
+            <End Role="Hefte_x_Kunden" EntitySet="Hefte_x_Kunden" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hefte_x_Kunden_Kunden" Association="AvonDbModel.Store.FK_Hefte_x_Kunden_Kunden">
+            <End Role="Kunden" EntitySet="Kunden" />
+            <End Role="Hefte_x_Kunden" EntitySet="Hefte_x_Kunden" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kategorie" Association="AvonDbModel.Store.FK_Kategorie">
+            <End Role="Kategorien" EntitySet="Kategorien" />
+            <End Role="Kategorien_x_Artikel" EntitySet="Kategorien_x_Artikel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Markierungen" Association="AvonDbModel.Store.FK_Markierungen">
+            <End Role="Markierungen" EntitySet="Markierungen" />
+            <End Role="Markierungen_x_Artikel" EntitySet="Markierungen_x_Artikel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Serien_Serien" Association="AvonDbModel.Store.FK_Serien_Serien">
+            <End Role="Serien" EntitySet="Serien" />
+            <End Role="Serien1" EntitySet="Serien" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Artikel">
+          <Key>
+            <PropertyRef Name="ArtikelId" />
+          </Key>
+          <Property Name="ArtikelId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Artikelname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Artikelbeschreibung" Type="nvarchar" MaxLength="255" />
+          <Property Name="ArtikelNr" Type="nvarchar" MaxLength="10" />
+          <Property Name="Inhalt" Type="nvarchar" MaxLength="50" />
+          <Property Name="Einzelpreis" Type="money" />
+          <Property Name="Lagerbestand" Type="int" />
+          <Property Name="SerienId" Type="int" />
+          <Property Name="Bild" Type="image" />
+        </EntityType>
+        <EntityType Name="ArtikelVarianten">
+          <Key>
+            <PropertyRef Name="VariantenId" />
+          </Key>
+          <Property Name="VariantenId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ArtikelId" Type="int" Nullable="false" />
+          <Property Name="ArtikelNr" Type="nvarchar" MaxLength="10" />
+          <Property Name="Variante" Type="nvarchar" MaxLength="255" />
+          <Property Name="Lagerbestand" Type="int" />
+          <Property Name="Einzelpreis" Type="money" />
+        </EntityType>
+        <EntityType Name="Bestelldetails">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BestellId" Type="int" Nullable="false" />
+          <Property Name="Campagne" Type="nvarchar" MaxLength="50" />
+          <Property Name="Jahr" Type="int" />
+          <Property Name="Seite" Type="int" />
+          <Property Name="ArtikelNr" Type="nvarchar" MaxLength="50" />
+          <Property Name="Menge" Type="int" />
+          <Property Name="Artikelbeschr" Type="nvarchar" MaxLength="100" />
+          <Property Name="FGD" Type="nvarchar" MaxLength="50" />
+          <Property Name="Einzelpreis" Type="money" />
+        </EntityType>
+        <EntityType Name="Bestellstatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Beschreibung" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Bestellung">
+          <Key>
+            <PropertyRef Name="BestellId" />
+          </Key>
+          <Property Name="BestellId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="KundenId" Type="int" />
+          <Property Name="Datum" Type="datetime" />
+          <Property Name="Bemerkung" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="Loeschvormerkung" Type="bit" />
+        </EntityType>
+        <EntityType Name="Entitaeten">
+          <Key>
+            <PropertyRef Name="EntitaetId" />
+          </Key>
+          <Property Name="EntitaetId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Hefte">
+          <Key>
+            <PropertyRef Name="HeftId" />
+          </Key>
+          <Property Name="HeftId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="100" />
+          <Property Name="Beschreibung" Type="nvarchar" MaxLength="500" />
+          <Property Name="Jahr" Type="int" />
+          <Property Name="Bild" Type="image" />
+        </EntityType>
+        <EntityType Name="Hefte_x_Kunden">
+          <Key>
+            <PropertyRef Name="HeftId" />
+            <PropertyRef Name="KundenId" />
+          </Key>
+          <Property Name="HeftId" Type="int" Nullable="false" />
+          <Property Name="KundenId" Type="int" Nullable="false" />
+          <Property Name="Erhalten" Type="datetime" />
+          <Property Name="HatBestellt" Type="bit" />
+        </EntityType>
+        <EntityType Name="Kategorien">
+          <Key>
+            <PropertyRef Name="KategorieId" />
+          </Key>
+          <Property Name="KategorieId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="Reihenfolge" Type="int" />
+          <Property Name="Bemerkung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Logo" Type="image" />
+        </EntityType>
+        <EntityType Name="Kategorien_x_Artikel">
+          <Key>
+            <PropertyRef Name="KategorieId" />
+            <PropertyRef Name="ArtikelId" />
+          </Key>
+          <Property Name="KategorieId" Type="int" Nullable="false" />
+          <Property Name="ArtikelId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kunden">
+          <Key>
+            <PropertyRef Name="KundenId" />
+          </Key>
+          <Property Name="KundenId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Vorname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nachname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adresse" Type="nvarchar" MaxLength="255" />
+          <Property Name="Ort" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postleitzahl" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmailAdresse" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelefonPrivat" Type="nvarchar" MaxLength="30" />
+          <Property Name="TelefonBeruflich" Type="nvarchar" MaxLength="30" />
+          <Property Name="MobilesTelefon" Type="nvarchar" MaxLength="30" />
+          <Property Name="Faxnummer" Type="nvarchar" MaxLength="30" />
+          <Property Name="Geburtsdatum" Type="datetime" />
+          <Property Name="Anmerkungen" Type="nvarchar" />
+          <Property Name="BekommtHeft" Type="bit" />
+          <Property Name="Bild" Type="image" />
+          <Property Name="Inaktiv" Type="bit" />
+        </EntityType>
+        <EntityType Name="Markierungen">
+          <Key>
+            <PropertyRef Name="MarkierungId" />
+          </Key>
+          <Property Name="MarkierungId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EntitaetId" Type="int" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="100" />
+          <Property Name="Bemerkung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FarbeARGB" Type="int" />
+        </EntityType>
+        <EntityType Name="Markierungen_x_Artikel">
+          <Key>
+            <PropertyRef Name="MarkierungId" />
+            <PropertyRef Name="ArtikelId" />
+          </Key>
+          <Property Name="MarkierungId" Type="int" Nullable="false" />
+          <Property Name="ArtikelId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Serien">
+          <Key>
+            <PropertyRef Name="SerienId" />
+          </Key>
+          <Property Name="SerienId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="Reihenfolge" Type="int" />
+          <Property Name="Bemerkung" Type="nvarchar" MaxLength="255" />
+          <Property Name="Logo" Type="image" />
+        </EntityType>
+        <Association Name="FK__Bestelldetails__0000000000000046">
+          <End Role="Bestellung" Type="AvonDbModel.Store.Bestellung" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bestelldetails" Type="AvonDbModel.Store.Bestelldetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestellung">
+              <PropertyRef Name="BestellId" />
+            </Principal>
+            <Dependent Role="Bestelldetails">
+              <PropertyRef Name="BestellId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artikel">
+          <End Role="Artikel" Type="AvonDbModel.Store.Artikel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Kategorien_x_Artikel" Type="AvonDbModel.Store.Kategorien_x_Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Principal>
+            <Dependent Role="Kategorien_x_Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artikel_Serien">
+          <End Role="Serien" Type="AvonDbModel.Store.Serien" Multiplicity="0..1" />
+          <End Role="Artikel" Type="AvonDbModel.Store.Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serien">
+              <PropertyRef Name="SerienId" />
+            </Principal>
+            <Dependent Role="Artikel">
+              <PropertyRef Name="SerienId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Artikel1">
+          <End Role="Artikel" Type="AvonDbModel.Store.Artikel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Markierungen_x_Artikel" Type="AvonDbModel.Store.Markierungen_x_Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Principal>
+            <Dependent Role="Markierungen_x_Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtikelVarianten_Artikel">
+          <End Role="Artikel" Type="AvonDbModel.Store.Artikel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ArtikelVarianten" Type="AvonDbModel.Store.ArtikelVarianten" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Principal>
+            <Dependent Role="ArtikelVarianten">
+              <PropertyRef Name="ArtikelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bestellung_Kunden">
+          <End Role="Kunden" Type="AvonDbModel.Store.Kunden" Multiplicity="0..1" />
+          <End Role="Bestellung" Type="AvonDbModel.Store.Bestellung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunden">
+              <PropertyRef Name="KundenId" />
+            </Principal>
+            <Dependent Role="Bestellung">
+              <PropertyRef Name="KundenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bestellung_Status">
+          <End Role="Bestellstatus" Type="AvonDbModel.Store.Bestellstatus" Multiplicity="0..1" />
+          <End Role="Bestellung" Type="AvonDbModel.Store.Bestellung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestellstatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Bestellung">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entitaeten">
+          <End Role="Entitaeten" Type="AvonDbModel.Store.Entitaeten" Multiplicity="1" />
+          <End Role="Markierungen" Type="AvonDbModel.Store.Markierungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entitaeten">
+              <PropertyRef Name="EntitaetId" />
+            </Principal>
+            <Dependent Role="Markierungen">
+              <PropertyRef Name="EntitaetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hefte_x_Kunden_Hefte">
+          <End Role="Hefte" Type="AvonDbModel.Store.Hefte" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hefte_x_Kunden" Type="AvonDbModel.Store.Hefte_x_Kunden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hefte">
+              <PropertyRef Name="HeftId" />
+            </Principal>
+            <Dependent Role="Hefte_x_Kunden">
+              <PropertyRef Name="HeftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hefte_x_Kunden_Kunden">
+          <End Role="Kunden" Type="AvonDbModel.Store.Kunden" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hefte_x_Kunden" Type="AvonDbModel.Store.Hefte_x_Kunden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunden">
+              <PropertyRef Name="KundenId" />
+            </Principal>
+            <Dependent Role="Hefte_x_Kunden">
+              <PropertyRef Name="KundenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kategorie">
+          <End Role="Kategorien" Type="AvonDbModel.Store.Kategorien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Kategorien_x_Artikel" Type="AvonDbModel.Store.Kategorien_x_Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorien">
+              <PropertyRef Name="KategorieId" />
+            </Principal>
+            <Dependent Role="Kategorien_x_Artikel">
+              <PropertyRef Name="KategorieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Markierungen">
+          <End Role="Markierungen" Type="AvonDbModel.Store.Markierungen" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Markierungen_x_Artikel" Type="AvonDbModel.Store.Markierungen_x_Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Markierungen">
+              <PropertyRef Name="MarkierungId" />
+            </Principal>
+            <Dependent Role="Markierungen_x_Artikel">
+              <PropertyRef Name="MarkierungId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Serien_Serien">
+          <End Role="Serien" Type="AvonDbModel.Store.Serien" Multiplicity="0..1" />
+          <End Role="Serien1" Type="AvonDbModel.Store.Serien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serien">
+              <PropertyRef Name="SerienId" />
+            </Principal>
+            <Dependent Role="Serien1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AvonDbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AvDBaseEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Artikels" EntityType="AvonDbModel.Artikel" />
+          <EntitySet Name="ArtikelVariantens" EntityType="AvonDbModel.ArtikelVarianten" />
+          <EntitySet Name="Bestelldetails" EntityType="AvonDbModel.Bestelldetail" />
+          <EntitySet Name="Bestellstatus" EntityType="AvonDbModel.Bestellstatus" />
+          <EntitySet Name="Bestellungs" EntityType="AvonDbModel.Bestellung" />
+          <EntitySet Name="Entitaetens" EntityType="AvonDbModel.Entitaeten" />
+          <EntitySet Name="Heftes" EntityType="AvonDbModel.Hefte" />
+          <EntitySet Name="Hefte_x_Kunden" EntityType="AvonDbModel.Hefte_x_Kunden" />
+          <EntitySet Name="Kategoriens" EntityType="AvonDbModel.Kategorien" />
+          <EntitySet Name="Kundens" EntityType="AvonDbModel.Kunden" />
+          <EntitySet Name="Markierungens" EntityType="AvonDbModel.Markierungen" />
+          <EntitySet Name="Seriens" EntityType="AvonDbModel.Serien" />
+          <AssociationSet Name="FK_Artikel_Serien" Association="AvonDbModel.FK_Artikel_Serien">
+            <End Role="Serien" EntitySet="Seriens" />
+            <End Role="Artikel" EntitySet="Artikels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtikelVarianten_Artikel" Association="AvonDbModel.FK_ArtikelVarianten_Artikel">
+            <End Role="Artikel" EntitySet="Artikels" />
+            <End Role="ArtikelVarianten" EntitySet="ArtikelVariantens" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bestelldetails__0000000000000046" Association="AvonDbModel.FK__Bestelldetails__0000000000000046">
+            <End Role="Bestellung" EntitySet="Bestellungs" />
+            <End Role="Bestelldetails" EntitySet="Bestelldetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bestellung_Status" Association="AvonDbModel.FK_Bestellung_Status">
+            <End Role="Bestellstatus" EntitySet="Bestellstatus" />
+            <End Role="Bestellung" EntitySet="Bestellungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bestellung_Kunden" Association="AvonDbModel.FK_Bestellung_Kunden">
+            <End Role="Kunden" EntitySet="Kundens" />
+            <End Role="Bestellung" EntitySet="Bestellungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entitaeten" Association="AvonDbModel.FK_Entitaeten">
+            <End Role="Entitaeten" EntitySet="Entitaetens" />
+            <End Role="Markierungen" EntitySet="Markierungens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hefte_x_Kunden_Hefte" Association="AvonDbModel.FK_Hefte_x_Kunden_Hefte">
+            <End Role="Hefte" EntitySet="Heftes" />
+            <End Role="Hefte_x_Kunden" EntitySet="Hefte_x_Kunden" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hefte_x_Kunden_Kunden" Association="AvonDbModel.FK_Hefte_x_Kunden_Kunden">
+            <End Role="Kunden" EntitySet="Kundens" />
+            <End Role="Hefte_x_Kunden" EntitySet="Hefte_x_Kunden" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Serien_Serien" Association="AvonDbModel.FK_Serien_Serien">
+            <End Role="Serien" EntitySet="Seriens" />
+            <End Role="Serien1" EntitySet="Seriens" />
+          </AssociationSet>
+          <AssociationSet Name="Kategorien_x_Artikel" Association="AvonDbModel.Kategorien_x_Artikel">
+            <End Role="Artikel" EntitySet="Artikels" />
+            <End Role="Kategorien" EntitySet="Kategoriens" />
+          </AssociationSet>
+          <AssociationSet Name="Markierungen_x_Artikel" Association="AvonDbModel.Markierungen_x_Artikel">
+            <End Role="Artikel" EntitySet="Artikels" />
+            <End Role="Markierungen" EntitySet="Markierungens" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Artikel">
+          <Key>
+            <PropertyRef Name="ArtikelId" />
+          </Key>
+          <Property Name="ArtikelId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Artikelname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Artikelbeschreibung" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ArtikelNr" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Inhalt" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Einzelpreis" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Lagerbestand" Type="Int32" />
+          <Property Name="SerienId" Type="Int32" />
+          <Property Name="Bild" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Serien" Relationship="AvonDbModel.FK_Artikel_Serien" FromRole="Artikel" ToRole="Serien" />
+          <NavigationProperty Name="Varianten" Relationship="AvonDbModel.FK_ArtikelVarianten_Artikel" FromRole="Artikel" ToRole="ArtikelVarianten" />
+          <NavigationProperty Name="Kategorien" Relationship="AvonDbModel.Kategorien_x_Artikel" FromRole="Artikel" ToRole="Kategorien" />
+          <NavigationProperty Name="Markierungen" Relationship="AvonDbModel.Markierungen_x_Artikel" FromRole="Artikel" ToRole="Markierungen" />
+        </EntityType>
+        <EntityType Name="ArtikelVarianten">
+          <Key>
+            <PropertyRef Name="VariantenId" />
+          </Key>
+          <Property Name="VariantenId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtikelId" Type="Int32" Nullable="false" />
+          <Property Name="ArtikelNr" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Variante" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Lagerbestand" Type="Int32" />
+          <Property Name="Einzelpreis" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Artikel" Relationship="AvonDbModel.FK_ArtikelVarianten_Artikel" FromRole="ArtikelVarianten" ToRole="Artikel" />
+        </EntityType>
+        <EntityType Name="Bestelldetail">
+          <Key>
+            <PropertyRef Name="DetailId" />
+          </Key>
+          <Property Name="DetailId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BestellId" Type="Int32" Nullable="false" />
+          <Property Name="Campagne" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Jahr" Type="Int32" />
+          <Property Name="Seite" Type="Int32" />
+          <Property Name="ArtikelNr" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Menge" Type="Int32" />
+          <Property Name="Artikelbeschr" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="FGD" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Einzelpreis" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Bestellung" Relationship="AvonDbModel.FK__Bestelldetails__0000000000000046" FromRole="Bestelldetails" ToRole="Bestellung" />
+        </EntityType>
+        <EntityType Name="Bestellstatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Bestellungs" Relationship="AvonDbModel.FK_Bestellung_Status" FromRole="Bestellstatus" ToRole="Bestellung" />
+        </EntityType>
+        <EntityType Name="Bestellung">
+          <Key>
+            <PropertyRef Name="BestellId" />
+          </Key>
+          <Property Name="BestellId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="KundenId" Type="Int32" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <Property Name="Bemerkung" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="Loeschvormerkung" Type="Boolean" />
+          <NavigationProperty Name="Bestelldetails" Relationship="AvonDbModel.FK__Bestelldetails__0000000000000046" FromRole="Bestellung" ToRole="Bestelldetails" />
+          <NavigationProperty Name="Bestellstatus" Relationship="AvonDbModel.FK_Bestellung_Status" FromRole="Bestellung" ToRole="Bestellstatus" />
+          <NavigationProperty Name="Kunden" Relationship="AvonDbModel.FK_Bestellung_Kunden" FromRole="Bestellung" ToRole="Kunden" />
+        </EntityType>
+        <EntityType Name="Entitaeten">
+          <Key>
+            <PropertyRef Name="EntitaetId" />
+          </Key>
+          <Property Name="EntitaetId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Markierungens" Relationship="AvonDbModel.FK_Entitaeten" FromRole="Entitaeten" ToRole="Markierungen" />
+        </EntityType>
+        <EntityType Name="Hefte">
+          <Key>
+            <PropertyRef Name="HeftId" />
+          </Key>
+          <Property Name="HeftId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Jahr" Type="Int32" />
+          <Property Name="Bild" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Hefte_x_Kunden" Relationship="AvonDbModel.FK_Hefte_x_Kunden_Hefte" FromRole="Hefte" ToRole="Hefte_x_Kunden" />
+        </EntityType>
+        <EntityType Name="Hefte_x_Kunden">
+          <Key>
+            <PropertyRef Name="HeftId" />
+            <PropertyRef Name="KundenId" />
+          </Key>
+          <Property Name="HeftId" Type="Int32" Nullable="false" />
+          <Property Name="KundenId" Type="Int32" Nullable="false" />
+          <Property Name="Erhalten" Type="DateTime" Precision="3" />
+          <Property Name="HatBestellt" Type="Boolean" />
+          <NavigationProperty Name="Hefte" Relationship="AvonDbModel.FK_Hefte_x_Kunden_Hefte" FromRole="Hefte_x_Kunden" ToRole="Hefte" />
+          <NavigationProperty Name="Kunden" Relationship="AvonDbModel.FK_Hefte_x_Kunden_Kunden" FromRole="Hefte_x_Kunden" ToRole="Kunden" />
+        </EntityType>
+        <EntityType Name="Kategorien">
+          <Key>
+            <PropertyRef Name="KategorieId" />
+          </Key>
+          <Property Name="KategorieId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="Reihenfolge" Type="Int32" />
+          <Property Name="Bemerkung" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Artikels" Relationship="AvonDbModel.Kategorien_x_Artikel" FromRole="Kategorien" ToRole="Artikel" />
+        </EntityType>
+        <EntityType Name="Kunden">
+          <Key>
+            <PropertyRef Name="KundenId" />
+          </Key>
+          <Property Name="KundenId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Vorname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Nachname" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Adresse" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Ort" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Postleitzahl" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="EmailAdresse" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TelefonPrivat" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="TelefonBeruflich" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="MobilesTelefon" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Faxnummer" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Geburtsdatum" Type="DateTime" Precision="3" />
+          <Property Name="Anmerkungen" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="BekommtHeft" Type="Boolean" />
+          <Property Name="Bild" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Inaktiv" Type="Boolean" />
+          <NavigationProperty Name="Bestellungs" Relationship="AvonDbModel.FK_Bestellung_Kunden" FromRole="Kunden" ToRole="Bestellung" />
+          <NavigationProperty Name="Hefte_x_Kunden" Relationship="AvonDbModel.FK_Hefte_x_Kunden_Kunden" FromRole="Kunden" ToRole="Hefte_x_Kunden" />
+        </EntityType>
+        <EntityType Name="Markierungen">
+          <Key>
+            <PropertyRef Name="MarkierungId" />
+          </Key>
+          <Property Name="MarkierungId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EntitaetId" Type="Int32" Nullable="false" />
+          <Property Name="Titel" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Bemerkung" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <Property Name="FarbeARGB" Type="Int32" />
+          <NavigationProperty Name="Entitaeten" Relationship="AvonDbModel.FK_Entitaeten" FromRole="Markierungen" ToRole="Entitaeten" />
+          <NavigationProperty Name="Artikels" Relationship="AvonDbModel.Markierungen_x_Artikel" FromRole="Markierungen" ToRole="Artikel" />
+        </EntityType>
+        <EntityType Name="Serien">
+          <Key>
+            <PropertyRef Name="SerienId" />
+          </Key>
+          <Property Name="SerienId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="Reihenfolge" Type="Int32" />
+          <Property Name="Bemerkung" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Artikels" Relationship="AvonDbModel.FK_Artikel_Serien" FromRole="Serien" ToRole="Artikel" />
+          <NavigationProperty Name="Serien1" Relationship="AvonDbModel.FK_Serien_Serien" FromRole="Serien" ToRole="Serien1" />
+          <NavigationProperty Name="Serien2" Relationship="AvonDbModel.FK_Serien_Serien" FromRole="Serien1" ToRole="Serien" />
+        </EntityType>
+        <Association Name="FK_Artikel_Serien">
+          <End Role="Serien" Type="AvonDbModel.Serien" Multiplicity="0..1" />
+          <End Role="Artikel" Type="AvonDbModel.Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serien">
+              <PropertyRef Name="SerienId" />
+            </Principal>
+            <Dependent Role="Artikel">
+              <PropertyRef Name="SerienId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtikelVarianten_Artikel">
+          <End Role="Artikel" Type="AvonDbModel.Artikel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ArtikelVarianten" Type="AvonDbModel.ArtikelVarianten" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ArtikelId" />
+            </Principal>
+            <Dependent Role="ArtikelVarianten">
+              <PropertyRef Name="ArtikelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bestelldetails__0000000000000046">
+          <End Role="Bestellung" Type="AvonDbModel.Bestellung" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Bestelldetails" Type="AvonDbModel.Bestelldetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestellung">
+              <PropertyRef Name="BestellId" />
+            </Principal>
+            <Dependent Role="Bestelldetails">
+              <PropertyRef Name="BestellId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bestellung_Status">
+          <End Role="Bestellstatus" Type="AvonDbModel.Bestellstatus" Multiplicity="0..1" />
+          <End Role="Bestellung" Type="AvonDbModel.Bestellung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bestellstatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Bestellung">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bestellung_Kunden">
+          <End Role="Kunden" Type="AvonDbModel.Kunden" Multiplicity="0..1" />
+          <End Role="Bestellung" Type="AvonDbModel.Bestellung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunden">
+              <PropertyRef Name="KundenId" />
+            </Principal>
+            <Dependent Role="Bestellung">
+              <PropertyRef Name="KundenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entitaeten">
+          <End Role="Entitaeten" Type="AvonDbModel.Entitaeten" Multiplicity="1" />
+          <End Role="Markierungen" Type="AvonDbModel.Markierungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entitaeten">
+              <PropertyRef Name="EntitaetId" />
+            </Principal>
+            <Dependent Role="Markierungen">
+              <PropertyRef Name="EntitaetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hefte_x_Kunden_Hefte">
+          <End Role="Hefte" Type="AvonDbModel.Hefte" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hefte_x_Kunden" Type="AvonDbModel.Hefte_x_Kunden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hefte">
+              <PropertyRef Name="HeftId" />
+            </Principal>
+            <Dependent Role="Hefte_x_Kunden">
+              <PropertyRef Name="HeftId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hefte_x_Kunden_Kunden">
+          <End Role="Kunden" Type="AvonDbModel.Kunden" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hefte_x_Kunden" Type="AvonDbModel.Hefte_x_Kunden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunden">
+              <PropertyRef Name="KundenId" />
+            </Principal>
+            <Dependent Role="Hefte_x_Kunden">
+              <PropertyRef Name="KundenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Serien_Serien">
+          <End Role="Serien" Type="AvonDbModel.Serien" Multiplicity="0..1" />
+          <End Role="Serien1" Type="AvonDbModel.Serien" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Serien">
+              <PropertyRef Name="SerienId" />
+            </Principal>
+            <Dependent Role="Serien1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Kategorien_x_Artikel">
+          <End Role="Artikel" Type="AvonDbModel.Artikel" Multiplicity="*" />
+          <End Role="Kategorien" Type="AvonDbModel.Kategorien" Multiplicity="*" />
+        </Association>
+        <Association Name="Markierungen_x_Artikel">
+          <End Role="Artikel" Type="AvonDbModel.Artikel" Multiplicity="*" />
+          <End Role="Markierungen" Type="AvonDbModel.Markierungen" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AvonDbModelStoreContainer" CdmEntityContainer="AvDBaseEntities">
+          <EntitySetMapping Name="Artikels">
+            <EntityTypeMapping TypeName="AvonDbModel.Artikel">
+              <MappingFragment StoreEntitySet="Artikel">
+                <ScalarProperty Name="ArtikelId" ColumnName="ArtikelId" />
+                <ScalarProperty Name="Artikelname" ColumnName="Artikelname" />
+                <ScalarProperty Name="Artikelbeschreibung" ColumnName="Artikelbeschreibung" />
+                <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
+                <ScalarProperty Name="Inhalt" ColumnName="Inhalt" />
+                <ScalarProperty Name="Einzelpreis" ColumnName="Einzelpreis" />
+                <ScalarProperty Name="Lagerbestand" ColumnName="Lagerbestand" />
+                <ScalarProperty Name="SerienId" ColumnName="SerienId" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtikelVariantens">
+            <EntityTypeMapping TypeName="AvonDbModel.ArtikelVarianten">
+              <MappingFragment StoreEntitySet="ArtikelVarianten">
+                <ScalarProperty Name="VariantenId" ColumnName="VariantenId" />
+                <ScalarProperty Name="ArtikelId" ColumnName="ArtikelId" />
+                <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
+                <ScalarProperty Name="Variante" ColumnName="Variante" />
+                <ScalarProperty Name="Lagerbestand" ColumnName="Lagerbestand" />
+                <ScalarProperty Name="Einzelpreis" ColumnName="Einzelpreis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bestelldetails">
+            <EntityTypeMapping TypeName="AvonDbModel.Bestelldetail">
+              <MappingFragment StoreEntitySet="Bestelldetails">
+                <ScalarProperty Name="DetailId" ColumnName="DetailId" />
+                <ScalarProperty Name="BestellId" ColumnName="BestellId" />
+                <ScalarProperty Name="Campagne" ColumnName="Campagne" />
+                <ScalarProperty Name="Jahr" ColumnName="Jahr" />
+                <ScalarProperty Name="Seite" ColumnName="Seite" />
+                <ScalarProperty Name="ArtikelNr" ColumnName="ArtikelNr" />
+                <ScalarProperty Name="Menge" ColumnName="Menge" />
+                <ScalarProperty Name="Artikelbeschr" ColumnName="Artikelbeschr" />
+                <ScalarProperty Name="FGD" ColumnName="FGD" />
+                <ScalarProperty Name="Einzelpreis" ColumnName="Einzelpreis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bestellstatus">
+            <EntityTypeMapping TypeName="AvonDbModel.Bestellstatus">
+              <MappingFragment StoreEntitySet="Bestellstatus">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bestellungs">
+            <EntityTypeMapping TypeName="AvonDbModel.Bestellung">
+              <MappingFragment StoreEntitySet="Bestellung">
+                <ScalarProperty Name="BestellId" ColumnName="BestellId" />
+                <ScalarProperty Name="KundenId" ColumnName="KundenId" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Loeschvormerkung" ColumnName="Loeschvormerkung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entitaetens">
+            <EntityTypeMapping TypeName="AvonDbModel.Entitaeten">
+              <MappingFragment StoreEntitySet="Entitaeten">
+                <ScalarProperty Name="EntitaetId" ColumnName="EntitaetId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Heftes">
+            <EntityTypeMapping TypeName="AvonDbModel.Hefte">
+              <MappingFragment StoreEntitySet="Hefte">
+                <ScalarProperty Name="HeftId" ColumnName="HeftId" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+                <ScalarProperty Name="Jahr" ColumnName="Jahr" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hefte_x_Kunden">
+            <EntityTypeMapping TypeName="AvonDbModel.Hefte_x_Kunden">
+              <MappingFragment StoreEntitySet="Hefte_x_Kunden">
+                <ScalarProperty Name="HeftId" ColumnName="HeftId" />
+                <ScalarProperty Name="KundenId" ColumnName="KundenId" />
+                <ScalarProperty Name="Erhalten" ColumnName="Erhalten" />
+                <ScalarProperty Name="HatBestellt" ColumnName="HatBestellt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategoriens">
+            <EntityTypeMapping TypeName="AvonDbModel.Kategorien">
+              <MappingFragment StoreEntitySet="Kategorien">
+                <ScalarProperty Name="KategorieId" ColumnName="KategorieId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="Reihenfolge" ColumnName="Reihenfolge" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kundens">
+            <EntityTypeMapping TypeName="AvonDbModel.Kunden">
+              <MappingFragment StoreEntitySet="Kunden">
+                <ScalarProperty Name="KundenId" ColumnName="KundenId" />
+                <ScalarProperty Name="Vorname" ColumnName="Vorname" />
+                <ScalarProperty Name="Nachname" ColumnName="Nachname" />
+                <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+                <ScalarProperty Name="Ort" ColumnName="Ort" />
+                <ScalarProperty Name="Postleitzahl" ColumnName="Postleitzahl" />
+                <ScalarProperty Name="EmailAdresse" ColumnName="EmailAdresse" />
+                <ScalarProperty Name="TelefonPrivat" ColumnName="TelefonPrivat" />
+                <ScalarProperty Name="TelefonBeruflich" ColumnName="TelefonBeruflich" />
+                <ScalarProperty Name="MobilesTelefon" ColumnName="MobilesTelefon" />
+                <ScalarProperty Name="Faxnummer" ColumnName="Faxnummer" />
+                <ScalarProperty Name="Geburtsdatum" ColumnName="Geburtsdatum" />
+                <ScalarProperty Name="Anmerkungen" ColumnName="Anmerkungen" />
+                <ScalarProperty Name="BekommtHeft" ColumnName="BekommtHeft" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+                <ScalarProperty Name="Inaktiv" ColumnName="Inaktiv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Markierungens">
+            <EntityTypeMapping TypeName="AvonDbModel.Markierungen">
+              <MappingFragment StoreEntitySet="Markierungen">
+                <ScalarProperty Name="MarkierungId" ColumnName="MarkierungId" />
+                <ScalarProperty Name="EntitaetId" ColumnName="EntitaetId" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="FarbeARGB" ColumnName="FarbeARGB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seriens">
+            <EntityTypeMapping TypeName="AvonDbModel.Serien">
+              <MappingFragment StoreEntitySet="Serien">
+                <ScalarProperty Name="SerienId" ColumnName="SerienId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="Reihenfolge" ColumnName="Reihenfolge" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Kategorien_x_Artikel" TypeName="AvonDbModel.Kategorien_x_Artikel" StoreEntitySet="Kategorien_x_Artikel">
+            <EndProperty Name="Artikel">
+              <ScalarProperty Name="ArtikelId" ColumnName="ArtikelId" />
+            </EndProperty>
+            <EndProperty Name="Kategorien">
+              <ScalarProperty Name="KategorieId" ColumnName="KategorieId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Markierungen_x_Artikel" TypeName="AvonDbModel.Markierungen_x_Artikel" StoreEntitySet="Markierungen_x_Artikel">
+            <EndProperty Name="Artikel">
+              <ScalarProperty Name="ArtikelId" ColumnName="ArtikelId" />
+            </EndProperty>
+            <EndProperty Name="Markierungen">
+              <ScalarProperty Name="MarkierungId" ColumnName="MarkierungId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
