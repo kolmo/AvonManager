@@ -88,7 +88,7 @@ namespace AvonManager.Desktop.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Durch Löschen einer Markierung werden alle Verknüpfungen mit Artikel entfernt..
+        ///   Looks up a localized string similar to Durch Löschen einer MarkierungDto werden alle Verknüpfungen mit Artikel entfernt..
         /// </summary>
         internal static string DeleteMarkierung {
             get {

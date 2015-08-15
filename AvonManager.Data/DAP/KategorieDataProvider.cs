@@ -15,9 +15,9 @@ namespace AvonManager.Data
         {
             _mapper = mapper;
         }
-        public Task<List<Kategorie>> ListAllKategorien()
+        public Task<List<KategorieDto>> ListAllKategorien()
         {
-            Task<List<BusinessObjects.Kategorie>> task = new Task<List<BusinessObjects.Kategorie>>(() =>
+            Task<List<BusinessObjects.KategorieDto>> task = new Task<List<BusinessObjects.KategorieDto>>(() =>
            {
                using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
                {
@@ -25,10 +25,10 @@ namespace AvonManager.Data
                                orderby b.Name
                                select b;
 
-                   List<BusinessObjects.Kategorie> list = new List<BusinessObjects.Kategorie>();
+                   List<BusinessObjects.KategorieDto> list = new List<BusinessObjects.KategorieDto>();
                    foreach (AvonManager.Data.Kategorien kat in query.ToList())
                    {
-                       list.Add(_mapper.Map<BusinessObjects.Kategorie>(kat));
+                       list.Add(_mapper.Map<BusinessObjects.KategorieDto>(kat));
                    }
                    return list;
                };
@@ -37,7 +37,7 @@ namespace AvonManager.Data
             return task;
         }
 
-        public void SaveKategorie(Kategorie kategorie)
+        public void SaveKategorie(KategorieDto kategorie)
         {
             using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
             {
@@ -47,13 +47,13 @@ namespace AvonManager.Data
             }
         }
 
-        public void DeleteKategorie(Kategorie kategorie)
+        public void DeleteKategorie(KategorieDto kategorie)
         {
             ;
         }
 
 
-        public int AddKategorie(Kategorie kategorie)
+        public int AddKategorie(KategorieDto kategorie)
         {
             using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
             {

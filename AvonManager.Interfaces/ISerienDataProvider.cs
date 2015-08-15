@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace AvonManager.Interfaces
 {
-    public interface IMarkierungenDataProvider
+    public interface ISerienDataProvider
     {
-        Task<List<MarkierungDto>> ListMarkierungenByArtikel(int artikelId);
-        Task<List<MarkierungDto>> ListAllMarkierungen();
+        Task<List<SerieDto>> ListAllSerien();
     }
 }

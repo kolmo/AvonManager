@@ -18,6 +18,7 @@ namespace AvonManager.ArtikelModule
         public void Initialize()
         {
             regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.ArtikelPage));
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.KategoriePage));
         }
     }
 }

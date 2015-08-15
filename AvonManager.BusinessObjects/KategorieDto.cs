@@ -5,14 +5,13 @@ using System.Text;
 
 namespace AvonManager.BusinessObjects
 {
-    public class Serie
+    public class KategorieDto
     {
-        public int SerienId { get; set; }
+        public int KategorieId { get; set; }
         public string Name { get; set; }
-        public int ParentId { get; set; }
-        public int Reihenfolge { get; set; }
+        public int? ParentId { get; set; }
+        public int? Reihenfolge { get; set; }
         public string Bemerkung { get; set; }
         public byte[] Logo { get; set; }
-
     }
 }

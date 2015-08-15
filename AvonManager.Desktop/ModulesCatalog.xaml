@@ -8,8 +8,8 @@
     <Modularity:ModuleInfo 
         ModuleName="ArtikelModule" 
        ModuleType="AvonManager.ArtikelModule.ArtikelModule, AvonManager.ArtikelModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
+    <!--<Modularity:ModuleInfo 
         ModuleName="KategorieModule" 
-        ModuleType="AvonManager.KategorieModule.KategorieModule, AvonManager.KategorieModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+        ModuleType="AvonManager.KategorieModule.KategorieModule, AvonManager.KategorieModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />-->
 
 </Modularity:ModuleCatalog>

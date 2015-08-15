@@ -43,17 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artikel.cs" />
+    <Compile Include="ArtikelMarkierungenDto.cs" />
     <Compile Include="ArtikelVariante.cs" />
     <Compile Include="Bestelldetail.cs" />
     <Compile Include="Bestellstatus.cs" />
     <Compile Include="Bestellung.cs" />
     <Compile Include="Entitaet.cs" />
     <Compile Include="Heft.cs" />
-    <Compile Include="Kategorie.cs" />
+    <Compile Include="KategorieDto.cs" />
     <Compile Include="Kunde.cs" />
-    <Compile Include="Markierung.cs" />
+    <Compile Include="MarkierungDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serie.cs" />
+    <Compile Include="SerieDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,9 +9,9 @@ namespace AvonManager.Interfaces
 {
     public interface IKategorieProvider
     {
-        Task<List<Kategorie>> ListAllKategorien();
-        void SaveKategorie(Kategorie kategorie);
-        int AddKategorie(Kategorie kategorie);
-        void DeleteKategorie(Kategorie kategorie);
+        Task<List<KategorieDto>> ListAllKategorien();
+        void SaveKategorie(KategorieDto kategorie);
+        int AddKategorie(KategorieDto kategorie);
+        void DeleteKategorie(KategorieDto kategorie);
     }
 }

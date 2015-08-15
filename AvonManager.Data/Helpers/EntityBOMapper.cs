@@ -71,9 +71,9 @@ namespace AvonManager.Data.Helpers
                 };
                 return target as Target;
             }
-            else if (src is BO.Kategorie)
+            else if (src is BO.KategorieDto)
             {
-                BO.Kategorie source = src as BO.Kategorie;
+                BO.KategorieDto source = src as BO.KategorieDto;
                 Kategorien target = new Kategorien()
                 {
                     KategorieId = source.KategorieId,
@@ -88,7 +88,7 @@ namespace AvonManager.Data.Helpers
             else if (src is Kategorien)
             {
                 Kategorien source = src as Kategorien;
-                BO.Kategorie target = new BO.Kategorie()
+                BO.KategorieDto target = new BO.KategorieDto()
                 {
                     KategorieId = source.KategorieId,
                     Name = source.Name,
@@ -99,9 +99,9 @@ namespace AvonManager.Data.Helpers
                 };
                 return target as Target;
             }
-            else if (src is BO.Markierung)
+            else if (src is BO.MarkierungDto)
             {
-                BO.Markierung source = src as BO.Markierung;
+                BO.MarkierungDto source = src as BO.MarkierungDto;
                 Markierungen target = new Markierungen()
                 {
                     MarkierungId = source.MarkierungId,
@@ -115,13 +115,35 @@ namespace AvonManager.Data.Helpers
             else if (src is Markierungen)
             {
                 Markierungen source = src as Markierungen;
-                BO.Markierung target = new BO.Markierung()
+                BO.MarkierungDto target = new BO.MarkierungDto()
                 {
                     MarkierungId = source.MarkierungId,
                     EntitaetId = source.EntitaetId,
                     Titel = source.Titel,
                     FarbeARGB = source.FarbeARGB,
                     Bemerkung = source.Bemerkung
+                };
+                return target as Target;
+            }
+            else if (src is Markierungen_x_Artikel)
+            {
+                Markierungen_x_Artikel source = src as Markierungen_x_Artikel;
+                BO.ArtikelMarkierungenDto target = new BusinessObjects.ArtikelMarkierungenDto()
+                {
+                    ArtikelId = source.ArtikelId,
+                    MarkierungId = source.MarkierungId
+                };
+                return target as Target;
+            }
+            else if (src is Serien)
+            {
+                Serien source = src as Serien;
+                BO.SerieDto target = new BO.SerieDto
+                {
+                    Bemerkung= source.Bemerkung,
+                    Logo=source.Logo?.ToArray(),
+                    Name=source.Name,
+                    SerienId=source.SerienId
                 };
                 return target as Target;
             }

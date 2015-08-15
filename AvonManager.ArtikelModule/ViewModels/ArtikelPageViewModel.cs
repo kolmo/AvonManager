@@ -1,18 +1,14 @@
-﻿using AvonManager.BusinessObjects;
+﻿using AvonManager.ArtikelModule.Interfaces;
+using AvonManager.BusinessObjects;
 using AvonManager.Interfaces;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AvonManager.ArtikelModule.ViewModels
@@ -25,12 +21,24 @@ namespace AvonManager.ArtikelModule.ViewModels
     /// </summary>
     public class ArtikelPageViewModel : BaseViewModel
     {
+        int _pageSize = 5;
+        int _page = 0;
         IArtikelDataProvider _dataProvider;
         IMarkierungenDataProvider _markierungenDataProvider;
-        public ArtikelPageViewModel(IArtikelDataProvider dataProvider, IMarkierungenDataProvider markierungenDataProvider)
+        IKategorieProvider _kategorienDataProvider;
+        ISerienDataProvider _seriendataProvider;
+        public ArtikelPageViewModel(IArtikelDataProvider dataProvider,
+            IMarkierungenDataProvider markierungenDataProvider,
+            IKategorieProvider kategorienDataProvider,
+            ISerienDataProvider seriendataProvider) : this()
         {
             _dataProvider = dataProvider;
             _markierungenDataProvider = markierungenDataProvider;
+            _kategorienDataProvider = kategorienDataProvider;
+            _seriendataProvider = seriendataProvider;
+            KategorienFilter = new ObservableCollection<IFilterEntry>();
+            MarkierungenFilter = new ObservableCollection<IFilterEntry>();
+            SerienFilter = new ObservableCollection<IFilterEntry>();
         }
         #region Props
 
@@ -75,16 +83,33 @@ namespace AvonManager.ArtikelModule.ViewModels
         #endregion
         public async void LoadData()
         {
-            var result = await _dataProvider.ListAllArtikel();
-            foreach (Artikel artikel in result)
+            var kategorien = await _kategorienDataProvider.ListAllKategorien();
+            foreach (KategorieDto item in kategorien)
             {
-                ArtikelViewModel vm = new ArtikelViewModel(artikel);
-                vm.Markierungen = await _markierungenDataProvider.ListMarkierungenByArtikel(vm.ArtikelId);
-                ArtikelListe.Add(vm);
+                IFilterEntry vm = new Common.KategorieFilterEntry(item);
+                KategorienFilter.Add(vm);
             }
+            var markierungen = await _markierungenDataProvider.ListAllMarkierungen();
+            MarkierungenFilter.Clear();
+            MarkierungenFilter.Add(new Common.AlleMarkierungenFilterEntry());
+            foreach (var item in markierungen)
+            {
+                IFilterEntry vm = new Common.MarkierungFilterEntry(item);
+                MarkierungenFilter.Add(vm);
+            }
+            SelectedMarkierungFilterEntry = MarkierungenFilter[0];
+            var serien = await _seriendataProvider.ListAllSerien();
+            SerienFilter.Clear();
+            SerienFilter.Add(new Common.AlleSerienFilterEntry());
+            foreach (var item in serien.OrderBy(x => x.Name))
+            {
+                IFilterEntry vm = new Common.SerieFilterEntry(item);
+                SerienFilter.Add(vm);
+            }
+            SelectedSerienFilterEntry = SerienFilter[0];
         }
         private List<DelegateCommand<object>> commands = new List<DelegateCommand<object>>();
-        /*
+
         #region Fields
         private const int STD_WAIT = 2000;
         //private ClipboardManager _clipboardMgr;
@@ -94,10 +119,8 @@ namespace AvonManager.ArtikelModule.ViewModels
         private List<int> _markierungenIds;
         private string _suchString;
         private ArtikelVariante _selectedVariante;
-        private Artikel _selectedArtikel;
-        private Serie _selectedSerienDec;
+        private SerieDto _selectedSerienDec;
         private ICommand _reloadData;
-        private bool _artikelNeedsRefresh = false;
         private System.Threading.Timer _executeFilterTimer;
         #endregion
 
@@ -179,7 +202,10 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
-        public IEnumerable<Serie> SortedSerienList { get { return Context.Seriens.ToList(); } }
+        /// <summary>
+        /// Todo Context fixen
+        /// </summary>
+        public ObservableCollection<IFilterEntry> SerienFilter { get; private set; }
         /// <summary>
         /// Gets or sets the KatIds.
         /// </summary>
@@ -193,27 +219,26 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// Gets or sets the KategorienFilter.
         /// </summary>
         /// <value>
-        /// The KategorienFilter.
+        /// Todo The KategorienFilter.
         /// </value>
-        public IEnumerable<Kategorie> KategorienFilter { get { return Context.Kategoriens.Local; } }
-        public IEnumerable<Kategorie> SortedKategorienListe { get { return Context.Kategoriens.OrderByDescending(x => x.IsAssignedToArtikel).ThenBy(x => x.Name); } }
-        public IEnumerable<Kategorie> AssignedKategorienListe
-        {
-            get
-            {
-                return Context.Kategoriens.OrderBy(x => x.Name).Where(x => x.IsAssignedToArtikel).ToList();
-            }
-        }
-        public IEnumerable<Markierung> MarkierungenFilter { get { return Context.Markierungens.Local; } }
-        public IEnumerable<Markierung> SortedMarkierungenListe { get { return Context.Markierungens.OrderByDescending(x => x.IsAssignedToArtikel).ThenBy(x => x.Titel); } }
-        public IEnumerable<Markierung> AssignedMarkierungenliste
-        {
-            get
-            {
-                return Context.Markierungens.OrderBy(x => x.Titel).Where(x => x.IsAssignedToArtikel).ToList(); ;
-            }
-        }
-        public string QueryName { get { return "GetArtikelbySerienAndKategorien"; } }
+        public ObservableCollection<IFilterEntry> KategorienFilter { get; private set; }
+        //public IEnumerable<Kategorie> SortedKategorienListe { get { return Context.Kategoriens.OrderByDescending(x => x.IsAssignedToArtikel).ThenBy(x => x.Name); } }
+        //public IEnumerable<Kategorie> AssignedKategorienListe
+        //{
+        //    get
+        //    {
+        //        return Context.Kategoriens.OrderBy(x => x.Name).Where(x => x.IsAssignedToArtikel).ToList();
+        //    }
+        //}
+        public ObservableCollection<IFilterEntry> MarkierungenFilter { get; private set; }
+        //public IEnumerable<MarkierungDto> SortedMarkierungenListe { get { return Context.Markierungens.OrderByDescending(x => x.IsAssignedToArtikel).ThenBy(x => x.Titel); } }
+        //public IEnumerable<MarkierungDto> AssignedMarkierungenliste
+        //{
+        //    get
+        //    {
+        //        return Context.Markierungens.OrderBy(x => x.Titel).Where(x => x.IsAssignedToArtikel).ToList(); ;
+        //    }
+        //}
         public int LoadSize { get { return 100; } }
         /// <summary>
         /// Gets or sets the SuchString.
@@ -229,6 +254,47 @@ namespace AvonManager.ArtikelModule.ViewModels
                 if (_suchString != value)
                 {
                     _suchString = value;
+                    OnPropertyChanged(nameof(SuchString));
+                }
+            }
+        }
+
+        private IFilterEntry _SelectedSerienFilter;
+        /// <summary>
+        /// Gets or sets the SelectedSerienFilterEntry.
+        /// </summary>
+        /// <value>
+        /// The SelectedSerienFilterEntry.
+        /// </value>
+        public IFilterEntry SelectedSerienFilterEntry
+        {
+            get { return _SelectedSerienFilter; }
+            set
+            {
+                if (_SelectedSerienFilter != value)
+                {
+                    _SelectedSerienFilter = value;
+                    OnPropertyChanged(nameof(SelectedSerienFilterEntry));
+                }
+            }
+        }
+
+        private IFilterEntry _selectedMarkierungFilterEntry;
+        /// <summary>
+        /// Gets or sets the SelectedMarkierungFilterEntry.
+        /// </summary>
+        /// <value>
+        /// The SelectedMarkierungFilterEntry.
+        /// </value>
+        public IFilterEntry SelectedMarkierungFilterEntry
+        {
+            get { return _selectedMarkierungFilterEntry; }
+            set
+            {
+                if (_selectedMarkierungFilterEntry != value)
+                {
+                    _selectedMarkierungFilterEntry = value;
+                    OnPropertyChanged(nameof(SelectedMarkierungFilterEntry));
                 }
             }
         }
@@ -270,6 +336,9 @@ namespace AvonManager.ArtikelModule.ViewModels
         public DelegateCommand<object> SubmitChanges { get; private set; }
         public DelegateCommand<object> RejectChanges { get; private set; }
         public DelegateCommand<object> SendArtikelOrVariantToBestellung { get; private set; }
+        public DelegateCommand SearchArticlesCommand { get; private set; }
+        public DelegateCommand ResetFiltersCommand { get; private set; }
+        public DelegateCommand LoadMoreArticlesCommand { get; private set; }
         public ICommand ReloadData
         {
             get { return _reloadData; }
@@ -307,36 +376,36 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// <value>
         /// The SelectedArtikel.
         /// </value>
-        public Artikel SelectedArtikel
-        {
-            get { return _selectedArtikel; }
-            set
-            {
-                if (_selectedArtikel != value)
-                {
-                    _selectedArtikel = value;
-                    OnPropertyChanged(() => this.HasVariants);
-                    if (_selectedArtikel != null)
-                    {
-                        if (_selectedArtikel.Varianten.Count > 0)
-                        {
-                            SelectedVariante = _selectedArtikel.Varianten.ElementAt(0);
-                        }
-                    }
-                    PrepareKategorien();
-                    PrepareMarkierungen();
-                    CheckCommandsState();
-                    OnPropertyChanged(() => SelectedArtikel);
-                }
-            }
-        }
+        //public Artikel SelectedArtikel
+        //{
+        //    get { return _selectedArtikel; }
+        //    set
+        //    {
+        //        if (_selectedArtikel != value)
+        //        {
+        //            _selectedArtikel = value;
+        //            OnPropertyChanged(() => this.HasVariants);
+        //            if (_selectedArtikel != null)
+        //            {
+        //                if (_selectedArtikel.Varianten.Count > 0)
+        //                {
+        //                    SelectedVariante = _selectedArtikel.Varianten.ElementAt(0);
+        //                }
+        //            }
+        //            PrepareKategorien();
+        //            PrepareMarkierungen();
+        //            CheckCommandsState();
+        //            OnPropertyChanged(() => SelectedArtikel);
+        //        }
+        //    }
+        //}
         /// <summary>
         /// Gets or sets the SelectedSerienDec.
         /// </summary>
         /// <value>
         /// The SelectedSerienDEc.
         /// </value>
-        public Serie SelectedSerienDec
+        public SerieDto SelectedSerienDec
         {
             get { return _selectedSerienDec; }
             set
@@ -353,10 +422,10 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// <value>
         /// The HasVariants.
         /// </value>
-        public bool HasVariants
-        {
-            get { return SelectedArtikel != null ? SelectedArtikel.Varianten.Count > 0 : false; }
-        }
+        //public bool HasVariants
+        //{
+        //    get { return SelectedArtikel != null ? SelectedArtikel.Varianten.Count > 0 : false; }
+        //}
         #region Commands
         public ICommand StartEditVarianteCommand { get; set; }
         public ICommand CancelArtikelEdit { get; set; }
@@ -367,14 +436,17 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the ArtikelViewModel class.
         /// </summary>
-        public ArtikelViewModel()
+        public ArtikelPageViewModel()
         {
-            AddVariante = new DelegateCommand<object>(AddVarianteAction, CanAddVariante);
-            RemoveVariante = new DelegateCommand<object>(RemoveVarianteAction, CanRemoveVariante);
+            //AddVariante = new DelegateCommand<object>(AddVarianteAction, CanAddVariante);
+            //RemoveVariante = new DelegateCommand<object>(RemoveVarianteAction, CanRemoveVariante);
             FilterSetzen = new DelegateCommand<object>(FilterSetzenAction);
             FilterReset = new DelegateCommand<object>(FilterResetAction);
-            SendArtikelOrVariantToBestellung = new DelegateCommand<object>(SendArtikelOrVariantToBestellungAction, x => { return BestellungIsEditing; });
-            AddArtikelToClipboard = new DelegateCommand<object>(AddArtikelToClipboardAction, x => { return SelectedArtikel != null; });
+            SearchArticlesCommand = new DelegateCommand(SearchArticlesAction);
+            ResetFiltersCommand = new DelegateCommand(ResetFilterAction);
+            LoadMoreArticlesCommand = new DelegateCommand(LoadMoreArticlesAction);
+            //SendArtikelOrVariantToBestellung = new DelegateCommand<object>(SendArtikelOrVariantToBestellungAction, x => { return BestellungIsEditing; });
+            //AddArtikelToClipboard = new DelegateCommand<object>(AddArtikelToClipboardAction, x => { return SelectedArtikel != null; });
             AddCommand(AddVariante);
             AddCommand(RemoveVariante);
             AddCommand(SubmitChanges);
@@ -400,7 +472,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             //Context.Load(Context.GetKategorienQuery(), LoadKatgorienCallback, null);
             //Context.Load(Context.GetSerienQuery(), LoadSerienCallback, null);
             LoadMarkierungen();
-            ArtikelListe = new ObservableCollection<Artikel>(Context.GetArtikelPaged(1, 20));
+            //ArtikelListe = new ObservableCollection<Artikel>(Context.GetArtikelPaged(1, 20));
         }
         public void ResetSuchfeld()
         {
@@ -410,12 +482,12 @@ namespace AvonManager.ArtikelModule.ViewModels
         #endregion Public methods
         #region Private helper methods
         #region Callbacks/Event handler
-        private void OnBestellungChanged(BestellungEditMessage payload)
-        {
-            BestellungIsEditing = payload.IsEditing;
-            SendArtikelOrVariantToBestellung.RaiseCanExecuteChanged();
-        }
-        private void OnMarkierungenChanged(PubSubEvent<Markierung> msg)
+        //private void OnBestellungChanged(BestellungEditMessage payload)
+        //{
+        //    BestellungIsEditing = payload.IsEditing;
+        //    SendArtikelOrVariantToBestellung.RaiseCanExecuteChanged();
+        //}
+        private void OnMarkierungenChanged(PubSubEvent<MarkierungDto> msg)
         {
             //Context.Markierungens.Clear();
             //Context.Load(Context.GetMarkierungenByEntityTypeQuery(1), LoadBehavior.RefreshCurrent, LoadMarkierungenCallback, null);
@@ -425,20 +497,20 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             if (e.PropertyName == "IsSelected4Filter")
             {
-                OnPropertyChanged(() => this.SortedSerienList);
+                //OnPropertyChanged(() => this.SortedSerienList);
                 CheckedSerie = sender;
             }
         }
         void kategorie_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Kategorie dec = sender as Kategorie;
-            if (SelectedArtikel == null || dec == null)
-            {
-                return;
-            }
+            KategorieDto dec = sender as KategorieDto;
+            //if (SelectedArtikel == null || dec == null)
+            //{
+            //    return;
+            //}
             if (e.PropertyName == "IsSelected")
             {
-                OnPropertyChanged(() => this.KategorienFilter);
+                //OnPropertyChanged(() => this.KategorienFilter);
                 CheckedKategorie = sender;
             }
             else if (e.PropertyName == "IsAssignedToArtikel")
@@ -459,12 +531,12 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
         void markierung_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Markierung dec = sender as Markierung;
-            if (SelectedArtikel == null || dec == null)
-                return;
+            MarkierungDto dec = sender as MarkierungDto;
+            //if (SelectedArtikel == null || dec == null)
+            //    return;
             if (e.PropertyName == "IsSelected")
             {
-                OnPropertyChanged(() => this.MarkierungenFilter);
+                //OnPropertyChanged(() => this.MarkierungenFilter);
                 CheckedMarkierung = sender;
             }
             else if (e.PropertyName == "IsAssignedToArtikel")
@@ -497,80 +569,98 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// Setze den Kontext auf NULL damit er neu geladen werden kann. Die Serien haben sich geändert.
         /// </summary>
         /// <param name="msg">The MSG.</param>
-        private void PrepareKategorien()
+        //private void PrepareKategorien()
+        //{
+        //    if (SelectedArtikel == null)
+        //        return;
+        //    foreach (Kategorien item in Context.Kategoriens)
+        //    {
+        //        item.SetIsAssigned(SelectedArtikel.Kategorien.FirstOrDefault(x => x.KategorieId == item.KategorieId) != null);
+        //    }
+        //    OnPropertyChanged(() => this.SortedKategorienListe);
+        //    OnPropertyChanged(() => this.AssignedKategorienListe);
+        //}
+        //private void PrepareMarkierungen()
+        //{
+        //    if (SelectedArtikel == null)
+        //        return;
+        //    foreach (Markierungen item in Context.Markierungens)
+        //    {
+        //        item.SetIsAssigned(SelectedArtikel.Markierungen.FirstOrDefault(x => x.MarkierungId == item.MarkierungId) != null);
+        //    }
+        //    OnPropertyChanged(() => this.SortedMarkierungenListe);
+        //    OnPropertyChanged(() => this.AssignedMarkierungenliste);
+        //}
+        //private void AddVarianteAction(object obj)
+        //{
+        //    if (SelectedArtikel != null && SelectedArtikel.Varianten != null)
+        //    {
+        //        ArtikelVariante av = new ArtikelVariante();
+        //        av.ArtikelNr = Guid.NewGuid().ToString().Substring(0, 6);
+        //        SelectedArtikel.AddVariante(av);
+        //        SelectedVariante = av;
+        //        if (StartEditVarianteCommand != null)
+        //        {
+        //            StartEditVarianteCommand.Execute(SelectedVariante);
+        //        }
+        //    }
+        //}
+        //private void RemoveVarianteAction(object obj)
+        //{
+        //    if (SelectedArtikel != null && SelectedArtikel.Varianten != null && SelectedVariante != null)
+        //    {
+        //        ArtikelVariante av = SelectedVariante;
+        //        SelectedVariante = null;
+        //        SelectedArtikel.RemoveVariante(av);
+        //    }
+        //}
+        private void SearchArticlesAction()
         {
-            if (SelectedArtikel == null)
-                return;
-            foreach (Kategorien item in Context.Kategoriens)
+            _page = 1;
+            ArtikelListe.Clear();
+            GatherFilterCriteria();
+            LoadArticlesPage();
+        }
+        private async void LoadArticlesPage()
+        {
+            var result = await _dataProvider.SearchArticles(_katIds, _serienIds, _markierungenIds, MarkierungInverted, SuchString, _pageSize, _page);
+            AddArticlesToList(result);
+        }
+        private async void AddArticlesToList(List<Artikel> list)
+        {
+            foreach (Artikel artikel in list)
             {
-                item.SetIsAssigned(SelectedArtikel.Kategorien.FirstOrDefault(x => x.KategorieId == item.KategorieId) != null);
-            }
-            OnPropertyChanged(() => this.SortedKategorienListe);
-            OnPropertyChanged(() => this.AssignedKategorienListe);
-        }
-        private void PrepareMarkierungen()
-        {
-            if (SelectedArtikel == null)
-                return;
-            foreach (Markierungen item in Context.Markierungens)
-            {
-                item.SetIsAssigned(SelectedArtikel.Markierungen.FirstOrDefault(x => x.MarkierungId == item.MarkierungId) != null);
-            }
-            OnPropertyChanged(() => this.SortedMarkierungenListe);
-            OnPropertyChanged(() => this.AssignedMarkierungenliste);
-        }
-        private void AddVarianteAction(object obj)
-        {
-            if (SelectedArtikel != null && SelectedArtikel.Varianten != null)
-            {
-                ArtikelVariante av = new ArtikelVariante();
-                av.ArtikelNr = Guid.NewGuid().ToString().Substring(0, 6);
-                SelectedArtikel.AddVariante(av);
-                SelectedVariante = av;
-                if (StartEditVarianteCommand!= null)
-                {
-                    StartEditVarianteCommand.Execute(SelectedVariante);
-                }
+                ArtikelViewModel vm = new ArtikelViewModel(artikel);
+                vm.Markierungen = await _markierungenDataProvider.ListMarkierungenByArtikel(vm.ArtikelId);
+                ArtikelListe.Add(vm);
             }
         }
-        private void RemoveVarianteAction(object obj)
+        private void ResetFilterAction()
         {
-            if (SelectedArtikel != null && SelectedArtikel.Varianten != null && SelectedVariante != null)
-            {
-                ArtikelVariante av = SelectedVariante;
-                SelectedVariante = null;
-                SelectedArtikel.RemoveVariante(av);
-            }
-        }
-        protected override void FilterSetzenAction(object obj)
-        {
-            _katIds = KategorienFilter.Where(x => x.IsSelected).Select(x => x.KategorieId).ToList();
-            _serienIds = SortedSerienList.Where(x => x.IsSelected4Filter).Select(x => x.SerienId).ToList();
-            _markierungenIds = MarkierungenFilter.Where(x => x.IsSelected).Select(x => x.MarkierungId).ToList();
-            RaiseFilterChanged();
-        }
-        private void RaiseFilterChanged()
-        {
-            OnPropertyChanged(() => KatIds);
-            OnPropertyChanged(() => SerienIds);
-            OnPropertyChanged(() => MarkierungenIds);
-            OnPropertyChanged(() => SuchString);
-            OnPropertyChanged(() => SucheArtikelNr);
-            OnPropertyChanged(() => MarkierungInverted);
-        }
-        protected override void FilterResetAction(object obj)
-        {
+            SerienFilter.ToList().ForEach(x => x.IsSelected = false);
             KategorienFilter.ToList().ForEach(x => x.IsSelected = false);
-            SortedSerienList.ToList().ForEach(x => x.IsSelected4Filter = false);
             MarkierungenFilter.ToList().ForEach(x => x.IsSelected = false);
-            MarkierungInverted = false;
-            _katIds = null;
-            _serienIds = null;
-            _markierungenIds = null;
-            _suchString = string.Empty;
-            _sucheArtikelNr = string.Empty;
-            RaiseFilterChanged();
+            SuchString = null;
+            GatherFilterCriteria();
         }
+        private void LoadMoreArticlesAction()
+        {
+            _page++;
+            LoadArticlesPage();
+        }
+        //protected override void FilterResetAction(object obj)
+        //{
+        //    KategorienFilter.ToList().ForEach(x => x.IsSelected = false);
+        //    SortedSerienList.ToList().ForEach(x => x.IsSelected4Filter = false);
+        //    MarkierungenFilter.ToList().ForEach(x => x.IsSelected = false);
+        //    MarkierungInverted = false;
+        //    _katIds = null;
+        //    _serienIds = null;
+        //    _markierungenIds = null;
+        //    _suchString = string.Empty;
+        //    _sucheArtikelNr = string.Empty;
+        //    RaiseFilterChanged();
+        //}
         private bool CanAddVariante(object obj)
         {
             return true;
@@ -579,48 +669,54 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             return SelectedVariante != null;
         }
-        private void AddArtikelToClipboardAction(object obj)
-        {
-            if (SelectedArtikel != null)
-            {
-                _clipboardMgr.AddObjectToClipboard(SelectedArtikel);
-            }
-        }
+        //private void AddArtikelToClipboardAction(object obj)
+        //{
+        //    if (SelectedArtikel != null)
+        //    {
+        //        _clipboardMgr.AddObjectToClipboard(SelectedArtikel);
+        //    }
+        //}
         /// <summary>
         /// Gets the serien children recursively.
         /// </summary>
         /// <param name="serieBase">The serie base.</param>
         /// <param name="children">The children.</param>
         /// <returns></returns>
-        private void GetSerienChildrenRecursively(Serien root, Serien mother)
-        {
-            if (mother == null)
-            {
-                return;
-            }
-            var children = Context.Seriens.Where(x => x.Parent.HasValue && x.Parent.Value == mother.SerienId && !root.IdsInclChildren.Contains(x.SerienId));
-            foreach (Serien serie in children)
-            {
-                root.AddKindId(serie.SerienId);
-                GetSerienChildrenRecursively(root, serie);
-            }
-        }
-        private void SendArtikelOrVariantToBestellungAction(object obj)
-        {
-            if (obj is Artikel)
-            {
-                MessengerInstance.Send<PubSubEvent<Artikel>>(new PubSubEvent<Artikel>(obj as Artikel, null));
-            }
-            else if (obj is ArtikelVarianten)
-            {
-                MessengerInstance.Send<PubSubEvent<ArtikelVarianten>>(new PubSubEvent<ArtikelVarianten>(obj as ArtikelVarianten, null));
-            }
-        }
+        //private void GetSerienChildrenRecursively(Serien root, Serien mother)
+        //{
+        //    if (mother == null)
+        //    {
+        //        return;
+        //    }
+        //    var children = Context.Seriens.Where(x => x.Parent.HasValue && x.Parent.Value == mother.SerienId && !root.IdsInclChildren.Contains(x.SerienId));
+        //    foreach (Serien serie in children)
+        //    {
+        //        root.AddKindId(serie.SerienId);
+        //        GetSerienChildrenRecursively(root, serie);
+        //    }
+        //}
+        //private void SendArtikelOrVariantToBestellungAction(object obj)
+        //{
+        //    if (obj is Artikel)
+        //    {
+        //        MessengerInstance.Send<PubSubEvent<Artikel>>(new PubSubEvent<Artikel>(obj as Artikel, null));
+        //    }
+        //    else if (obj is ArtikelVarianten)
+        //    {
+        //        MessengerInstance.Send<PubSubEvent<ArtikelVarianten>>(new PubSubEvent<ArtikelVarianten>(obj as ArtikelVarianten, null));
+        //    }
+        //}
         private void BeginFiltering(int dueTime = 200)
         {
             _executeFilterTimer.Change(dueTime, Timeout.Infinite);
         }
+        private void GatherFilterCriteria()
+        {
+            _katIds = KategorienFilter.Where(x => x.IsSelected).Select(x => x.ID).ToList();
+            _serienIds = SelectedSerienFilterEntry?.ID >= 0 ? new List<int>() { SelectedSerienFilterEntry.ID } : null;
+            _markierungenIds = SelectedMarkierungFilterEntry?.ID >= 0 ? new List<int>() { SelectedMarkierungFilterEntry.ID } : null;
+           
+        }
         #endregion Private helper methods
-         * */
     }
 }

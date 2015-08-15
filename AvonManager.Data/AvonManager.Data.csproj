@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="DAP\ArtikelDataProvider.cs" />
     <Compile Include="DAP\KategorieDataProvider.cs" />
+    <Compile Include="DAP\SerienDataProvider.cs" />
     <Compile Include="DataProviderModule.cs" />
     <Compile Include="Extensions\Hefte.cs" />
     <Compile Include="Extensions\Kategorien.cs" />

@@ -4,9 +4,6 @@
   xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
     xmlns:helper="clr-namespace:AvonManager.Helpers"
-        xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
 >
     <helper:CollectionToCountConverter x:Key="CollectionConverter"/>
     <helper:ColorToIntegerConverter x:Key="C2IConverter"/>
@@ -16,10 +13,6 @@
 
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
-    </Style>
-    <Style x:Key="DingbatsFontStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="/AvonManager;component/Fonts/BRDB1RT0.TTF#PT Dingbats 1"/>
-        <Setter Property="FontSize" Value="24"/>
     </Style>
     <SolidColorBrush x:Key="TextBrush" Color="#FFFFFFFF" />
     <Color x:Key="TextColor">#FFFFFFFF</Color>

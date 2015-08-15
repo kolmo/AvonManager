@@ -73,7 +73,7 @@ namespace AvonManager.ViewModels
                 }
             }
         }
-        public Markierung CurrentMarkierung { get { return MarkierungenView != null ? MarkierungenView.CurrentItem as Markierung : null; } }
+        public MarkierungDto CurrentMarkierung { get { return MarkierungenView != null ? MarkierungenView.CurrentItem as MarkierungDto : null; } }
         #endregion Properties
 
         #region Public methods

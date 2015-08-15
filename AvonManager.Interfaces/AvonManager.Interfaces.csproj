@@ -46,6 +46,7 @@
     <Compile Include="IArtikelDataProvider.cs" />
     <Compile Include="IKategorieProvider.cs" />
     <Compile Include="IMarkierungenDataProvider.cs" />
+    <Compile Include="ISerienDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

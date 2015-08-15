@@ -14,7 +14,7 @@
         <elementListCompartment Id="34e6f085-8f2c-487c-9a97-309acae39cbf" absoluteBounds="4.39, 5.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.8125 : 4.5401025390625); (5.8125 : 4.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.8125 : 4.5401025390625); (5.8125 : 4.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AvonDatabaseDataContext/Artikel/Artikel_ArtikelVarianten" />
       <nodes>
         <classShapeMoniker Id="5ab40631-65a1-42d6-bab2-f699f7e5fc24" />
@@ -39,7 +39,7 @@
         <elementListCompartment Id="16fabb96-cdd4-4943-8106-5f1ea67f4bd4" absoluteBounds="3.7649999999999997, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 2); (5.5 : 1.69399251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 2); (5.5 : 1.69399251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AvonDatabaseDataContext/Artikel/Artikel_Markierungen_x_Artikel" />
       <nodes>
         <classShapeMoniker Id="5ab40631-65a1-42d6-bab2-f699f7e5fc24" />
@@ -52,7 +52,7 @@
         <elementListCompartment Id="7365ab40-71c1-473a-a5f9-a61513d46843" absoluteBounds="8.14, 1.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.125 : 1.28449625651042); (5.75 : 1.28449625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.125 : 1.28449625651042); (5.75 : 1.28449625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AvonDatabaseDataContext/Markierungen/Markierungen_Markierungen_x_Artikel" />
       <nodes>
         <classShapeMoniker Id="2d2ee504-b14e-4f3a-89ac-68e0146a914c" />
@@ -65,7 +65,7 @@
         <elementListCompartment Id="6c91c21f-1511-4d5d-80ee-c361f85e8a65" absoluteBounds="1.6400000000000001, 6.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(3.625 : 7.2444482421875); (6.84375 : 7.2444482421875); (6.84375 : 4.5401025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.625 : 7.2444482421875); (6.84375 : 7.2444482421875); (6.84375 : 4.5401025390625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/AvonDatabaseDataContext/Serien/Serien_Artikel" />
       <nodes>
         <classShapeMoniker Id="c715a101-8f98-4457-a0da-f9be1d7a7438" />
@@ -77,6 +77,26 @@
       <nodes>
         <classShapeMoniker Id="c715a101-8f98-4457-a0da-f9be1d7a7438" />
         <classShapeMoniker Id="c715a101-8f98-4457-a0da-f9be1d7a7438" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="374f57ba-e7f0-409f-96e9-d274d437b7ca" absoluteBounds="7.875, 6.375, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/AvonDatabaseDataContext/Kategorien_x_Artikel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="53a5b861-011d-481a-8e16-b3e3bac19a8e" absoluteBounds="7.89, 6.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.0781275 : 4.5401025390625); (7.0781275 : 7.0725732421875); (7.875 : 7.0725732421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AvonDatabaseDataContext/Artikel/Artikel_Kategorien_x_Artikel" />
+      <nodes>
+        <classShapeMoniker Id="5ab40631-65a1-42d6-bab2-f699f7e5fc24" />
+        <classShapeMoniker Id="374f57ba-e7f0-409f-96e9-d274d437b7ca" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.8125 : 5.9631982421875); (8.8125 : 6.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AvonDatabaseDataContext/Kategorien/Kategorien_Kategorien_x_Artikel" />
+      <nodes>
+        <classShapeMoniker Id="64f99d4e-a7a3-4cdd-ada3-3e80f539b64b" />
+        <classShapeMoniker Id="374f57ba-e7f0-409f-96e9-d274d437b7ca" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

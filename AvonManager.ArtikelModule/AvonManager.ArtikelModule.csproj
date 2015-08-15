@@ -75,14 +75,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtikelModule.cs" />
+    <Compile Include="Common\AlleMarkierungenFilterEntry.cs" />
+    <Compile Include="Common\AlleSerienFilterEntry.cs" />
+    <Compile Include="Common\FilterEntryBase.cs" />
+    <Compile Include="Common\KategorieFilterEntry.cs" />
+    <Compile Include="Common\MarkierungFilterEntry.cs" />
+    <Compile Include="Common\SerieFilterEntry.cs" />
+    <Compile Include="Controls\MarkierungenAdminControl.xaml.cs">
+      <DependentUpon>MarkierungenAdminControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SerienControl.xaml.cs">
+      <DependentUpon>SerienControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\ListBoxBehavoir.cs" />
+    <Compile Include="Interfaces\IExtendedFilterEntry.cs" />
+    <Compile Include="Interfaces\IFilterEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArtikelPageViewModel.cs" />
     <Compile Include="ViewModels\ArtikelViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\KategoriePageViewModel.cs" />
+    <Compile Include="ViewModels\KategorieViewModel.cs" />
+    <Compile Include="ViewModels\MarkierungenViewModel.cs" />
+    <Compile Include="ViewModels\MarkierungViewModel.cs" />
+    <Compile Include="ViewModels\SerienViewModel.cs" />
+    <Compile Include="ViewModels\SerieViewModel.cs" />
     <Compile Include="Views\ArtikelPage.xaml.cs">
       <DependentUpon>ArtikelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KategoriePage.xaml.cs">
+      <DependentUpon>KategoriePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +113,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Controls\MarkierungenAdminControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SerienControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ArtikelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\KategoriePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

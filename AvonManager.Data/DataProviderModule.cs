@@ -22,6 +22,7 @@ namespace AvonManager.Data
             _container.RegisterType<IArtikelDataProvider,ArtikelDataProvider>();
             _container.RegisterType<IMarkierungenDataProvider,MarkierungenDataProvider>();
             _container.RegisterType<IKategorieProvider,KategorieDataProvider>();
+            _container.RegisterType<ISerienDataProvider, SerienDataProvider>();
         }
     }
 }

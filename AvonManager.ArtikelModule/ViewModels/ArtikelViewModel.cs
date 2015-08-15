@@ -16,14 +16,14 @@ namespace AvonManager.ArtikelModule.ViewModels
             _artikel = artikel;
         }
 
-        private List<Markierung> _markierungen;
+        private List<MarkierungDto> _markierungen;
         /// <summary>
         /// Gets or sets the Markierungen.
         /// </summary>
         /// <value>
         /// The Markierungen.
         /// </value>
-        public List<Markierung> Markierungen
+        public List<MarkierungDto> Markierungen
         {
             get { return _markierungen; }
             set

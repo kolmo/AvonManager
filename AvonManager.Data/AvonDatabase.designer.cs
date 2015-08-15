@@ -22,7 +22,7 @@ namespace AvonManager.Data
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="AvDBase")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="AvonDatabase")]
 	public partial class AvonDatabaseDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -51,6 +51,9 @@ namespace AvonManager.Data
     partial void InsertSerien(Serien instance);
     partial void UpdateSerien(Serien instance);
     partial void DeleteSerien(Serien instance);
+    partial void InsertKategorien_x_Artikel(Kategorien_x_Artikel instance);
+    partial void UpdateKategorien_x_Artikel(Kategorien_x_Artikel instance);
+    partial void DeleteKategorien_x_Artikel(Kategorien_x_Artikel instance);
     #endregion
 		
 		public AvonDatabaseDataContext() : 
@@ -138,6 +141,14 @@ namespace AvonManager.Data
 				return this.GetTable<Serien>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Kategorien_x_Artikel> Kategorien_x_Artikels
+		{
+			get
+			{
+				return this.GetTable<Kategorien_x_Artikel>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Artikel")]
@@ -167,6 +178,8 @@ namespace AvonManager.Data
 		private EntitySet<ArtikelVarianten> _ArtikelVariantens;
 		
 		private EntitySet<Markierungen_x_Artikel> _Markierungen_x_Artikels;
+		
+		private EntitySet<Kategorien_x_Artikel> _Kategorien_x_Artikels;
 		
 		private EntityRef<Serien> _Serien;
 		
@@ -198,6 +211,7 @@ namespace AvonManager.Data
 		{
 			this._ArtikelVariantens = new EntitySet<ArtikelVarianten>(new Action<ArtikelVarianten>(this.attach_ArtikelVariantens), new Action<ArtikelVarianten>(this.detach_ArtikelVariantens));
 			this._Markierungen_x_Artikels = new EntitySet<Markierungen_x_Artikel>(new Action<Markierungen_x_Artikel>(this.attach_Markierungen_x_Artikels), new Action<Markierungen_x_Artikel>(this.detach_Markierungen_x_Artikels));
+			this._Kategorien_x_Artikels = new EntitySet<Kategorien_x_Artikel>(new Action<Kategorien_x_Artikel>(this.attach_Kategorien_x_Artikels), new Action<Kategorien_x_Artikel>(this.detach_Kategorien_x_Artikels));
 			this._Serien = default(EntityRef<Serien>);
 			OnCreated();
 		}
@@ -412,6 +426,19 @@ namespace AvonManager.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artikel_Kategorien_x_Artikel", Storage="_Kategorien_x_Artikels", ThisKey="ArtikelId", OtherKey="ArtikelId")]
+		public EntitySet<Kategorien_x_Artikel> Kategorien_x_Artikels
+		{
+			get
+			{
+				return this._Kategorien_x_Artikels;
+			}
+			set
+			{
+				this._Kategorien_x_Artikels.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Serien_Artikel", Storage="_Serien", ThisKey="SerienId", OtherKey="SerienId", IsForeignKey=true)]
 		public Serien Serien
 		{
@@ -485,6 +512,18 @@ namespace AvonManager.Data
 		}
 		
 		private void detach_Markierungen_x_Artikels(Markierungen_x_Artikel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Artikel = null;
+		}
+		
+		private void attach_Kategorien_x_Artikels(Kategorien_x_Artikel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Artikel = this;
+		}
+		
+		private void detach_Kategorien_x_Artikels(Kategorien_x_Artikel entity)
 		{
 			this.SendPropertyChanging();
 			entity.Artikel = null;
@@ -1154,6 +1193,8 @@ namespace AvonManager.Data
 		
 		private System.Data.Linq.Binary _Logo;
 		
+		private EntitySet<Kategorien_x_Artikel> _Kategorien_x_Artikels;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1174,6 +1215,7 @@ namespace AvonManager.Data
 		
 		public Kategorien()
 		{
+			this._Kategorien_x_Artikels = new EntitySet<Kategorien_x_Artikel>(new Action<Kategorien_x_Artikel>(this.attach_Kategorien_x_Artikels), new Action<Kategorien_x_Artikel>(this.detach_Kategorien_x_Artikels));
 			OnCreated();
 		}
 		
@@ -1297,6 +1339,19 @@ namespace AvonManager.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kategorien_Kategorien_x_Artikel", Storage="_Kategorien_x_Artikels", ThisKey="KategorieId", OtherKey="KategorieId")]
+		public EntitySet<Kategorien_x_Artikel> Kategorien_x_Artikels
+		{
+			get
+			{
+				return this._Kategorien_x_Artikels;
+			}
+			set
+			{
+				this._Kategorien_x_Artikels.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1315,6 +1370,18 @@ namespace AvonManager.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Kategorien_x_Artikels(Kategorien_x_Artikel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kategorien = this;
+		}
+		
+		private void detach_Kategorien_x_Artikels(Kategorien_x_Artikel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kategorien = null;
 		}
 	}
 	
@@ -1948,6 +2015,174 @@ namespace AvonManager.Data
 		{
 			this.SendPropertyChanging();
 			entity.Serien1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Kategorien_x_Artikel")]
+	public partial class Kategorien_x_Artikel : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _KategorieId;
+		
+		private int _ArtikelId;
+		
+		private EntityRef<Artikel> _Artikel;
+		
+		private EntityRef<Kategorien> _Kategorien;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnKategorieIdChanging(int value);
+    partial void OnKategorieIdChanged();
+    partial void OnArtikelIdChanging(int value);
+    partial void OnArtikelIdChanged();
+    #endregion
+		
+		public Kategorien_x_Artikel()
+		{
+			this._Artikel = default(EntityRef<Artikel>);
+			this._Kategorien = default(EntityRef<Kategorien>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KategorieId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int KategorieId
+		{
+			get
+			{
+				return this._KategorieId;
+			}
+			set
+			{
+				if ((this._KategorieId != value))
+				{
+					if (this._Kategorien.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnKategorieIdChanging(value);
+					this.SendPropertyChanging();
+					this._KategorieId = value;
+					this.SendPropertyChanged("KategorieId");
+					this.OnKategorieIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArtikelId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ArtikelId
+		{
+			get
+			{
+				return this._ArtikelId;
+			}
+			set
+			{
+				if ((this._ArtikelId != value))
+				{
+					if (this._Artikel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnArtikelIdChanging(value);
+					this.SendPropertyChanging();
+					this._ArtikelId = value;
+					this.SendPropertyChanged("ArtikelId");
+					this.OnArtikelIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artikel_Kategorien_x_Artikel", Storage="_Artikel", ThisKey="ArtikelId", OtherKey="ArtikelId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Artikel Artikel
+		{
+			get
+			{
+				return this._Artikel.Entity;
+			}
+			set
+			{
+				Artikel previousValue = this._Artikel.Entity;
+				if (((previousValue != value) 
+							|| (this._Artikel.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Artikel.Entity = null;
+						previousValue.Kategorien_x_Artikels.Remove(this);
+					}
+					this._Artikel.Entity = value;
+					if ((value != null))
+					{
+						value.Kategorien_x_Artikels.Add(this);
+						this._ArtikelId = value.ArtikelId;
+					}
+					else
+					{
+						this._ArtikelId = default(int);
+					}
+					this.SendPropertyChanged("Artikel");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kategorien_Kategorien_x_Artikel", Storage="_Kategorien", ThisKey="KategorieId", OtherKey="KategorieId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Kategorien Kategorien
+		{
+			get
+			{
+				return this._Kategorien.Entity;
+			}
+			set
+			{
+				Kategorien previousValue = this._Kategorien.Entity;
+				if (((previousValue != value) 
+							|| (this._Kategorien.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Kategorien.Entity = null;
+						previousValue.Kategorien_x_Artikels.Remove(this);
+					}
+					this._Kategorien.Entity = value;
+					if ((value != null))
+					{
+						value.Kategorien_x_Artikels.Add(this);
+						this._KategorieId = value.KategorieId;
+					}
+					else
+					{
+						this._KategorieId = default(int);
+					}
+					this.SendPropertyChanged("Kategorien");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
