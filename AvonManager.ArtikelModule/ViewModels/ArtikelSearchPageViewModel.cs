@@ -19,7 +19,7 @@ namespace AvonManager.ArtikelModule.ViewModels
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ArtikelPageViewModel : BaseViewModel
+    public class ArtikelSearchPageViewModel : BaseViewModel
     {
         int _pageSize = 5;
         int _page = 0;
@@ -27,7 +27,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         IMarkierungenDataProvider _markierungenDataProvider;
         IKategorieProvider _kategorienDataProvider;
         ISerienDataProvider _seriendataProvider;
-        public ArtikelPageViewModel(IArtikelDataProvider dataProvider,
+        public ArtikelSearchPageViewModel(IArtikelDataProvider dataProvider,
             IMarkierungenDataProvider markierungenDataProvider,
             IKategorieProvider kategorienDataProvider,
             ISerienDataProvider seriendataProvider) : this()
@@ -436,7 +436,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the ArtikelViewModel class.
         /// </summary>
-        public ArtikelPageViewModel()
+        public ArtikelSearchPageViewModel()
         {
             //AddVariante = new DelegateCommand<object>(AddVarianteAction, CanAddVariante);
             //RemoveVariante = new DelegateCommand<object>(RemoveVarianteAction, CanRemoveVariante);

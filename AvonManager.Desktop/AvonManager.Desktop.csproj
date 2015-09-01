@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AvonManager.Desktop</RootNamespace>
     <AssemblyName>AvonManager.Desktop</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -325,6 +325,10 @@
       <Project>{af676231-dc7f-4f08-81a0-9dd77e77480b}</Project>
       <Name>AvonManager.ArtikelModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AvonManager.Bestellungen\AvonManager.Bestellungen.csproj">
+      <Project>{f31fe3e9-3a02-4726-a5ae-4739569bf8ae}</Project>
+      <Name>AvonManager.Bestellungen</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AvonManager.BusinessObjects\AvonManager.BusinessObjects.csproj">
       <Project>{0a681fbe-e84b-403d-8f55-23281a882a8a}</Project>
       <Name>AvonManager.BusinessObjects</Name>
@@ -336,6 +340,10 @@
     <ProjectReference Include="..\AvonManager.Data\AvonManager.Data.csproj">
       <Project>{2895ffe4-5d4c-47e2-a4fc-72d126c5b115}</Project>
       <Name>AvonManager.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvonManager.KundenHefte\AvonManager.KundenHefte.csproj">
+      <Project>{8f97007e-9c03-4386-ae51-b40751fa044e}</Project>
+      <Name>AvonManager.KundenHefte</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AvonManager.Interfaces</RootNamespace>
     <AssemblyName>AvonManager.Interfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -47,6 +47,7 @@
     <Compile Include="IKategorieProvider.cs" />
     <Compile Include="IMarkierungenDataProvider.cs" />
     <Compile Include="ISerienDataProvider.cs" />
+    <Compile Include="ITitleView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Practices.Prism.Modularity;
+﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
-using System.ComponentModel.Composition;
-
+using System.Linq;
 namespace AvonManager.ArtikelModule
 {
     public class ArtikelModule : IModule
@@ -17,8 +12,11 @@ namespace AvonManager.ArtikelModule
         }
         public void Initialize()
         {
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.ArtikelPage));
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.KategoriePage));
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.ArtikelManagementView));
+            IRegion mainRegion = regionManager.Regions["MainRegion"];
+            mainRegion.Activate(mainRegion.Views.FirstOrDefault());
+            regionManager.RegisterViewWithRegion("ArtikelRegion", typeof(Views.ArtikelSearchPage));
+            regionManager.RegisterViewWithRegion("ArtikelRegion", typeof(Views.KategoriePage));
         }
     }
 }

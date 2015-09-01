@@ -4,7 +4,15 @@
         xmlns:prism="http://www.codeplex.com/prism"
         x:Class="AvonManager.Desktop.Shell"
         Title="Shell" Height="507" Width="872">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <TabControl Name="MainRegion" prism:RegionManager.RegionName="MainRegion"/>
+        <TabControl Name="MainRegion" prism:RegionManager.RegionName="MainRegion"
+                    ItemContainerStyle="{StaticResource RegionTabItemHeaderStyle}"/>
     </Grid>
 </Window>

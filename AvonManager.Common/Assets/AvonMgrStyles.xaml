@@ -16,6 +16,11 @@
     <!--Spezielle Stile-->
     <!-- EXPRESSION DARK VALUES -->
 
+    <Style TargetType="{x:Type TabItem}" x:Key="RegionTabItemHeaderStyle">
+        <Setter Property="Header" 
+                Value="{Binding RelativeSource={RelativeSource Self}, 
+                    Path=Content.Title}" />
+    </Style>
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="14"/>
     </Style>

@@ -32,7 +32,7 @@ namespace AvonManager.Desktop
         {
             var mappings = base.ConfigureRegionAdapterMappings();
 
-            mappings.RegisterMapping(typeof(TabControl), Container.TryResolve<TabControlAdapter>());
+            //mappings.RegisterMapping(typeof(TabControl), Container.TryResolve<TabControlAdapter>());
 
             return mappings;
         }
