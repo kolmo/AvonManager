@@ -1,0 +1,15 @@
+﻿<local:HefteSearchViewModel
+  xmlns:local="clr-namespace:AvonManager.KundenHefte.ViewModels"
+    xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  >
+  
+  <local:HefteSearchViewModel.AlleHefte>
+    <local:HeftViewModel Titel="Hallo" Jahr="2014"/>
+  </local:HefteSearchViewModel.AlleHefte>
+  <local:HefteSearchViewModel.AlleJahre>
+    <common:YearSelector Year="2015"/>
+    <common:YearSelector Year="2014"/>
+  </local:HefteSearchViewModel.AlleJahre>
+</local:HefteSearchViewModel>
+

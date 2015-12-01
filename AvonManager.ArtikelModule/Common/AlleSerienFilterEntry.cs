@@ -1,4 +1,5 @@
-﻿using AvonManager.ArtikelModule.Interfaces;
+﻿
+using AvonManager.Interfaces;
 
 namespace AvonManager.ArtikelModule.Common
 {

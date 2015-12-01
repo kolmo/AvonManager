@@ -1,29 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
+using System;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AvonManager.Desktop
 {
     /// <summary>
     /// Interaktionslogik für Shell.xaml
     /// </summary>
-   [Export]
+    [Export]
     public partial class Shell : Window
     {
+        IRegionManager _regionManager;
         public Shell()
         {
             InitializeComponent();
+        }
+        public Shell(IUnityContainer container)
+            :this()
+        {
+            _regionManager = container.Resolve<IRegionManager>();
+        }
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void ApplicationNameTextBlock_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var uri = new Uri("HomeView", UriKind.Relative);
+            _regionManager.RequestNavigate(AvonManager.Common.RegionNames.MainRegion, uri);
         }
     }
 }

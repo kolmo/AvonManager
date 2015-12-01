@@ -105,14 +105,17 @@
       <DependentUpon>AvonDatabase.dbml</DependentUpon>
     </Compile>
     <Compile Include="DAP\ArtikelDataProvider.cs" />
+    <Compile Include="SearchCriteria\ArticleSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\BrochureSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\CustomerSearchCriteria.cs" />
+    <Compile Include="DAP\HefteDataProvider.cs" />
     <Compile Include="DAP\KategorieDataProvider.cs" />
+    <Compile Include="DAP\KundenDataProvider.cs" />
+    <Compile Include="DAP\OrderDataProvider.cs" />
+    <Compile Include="SearchCriteria\OrderSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\SearchCriteriaBase.cs" />
     <Compile Include="DAP\SerienDataProvider.cs" />
     <Compile Include="DataProviderModule.cs" />
-    <Compile Include="Extensions\Hefte.cs" />
-    <Compile Include="Extensions\Kategorien.cs" />
-    <Compile Include="Extensions\Kunden.cs" />
-    <Compile Include="Extensions\Markierungen.cs" />
-    <Compile Include="Extensions\Serien.cs" />
     <Compile Include="DAP\MarkierungenDataProvider.cs" />
     <Compile Include="Helpers\EntityBOMapper.cs" />
     <Compile Include="Interfaces\IObjectMapper.cs" />
@@ -122,6 +125,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -166,6 +170,10 @@
     <ProjectReference Include="..\AvonManager.BusinessObjects\AvonManager.BusinessObjects.csproj">
       <Project>{0a681fbe-e84b-403d-8f55-23281a882a8a}</Project>
       <Name>AvonManager.BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvonManager.Common\AvonManager.Common.csproj">
+      <Project>{e510febd-16f6-4442-aa20-a8a2e1278116}</Project>
+      <Name>AvonManager.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\AvonManager.Interfaces\AvonManager.Interfaces.csproj">
       <Project>{a2e7e04d-ad9c-42c7-8737-c1d8be8954d2}</Project>

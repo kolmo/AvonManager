@@ -1,0 +1,97 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:local="clr-namespace:AvonManager.KundenHefte.Views"
+             xmlns:Helpers="clr-namespace:AvonManager.Common.Helpers;assembly=AvonManager.Common"    
+            xmlns:controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common"
+             xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+             x:Class="AvonManager.KundenHefte.Views.HeftEditView"
+             mc:Ignorable="d" 
+             d:DesignHeight="530.333" d:DesignWidth="379.91">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Helpers:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <xceed:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="53*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="47*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="62*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="Titel" Margin="0,0,0,6" >
+                        <TextBox Text="{Binding Titel, Mode=TwoWay}"/>
+                    </GroupBox>
+                    <GroupBox  Header="Jahr" Grid.Row="1" >
+                        <TextBox Text="{Binding Jahr, Mode=TwoWay}"/>
+                    </GroupBox>
+                    <GroupBox Header="Beschreibung" Margin="0,1.964,0,15" Grid.Row="3" >
+                        <TextBox Text="{Binding Beschreibung, Mode=TwoWay}"/>
+                    </GroupBox>
+                </Grid>
+                <GroupBox Header="Bild" HorizontalAlignment="Stretch" Grid.Column="1" VerticalContentAlignment="Stretch">
+                    <Grid Margin="3" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}"/>
+                        <controls:FileLoader FileData="{Binding Bild, Mode=TwoWay}" ButtonContent="Bild laden" HorizontalAlignment="Left" Grid.Row="1" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="5"/>
+            <DataGrid Grid.Row="2"
+    		ItemsSource="{Binding SortedKundenListe}"
+    		AutoGenerateColumns="False" Margin="3">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Erhalten">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox VerticalAlignment="Center" Foreground="Green"
+    							IsChecked="{Binding Received, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}"  Width="*"/>
+                    <DataGridTemplateColumn Header="Erhalten am">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding ReceivedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Received}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Hat Bestellt" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox VerticalAlignment="Center" Foreground="Green"
+    							IsChecked="{Binding HasOrdered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </xceed:BusyIndicator>
+</UserControl>

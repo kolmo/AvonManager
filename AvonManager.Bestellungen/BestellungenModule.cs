@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,19 @@ namespace AvonManager.Bestellungen
     public class BestellungenModule : IModule
     {
         private readonly IRegionManager _regionManager;
-        public BestellungenModule(IRegionManager regionManager)
+       IUnityContainer _container;
+        public BestellungenModule(IRegionManager regionManager, IUnityContainer container)
         {
             _regionManager = regionManager;
+            _container = container;
         }
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.BestellungManagementView));
-            _regionManager.RegisterViewWithRegion("BestellungRegion", typeof(Views.BestellungSearchView));
-            _regionManager.RegisterViewWithRegion("BestellungRegion", typeof(Views.BestellungEditView));
+            _container.RegisterType<object, Views.BestellungManagementView>("OrderModuleWorkspace");
+            _container.RegisterType<object, Views.OrderEditView>("OrderEditView");
+            _regionManager.RegisterViewWithRegion("TaskButtonRegion", typeof(Controls.OrderModuleTaskButton));
+            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.OrderButtonRegion, typeof(Controls.OrderModuleTaskButton));
+            _regionManager.RegisterViewWithRegion("OrderSearchRegion", typeof(Views.OrderSearchView));
         }
     }
 }

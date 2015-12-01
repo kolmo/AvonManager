@@ -11,14 +11,16 @@ namespace AvonManager.ArtikelModule.Controls
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(MarkierungenAdminControl_Loaded);
         }
-
+        public MarkierungenAdminControl(MarkierungenAdminViewModel viewModel) :this()
+        {
+            DataContext = viewModel;
+        }
         void MarkierungenAdminControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.DataContext is MarkierungenViewModel)
+            if (this.DataContext is MarkierungenAdminViewModel)
             {
-                //(DataContext as MarkierungenViewModel).LoadData(this.EntitaetId);
+                (DataContext as MarkierungenAdminViewModel).LoadData(1);
             }
         }
-        public int EntitaetId { get; set; }
     }
 }

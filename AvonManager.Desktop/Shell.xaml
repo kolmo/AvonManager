@@ -3,16 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://www.codeplex.com/prism"
         x:Class="AvonManager.Desktop.Shell"
-        Title="Shell" Height="507" Width="872">
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
+        Title="Shell" Height="700" Width="1100"
+    Language="de-DE">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+                <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+            </ItemsPanelTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TabControl Name="MainRegion" prism:RegionManager.RegionName="MainRegion"
-                    ItemContainerStyle="{StaticResource RegionTabItemHeaderStyle}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="41*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="BrandingStackPanel">
+                <TextBlock x:Name="ApplicationNameTextBlock" Style="{StaticResource ApplicationNameStyle}"
+                   Text="AVON Manager" ToolTipService.ToolTip="Startseite" TextOptions.TextHintingMode="Fixed" MouseLeftButtonDown="ApplicationNameTextBlock_MouseLeftButtonDown">
+                </TextBlock>
+            </StackPanel>
+            <ItemsControl x:Name="TaskButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.TaskButtonRegion}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ItemsPanel="{DynamicResource ItemsPanelTemplate1}" />
+            <Button Grid.Column="2" Margin="30,0,10,0" Click="InfoButton_Click" VerticalAlignment="Center">
+                <Image Style="{StaticResource InfoImage}"/>
+            </Button>
+
+        </Grid>
+
+        <ContentControl x:Name="MainRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainRegion}" Grid.Row="1"/>
     </Grid>
 </Window>

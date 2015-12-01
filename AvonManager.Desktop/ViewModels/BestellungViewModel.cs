@@ -28,10 +28,10 @@ namespace AvonManager.ViewModels
         private Timer _executeFilterTimer;
         private bool _isAddingNewItem = false;
         private ClipboardManager _clipboardMgr;
-        private Bestelldetail _selectedDetail;
-        private Bestellung _selectedBestellung;
-        private IEnumerable<Kunde> _availableKunden;
-        private IList<Kunde> _sortedKunden4Filter;
+        private BestelldetailDto _selectedDetail;
+        private BestellungDto _selectedBestellung;
+        private IEnumerable<KundeDto> _availableKunden;
+        private IList<KundeDto> _sortedKunden4Filter;
         private string _suchString;
         private string _sucheArtikelNr;
         private ICommand _addNewBestellung;
@@ -169,16 +169,16 @@ namespace AvonManager.ViewModels
         }
 
         public IList<JahrSelektor> JahrListe { get; set; }
-        public IList<Kunde> SortedKunden4Filter { get { return _sortedKunden4Filter; } }
+        public IList<KundeDto> SortedKunden4Filter { get { return _sortedKunden4Filter; } }
 
-        private IList<Kunde> _kunden4NeueBestellung;
+        private IList<KundeDto> _kunden4NeueBestellung;
         /// <summary>
         /// Gets or sets the Kunden4NeueBestellung.
         /// </summary>
         /// <value>
         /// The Kunden4NeueBestellung.
         /// </value>
-        public IList<Kunde> Kunden4NeueBestellung
+        public IList<KundeDto> Kunden4NeueBestellung
         {
             get { return _kunden4NeueBestellung; }
             set
@@ -191,14 +191,14 @@ namespace AvonManager.ViewModels
             }
         }
 
-        private Kunde _selectedKunde;
+        private KundeDto _selectedKunde;
         /// <summary>
         /// Gets or sets the SelectedKunde.
         /// </summary>
         /// <value>
         /// The SelectedKunde.
         /// </value>
-        public Kunde SelectedKunde
+        public KundeDto SelectedKunde
         {
             get { return _selectedKunde; }
             set
@@ -239,7 +239,7 @@ namespace AvonManager.ViewModels
         /// <value>
         /// The SelectedDetails.
         /// </value>
-        public Bestelldetail SelectedDetail
+        public BestelldetailDto SelectedDetail
         {
             get { return _selectedDetail; }
             set
@@ -257,7 +257,7 @@ namespace AvonManager.ViewModels
         /// <value>
         /// The SelectedBestellung.
         /// </value>
-        public Bestellung SelectedBestellung
+        public BestellungDto SelectedBestellung
         {
             get { return _selectedBestellung; }
             set
@@ -286,7 +286,7 @@ namespace AvonManager.ViewModels
         /// <value>
         /// The AvailableKunden.
         /// </value>
-        public IEnumerable<Kunde> AvailableKunden
+        public IEnumerable<KundeDto> AvailableKunden
         {
             get { return _availableKunden; }
             set
@@ -298,7 +298,7 @@ namespace AvonManager.ViewModels
                 }
             }
         }
-        public List<Bestellstatus> Bestellstatuswerte { get { return null /*_ctx.Bestellstatus*/; } }
+        public List<BestellstatusDto> Bestellstatuswerte { get { return null /*_ctx.Bestellstatus*/; } }
         public DelegateCommand<object> AddDetail { get; private set; }
         public DelegateCommand<object> RemoveDetail { get; private set; }
         public ICommand StartEditCommand { get; set; }
@@ -366,7 +366,7 @@ namespace AvonManager.ViewModels
         private void LoadSupplementData()
         {
             //Context.Load(Context.GetBestellstatuswerteQuery());
-            IList<Heft> heftList = _clipboardMgr.GetAllOfType<Heft>();
+            //IList<Heft> heftList = _clipboardMgr.GetAllOfType<Heft>();
             LoadAvailableKunden();
             LoadBestellungsjahre();
         }
@@ -427,34 +427,8 @@ namespace AvonManager.ViewModels
             //    //SelectedBestellung.Bestelldetails.Remove(av);
             //}
         }
-        private void CopyArtikelToBestelldetail(object artikelOrVariante)
-        {
-            if (SelectedBestellung != null && (artikelOrVariante is Artikel || artikelOrVariante is ArtikelVariante)
-                && IsEditing)
-            {
-                Bestelldetail detail = new Bestelldetail();
-                PrefillDetails(detail);
-                if (artikelOrVariante is Artikel)
-                {
-                    Artikel artikel = artikelOrVariante as Artikel;
-                    //detail.Artikelbeschr = artikel.Artikelname;
-                    //detail.ArtikelNr = artikel.ArtikelNr;
-                    //detail.Einzelpreis = artikel.Einzelpreis;
-                    //detail.FGD = artikel.Inhalt;
-                }
-                else
-                {
-                    ArtikelVariante variante = artikelOrVariante as ArtikelVariante;
-                    //detail.Artikelbeschr = variante.Artikel.Artikelname;
-                    //detail.ArtikelNr = variante.ArtikelNr;
-                    //detail.Einzelpreis = variante.Einzelpreis.HasValue ? variante.Einzelpreis : variante.Artikel.Einzelpreis;
-                    //detail.FGD = variante.Variante;
-                }
-                //SelectedBestellung.Bestelldetails.Add(detail);
-            }
-        }
-
-        private void PrefillDetails(Bestelldetail detail)
+     
+        private void PrefillDetails(BestelldetailDto detail)
         {
             //if (SelectedBestellung.Bestelldetails.Any())
             //{
@@ -473,15 +447,11 @@ namespace AvonManager.ViewModels
         {
             //OnPropertyChanged(() => this.BestellungHasChanges);
         }
-        private void ReactOnArtikelFromClipboard(PubSubEvent<Artikel> msg)
+        private void ReactOnArtikelFromClipboard(PubSubEvent<ArtikelDto> msg)
         {
             //CopyArtikelToBestelldetail(msg.Content);
         }
 
-        private void ReactOnArtikelVarianteFromClipboard(PubSubEvent<ArtikelVariante> msg)
-        {
-            //CopyArtikelToBestelldetail(msg.Content);
-        }
         private void OnKundinAdded(KundinAddedMessage msg)
         {
             //Context.Kundens.Clear();

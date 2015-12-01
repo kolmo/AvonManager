@@ -1,10 +1,7 @@
 ﻿using AvonManager.Desktop;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Prism.Regions;
 
 namespace AvonManager
 {
@@ -18,6 +15,10 @@ namespace AvonManager
             base.OnStartup(e);
             Bootstrapper bootstrapper = new Bootstrapper();
             bootstrapper.Run();
+            IRegionManager regionManager = bootstrapper.Container.Resolve<IRegionManager>();
+            regionManager.RegisterViewWithRegion(Common.RegionNames.MainRegion, typeof(MainView));
+            bootstrapper.Container.RegisterType<object, MainView>("HomeView");
         }
+       
     }
 }

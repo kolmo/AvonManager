@@ -34,8 +34,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -53,15 +82,42 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Base\DeleteEntityConfirmation.cs" />
+    <Compile Include="Base\ErrorAwareBaseViewModel.cs" />
+    <Compile Include="Base\FilterEntryBase.cs" />
+    <Compile Include="Base\ListEntryBaseViewModel.cs" />
+    <Compile Include="Base\YearSelector.cs" />
+    <Compile Include="Controls\EditDeleteCmdControl.xaml.cs">
+      <DependentUpon>EditDeleteCmdControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FileLoader.xaml.cs">
+      <DependentUpon>FileLoader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\NavigationCompletedEvent.cs" />
     <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Helpers\BusyFlagsManager.cs" />
     <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\CollectionToCountConverter.cs" />
     <Compile Include="Helpers\ColorToIntegerConverter.cs" />
     <Compile Include="Helpers\ListBoxBehavoir.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Assets\AvonMgrStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Cosmo\SDKStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EditDeleteCmdControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\FileLoader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -107,7 +163,7 @@
     <Resource Include="Assets\Images\coins.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Delete.PNG" />
+    <EmbeddedResource Include="Assets\Images\Delete.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Filter.png" />
@@ -153,6 +209,50 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Edit-26.png" />
+    <Resource Include="Assets\Images\Trash-26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lipstick-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Categorize-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Address Book-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Nail Polish-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Shopping Cart Loaded-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Info-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Info-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Clear Filters-26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Search-26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Broom-26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Plus-26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\More-26.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

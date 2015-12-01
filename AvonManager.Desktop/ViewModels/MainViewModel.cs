@@ -28,7 +28,7 @@ namespace AvonManager.ViewModels
 
         #region Fields
         private ObservableCollection<object> _clipboardList = null;
-        private Bestellung _bestellungInProcess;
+        private BestellungDto _bestellungInProcess;
         #endregion Fields
 
         #region Properties
@@ -39,7 +39,7 @@ namespace AvonManager.ViewModels
         /// <value>
         /// The bestellung information process.
         /// </value>
-        public Bestellung BestellungInProcess
+        public BestellungDto BestellungInProcess
         {
             get { return _bestellungInProcess; }
             set
@@ -146,14 +146,11 @@ namespace AvonManager.ViewModels
         }
         private void SelectArtikelOrVariantAction(object obj)
         {
-            if (obj is Artikel)
+            if (obj is ArtikelDto)
             {
                 //MessengerInstance.Send<PubSubEvent<Artikel>>(new PubSubEvent<Artikel>(obj as Artikel, null));
             }
-            else if (obj is ArtikelVariante)
-            {
-                //MessengerInstance.Send<PubSubEvent<ArtikelVarianten>>(new PubSubEvent<ArtikelVarianten>(obj as ArtikelVarianten, null));
-            }
+           
         }
         #endregion Private helper methods
 

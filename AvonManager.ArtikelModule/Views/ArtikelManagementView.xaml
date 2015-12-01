@@ -16,7 +16,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <TabControl Name="ArtikelRegion" prism:RegionManager.RegionName="ArtikelRegion" TabStripPlacement="Left"
-                      ItemContainerStyle="{StaticResource RegionTabItemHeaderStyle}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl  prism:RegionManager.RegionName="ArtikelSearchRegion"/>
+        <ContentControl prism:RegionManager.RegionName="ArtikelDetailsRegion" Grid.Column="1"/>
     </Grid>
 </UserControl>

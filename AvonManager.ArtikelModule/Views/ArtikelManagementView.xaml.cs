@@ -6,19 +6,11 @@ namespace AvonManager.ArtikelModule.Views
     /// <summary>
     /// Interaction logic for ArtikelManagementView.xaml
     /// </summary>
-    public partial class ArtikelManagementView : UserControl, ITitleView
+    public partial class ArtikelManagementView : UserControl
     {
         public ArtikelManagementView()
         {
             InitializeComponent();
-        }
-
-        public string Title
-        {
-            get
-            {
-                return "Artikel-Management";
-            }
         }
     }
 }

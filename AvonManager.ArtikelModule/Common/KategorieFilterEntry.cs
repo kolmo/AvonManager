@@ -1,10 +1,15 @@
-﻿using AvonManager.ArtikelModule.Interfaces;
+﻿using AvonManager.Common.Base;
+using AvonManager.Interfaces;
 
 namespace AvonManager.ArtikelModule.Common
 {
-    internal class KategorieFilterEntry : FilterEntryBase, IFilterEntry
+    public class KategorieFilterEntry : FilterEntryBase, IFilterEntry
     {
         private AvonManager.BusinessObjects.KategorieDto _kategorie;
+        public KategorieFilterEntry()
+        {
+
+        }
         public KategorieFilterEntry(AvonManager.BusinessObjects.KategorieDto kategorie)
         {
             _kategorie = kategorie;

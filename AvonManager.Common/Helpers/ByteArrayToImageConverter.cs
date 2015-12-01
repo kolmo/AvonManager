@@ -12,10 +12,12 @@ namespace AvonManager.Common.Helpers
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is byte[])
+            if (value is byte[] && (value as byte[]).Length > 0)
             {
                 BitmapImage bmi = new BitmapImage();
+                bmi.BeginInit();
                 bmi.StreamSource = new MemoryStream(value as byte[]);
+                bmi.EndInit();
                 return bmi;
             }
             else if (value is WriteableBitmap)

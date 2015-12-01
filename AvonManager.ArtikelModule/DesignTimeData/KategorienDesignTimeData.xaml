@@ -1,0 +1,9 @@
+﻿<local:KategoriePageViewModel
+  xmlns:local="clr-namespace:AvonManager.ArtikelModule.ViewModels"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <local:KategoriePageViewModel.AlleKategorien>
+        <local:CategoryViewModel  Bemerkung="Hallo" Kategoriename="Kategorie 1" />
+        <local:CategoryViewModel  Bemerkung="Hallo 2" Kategoriename="Kategorie 2" />
+    </local:KategoriePageViewModel.AlleKategorien>
+</local:KategoriePageViewModel>
+

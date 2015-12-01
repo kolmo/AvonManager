@@ -1,11 +1,15 @@
-﻿using System;
-using AvonManager.ArtikelModule.Interfaces;
+﻿using AvonManager.Common.Base;
+using AvonManager.Interfaces;
 
 namespace AvonManager.ArtikelModule.Common
 {
-    internal class MarkierungFilterEntry : FilterEntryBase, IExtendedFilterEntry
+    public class MarkierungFilterEntry : FilterEntryBase, IExtendedFilterEntry
     {
         private AvonManager.BusinessObjects.MarkierungDto _markierung;
+        public MarkierungFilterEntry()
+        {
+
+        }
         public MarkierungFilterEntry(AvonManager.BusinessObjects.MarkierungDto markierung)
         {
             _markierung = markierung;

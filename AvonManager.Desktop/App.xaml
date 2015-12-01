@@ -7,12 +7,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Assets/Cosmo/Styles.xaml"/>
-                <!--<ResourceDictionary Source="Assets/Cosmo/CoreStyles.xaml"/>-->
-                <ResourceDictionary Source="Assets/Cosmo/SDKStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Brushes.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/CoreStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/SDKStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Styles.xaml"/>
                 <ResourceDictionary Source="Assets/ImagesDic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <helpers:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
             <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <helpers:BooleanToVisibilityConverter x:Key="BooleanToCollapsedConverter" Inverted="True"/>
             <helpers:BooleanToTextConverter x:Key="BooleanToTextConverter" />

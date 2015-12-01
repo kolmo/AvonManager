@@ -1,0 +1,12 @@
+﻿<local:ArtikelDetailsViewModel
+  xmlns:local="clr-namespace:AvonManager.ArtikelModule.ViewModels"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Artikelname="Lip Me"
+    Beschreibung="Lippenstift"
+    Einzelpreis="25.00"
+    Inhalt="40 ml"
+    Lagerbestand="3"
+    Nummer="34325"
+    >
+</local:ArtikelDetailsViewModel>
+

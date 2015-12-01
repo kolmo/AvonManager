@@ -1,0 +1,8 @@
+﻿<local:HeftEditViewModel
+  xmlns:local="clr-namespace:AvonManager.KundenHefte.ViewModels"
+    xmlns:common="clr-namespace:AvonManager.KundenHefte.Common"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  >
+  
+</local:HeftEditViewModel>
+

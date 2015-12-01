@@ -15,6 +15,11 @@
             <TextBlock x:Name="HeaderText" Text="Info"/>
             <TextBlock x:Name="AutorText" Text="Autor"/>
             <TextBlock x:Name="ContentText" Text="Info über den Seiteninhalt"/>
+            <TextBlock>
+                 <Hyperlink NavigateUri="http://www.icons8.com" RequestNavigate="Hyperlink_RequestNavigate" >
+        Icons8
+    </Hyperlink>
+            </TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="OKButton" Click="OKButton_Click" Padding="20,3" HorizontalAlignment="Right" Margin="2" TabIndex="1" Content="OK"/>

@@ -16,7 +16,7 @@ namespace AvonManager.Common.Helpers
             get { return (object)GetValue(CheckedItemProperty); }
             set { SetValue(CheckedItemProperty, value); }
         }
-
+        public bool ScrollAlwaysFirst { get; set; } = true;
         // Using a DependencyProperty as the backing store for CheckedItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CheckedItemProperty =
             DependencyProperty.Register("CheckedItem", typeof(object), typeof(ListBoxBehavoir), new PropertyMetadata(null, CheckedItemCallback));
@@ -28,11 +28,12 @@ namespace AvonManager.Common.Helpers
         {
             if (dp is ListBoxBehavoir)
             {
-                ListBox lb = (dp as ListBoxBehavoir).AssociatedObject;
+                ListBoxBehavoir behavior = dp as ListBoxBehavoir;
+                ListBox lb = behavior.AssociatedObject;
                 if (lb.Items.Count > 0)
                 {
                     lb.UpdateLayout();
-                    lb.ScrollIntoView(lb.Items[0]);                 
+                    lb.ScrollIntoView(behavior.ScrollAlwaysFirst ? lb.Items[0] : behavior.CheckedItem);                 
                 }
             }
         }

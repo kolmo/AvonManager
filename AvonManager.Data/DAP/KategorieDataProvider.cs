@@ -28,11 +28,49 @@ namespace AvonManager.Data
                    List<BusinessObjects.KategorieDto> list = new List<BusinessObjects.KategorieDto>();
                    foreach (AvonManager.Data.Kategorien kat in query.ToList())
                    {
-                       list.Add(_mapper.Map<BusinessObjects.KategorieDto>(kat));
+                       list.Add(_mapper.Map(kat));
                    }
                    return list;
                };
            });
+            task.Start();
+            return task;
+        }
+        public Task<List<KategorieDto>> ListKategorienByArtikel(int artikelId)
+        {
+            Task<List<KategorieDto>> task = new Task<List<KategorieDto>>(() =>
+            {
+                using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+                {
+                    var query = from b in database.Kategorien_x_Artikels
+                                join c in database.Kategoriens
+                                on b.KategorieId equals c.KategorieId
+                                where b.ArtikelId == artikelId
+                                select c;
+
+                    List<KategorieDto> markierungenList = new List<KategorieDto>();
+                    foreach (Kategorien mark in query)
+                    {
+                        markierungenList.Add(_mapper.Map(mark));
+                    }
+                    return markierungenList;
+                };
+            });
+            task.Start();
+            return task;
+        }
+        public Task<KategorieDto> LoadCategoryById(int categoryId)
+        {
+            Task<KategorieDto> task = new Task<KategorieDto>(() =>
+            {
+                using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+                {
+                    var query = from b in database.Kategoriens
+                                select b;
+                    Kategorien category = query.FirstOrDefault(x => x.KategorieId == categoryId);
+                    return _mapper.Map(category);
+                }
+            });
             task.Start();
             return task;
         }
@@ -43,24 +81,101 @@ namespace AvonManager.Data
             {
                 var kat = database.Kategoriens.Single(x => x.KategorieId == kategorie.KategorieId);
                 kat.Name = kategorie.Name;
+                kat.Bemerkung = kategorie.Bemerkung;
+                kat.Logo = kategorie.Logo;
                 database.SubmitChanges();
             }
         }
 
-        public void DeleteKategorie(KategorieDto kategorie)
+        public void DeleteKategorie(int kategorieId)
         {
-            ;
+            using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+            {
+                var query = from b in database.Kategorien_x_Artikels
+                            where b.KategorieId == kategorieId
+                            select b;
+                foreach (var detail in query)
+                {
+                    database.Kategorien_x_Artikels.DeleteOnSubmit(detail);
+                }
+                var kat = database.Kategoriens.Single(x => x.KategorieId == kategorieId);
+                database.Kategoriens.DeleteOnSubmit(kat);
+                database.SubmitChanges();
+            };
         }
-
 
         public int AddKategorie(KategorieDto kategorie)
         {
             using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
             {
-                database.Kategoriens.InsertOnSubmit(_mapper.Map<Kategorien>(kategorie));
+                Kategorien category = _mapper.Map(kategorie);
+                database.Kategoriens.InsertOnSubmit(category);
                 database.SubmitChanges();
-                return kategorie.KategorieId;
+                return category.KategorieId;
             }
+        }
+        public void UpdateKategorieArtikel(int artikelId, int kategorieId, bool insert)
+        {
+            using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+            {
+                var query = from b in database.Kategorien_x_Artikels
+                            where b.KategorieId == kategorieId && b.ArtikelId == artikelId
+                            select b;
+                if (!insert)
+                {
+                    foreach (var detail in query)
+                    {
+                        database.Kategorien_x_Artikels.DeleteOnSubmit(detail);
+                    }
+                }
+                else
+                {
+                    if (!query.Any())
+                    {
+                        Kategorien_x_Artikel kxa = new Kategorien_x_Artikel { ArtikelId = artikelId, KategorieId = kategorieId };
+                        database.Kategorien_x_Artikels.InsertOnSubmit(kxa);
+                    }
+                }
+                try
+                {
+                    database.SubmitChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public Task<Dictionary<int, int>> ListArticleCountsByCategory(int[] categoryIds)
+        {
+            Task<Dictionary<int, int>> task = new Task<Dictionary<int, int>>(() =>
+            {
+                Dictionary<int, int> dic = new Dictionary<int, int>();
+                if (categoryIds?.Length > 0)
+                {
+                    using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+                    {
+                        var query = from c in database.Kategorien_x_Artikels
+                                    where categoryIds.Contains(c.KategorieId)
+                                    group c by c.KategorieId into grpCategorys
+                                    select new
+                                    {
+                                        categoryId = grpCategorys.Key,
+                                        cnt = grpCategorys.Count()
+                                    };
+
+                        foreach (var grp in query)
+                        {
+                            dic[grp.categoryId] = grp.cnt;
+                        }
+                    }
+                }
+                return dic;
+            });
+            task.Start();
+            return task;
+
         }
     }
 }

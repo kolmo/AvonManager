@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using AvonManager.ArtikelModule.ViewModels;
+using Microsoft.Practices.Prism.Mvvm;
 using System.Windows.Controls;
 
 namespace AvonManager.ArtikelModule.Controls
@@ -11,6 +12,10 @@ namespace AvonManager.ArtikelModule.Controls
         public SerienControl()
         {
             InitializeComponent();
+        }
+        public SerienControl(SerienAdminViewModel viewmodel):this()
+        {
+            DataContext = viewmodel;
         }
     }
 }

@@ -8,6 +8,11 @@
              xmlns:viewModel="clr-namespace:Microsoft.Practices.Prism.Mvvm;assembly=Microsoft.Practices.Prism.Mvvm.Desktop"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadData" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,66 +20,43 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="serienSource"
-                              Source="{Binding Path=AlleSerien}"/>
+                              Source="{Binding Path=Serien}"/>
+            <ContextMenu x:Key="cmenu">
+                <MenuItem Header="Löschen" Command="{Binding Path=DeleteSerieCommand}"/>
+            </ContextMenu>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border Style="{StaticResource SerienBorderStyle}" >
-                <ItemsControl ItemsSource="{Binding Source={StaticResource serienSource}}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <Grid Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="button" Content="Neue Serie" Margin="3" VerticalAlignment="Top" Command="{Binding AddNewSerieCommand}"/>
+                    <DataGrid ItemsSource="{Binding Source={StaticResource serienSource}}" AutoGenerateColumns="False"
+            			IsReadOnly="True" SelectedItem="{Binding SelectedKategorie}" ContextMenuService.ContextMenu="{StaticResource cmenu}" Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Bemerkung" Binding="{Binding Bemerkung}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Border>
             <Border Grid.Column="1" Style="{StaticResource SerienBorderStyle}" >
-                <GroupBox Name="serienDataForm" 
-                              DataContext="{Binding Path=SelectedSerie, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="EditEnded">
-                            <ei:CallMethodAction MethodName="EditEnded" TargetObject="{Binding}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <Grid Name="TCGrid" VerticalAlignment="Top">
-                        <TabControl 
-                                                SelectedIndex="{Binding Path=DataContext.SelectedSerieTabItem, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=GroupBox}}"
-                                                    >
-                            <TabItem Header="Details">
-                                <StackPanel>
-                                    <GroupBox Header="Name">
-                                        <TextBox Text="{Binding Path=Name, Mode=TwoWay}"/>
-                                    </GroupBox>
-                                    <GroupBox Header="Bemerkung">
-                                        <TextBox Text="{Binding Path=Bemerkung, Mode=TwoWay}"/>
-                                    </GroupBox>
-                                </StackPanel>
-                            </TabItem>
-                            <TabItem Header="Kinder">
-                                <ListBox  Style="{StaticResource AvonListBaseStyle}" 
-                                            ItemsSource="{Binding Path=DataContext.SortedSerienListe, RelativeSource={RelativeSource AncestorType=GroupBox}}">
-                                </ListBox>
-                            </TabItem>
-                            <TabItem Header="Logo">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <!--<controls:FileLoader Grid.Row="0" FileData="{Binding Path=Logo, Mode=TwoWay}"  HorizontalAlignment="Left"
-                                                                 EnableWebcam="True">
-                                            </controls:FileLoader>-->
-                                    <Image Grid.Row="1" Margin="3" MaxHeight="300" Source="{Binding Path=Logo, Converter={StaticResource ByteToImageConverter}}"/>
-                                </Grid>
-                            </TabItem>
-                        </TabControl>
-                    </Grid>
-                </GroupBox>
+                <StackPanel>
+                    <GroupBox Header="Name">
+                        <TextBox Text="{Binding Path=Name, Mode=TwoWay}"/>
+                    </GroupBox>
+                    <GroupBox Header="Bemerkung">
+                        <TextBox Text="{Binding Path=Bemerkung, Mode=TwoWay}"/>
+                    </GroupBox>
+                </StackPanel>
             </Border>
         </Grid>
     </Grid>

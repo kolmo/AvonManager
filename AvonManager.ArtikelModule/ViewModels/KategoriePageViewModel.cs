@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Controls;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Prism.Mvvm;
+﻿using Microsoft.Practices.Prism.Mvvm;
 using AvonManager.Interfaces;
 using AvonManager.BusinessObjects;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
-
+using System.Collections.Generic;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
@@ -16,15 +11,18 @@ namespace AvonManager.ArtikelModule.ViewModels
     {
         #region Private fields
         IKategorieProvider _dataProvider;
-        private ObservableCollection<KategorieViewModel> _alleKategorien;
+        IMarkierungenDataProvider _markierungenDataProvider;
+        ISerienDataProvider _seriendataProvider;
         private bool _isDataLoaded = false;
         #endregion
 
         #region Konstruktion
-        public KategoriePageViewModel(IKategorieProvider dataProvider)
+        public KategoriePageViewModel() { }
+        public KategoriePageViewModel(IKategorieProvider dataProvider, IMarkierungenDataProvider mprovider, ISerienDataProvider sprovider)
         {
             _dataProvider = dataProvider;
-            _alleKategorien = new ObservableCollection<KategorieViewModel>();
+            _markierungenDataProvider = mprovider;
+            _seriendataProvider = sprovider;
             DeleteCommand = new DelegateCommand<KategorieViewModel>(DeleteCurrentKategorie);
 
         }
@@ -35,12 +33,10 @@ namespace AvonManager.ArtikelModule.ViewModels
             if (!_isDataLoaded)
             {
                 var result = await _dataProvider.ListAllKategorien();
-                foreach (KategorieDto kategorie in result)
-                {
-                    KategorieViewModel vm = new KategorieViewModel(kategorie, _dataProvider);
-                    AlleKategorien.Add(vm);
-                }
-                OnPropertyChanged(() => this.AlleKategorien);
+                AlleKategorien.Clear();
+                result.ForEach(x => AlleKategorien.Add(new KategorieViewModel(x, _dataProvider)));
+                LoadMarkierungen();
+                LoadSerien();
                 _isDataLoaded = true;
             }
         }
@@ -52,18 +48,9 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// <value>
         /// The AlleKategorien.
         /// </value>
-        public ObservableCollection<KategorieViewModel> AlleKategorien
-        {
-            get { return _alleKategorien; }
-            set
-            {
-                if (_alleKategorien != value)
-                {
-                    _alleKategorien = value;
-                    OnPropertyChanged(() => this.AlleKategorien);
-                }
-            }
-        }
+        public ObservableCollection<KategorieViewModel> AlleKategorien { get; } = new ObservableCollection<KategorieViewModel>();
+        public ObservableCollection<MarkierungViewModel> AlleMarkierungen { get; } = new ObservableCollection<MarkierungViewModel>();
+        public ObservableCollection<SerieViewModel> AlleSerien { get; } = new ObservableCollection<SerieViewModel>();
         public DelegateCommand<KategorieViewModel> DeleteCommand { get; private set; }
 
         #endregion
@@ -72,11 +59,23 @@ namespace AvonManager.ArtikelModule.ViewModels
 
         #endregion
         #region Private methods
+        private async void LoadMarkierungen()
+        {
+            List<MarkierungDto> markierungen = await _markierungenDataProvider.ListAllMarkierungen(EntitaetDto.Artikel);
+            AlleMarkierungen.Clear();
+            markierungen.ForEach(x => AlleMarkierungen.Add(new MarkierungViewModel(x, _markierungenDataProvider)));
+        }
+        private async void LoadSerien()
+        {
+            var serien = await _seriendataProvider.ListAllSerien();
+            AlleSerien.Clear();
+            serien.ForEach(x => AlleSerien.Add(new SerieViewModel(x)));
+        }
         private void DeleteCurrentKategorie(KategorieViewModel kategorie)
         {
             if (kategorie != null)
             {
-                _dataProvider.DeleteKategorie(kategorie.Kategorie);
+                _dataProvider.DeleteKategorie(kategorie.Kategorie.KategorieId);
                 AlleKategorien.Remove(kategorie);
             }
         }

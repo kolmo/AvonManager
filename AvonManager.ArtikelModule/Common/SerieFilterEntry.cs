@@ -1,5 +1,7 @@
-﻿using AvonManager.ArtikelModule.Interfaces;
+﻿using System;
 using AvonManager.BusinessObjects;
+using AvonManager.Common.Base;
+using AvonManager.Interfaces;
 
 namespace AvonManager.ArtikelModule.Common
 {
@@ -23,6 +25,38 @@ namespace AvonManager.ArtikelModule.Common
             get
             {
                 return _serie.SerienId;
+            }
+        }
+    }
+
+    internal class NullSerieFilterEntry : IFilterEntry
+    {
+        public string DisplayName
+        {
+            get
+            {
+                return "<Keine Serie>";
+            }
+        }
+
+        public int ID
+        {
+            get
+            {
+                return -1;
+            }
+        }
+
+        public bool IsSelected
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
             }
         }
     }

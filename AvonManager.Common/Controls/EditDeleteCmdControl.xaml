@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="AvonManager.Common.Controls.EditDeleteCmdControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="124.572" d:DesignHeight="169.498" 
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="buttonEdit" HorizontalAlignment="Left" Grid.Row="0">
+            <Image Style="{StaticResource EditImage}"/>
+        </Button>
+        <Button x:Name="buttonDelete" HorizontalAlignment="Left" Grid.Row="2">
+            <Image Style="{StaticResource DeleteImage}"/>
+        </Button>
+    </Grid>
+</UserControl>

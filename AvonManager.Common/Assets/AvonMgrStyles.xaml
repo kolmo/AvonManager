@@ -13,26 +13,8 @@
     <helper:IntegerToBrushConverter x:Key="I2BrushConverter"/>
     <helper:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
     <helper:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    <!--Spezielle Stile-->
-    <!-- EXPRESSION DARK VALUES -->
-
-    <Style TargetType="{x:Type TabItem}" x:Key="RegionTabItemHeaderStyle">
-        <Setter Property="Header" 
-                Value="{Binding RelativeSource={RelativeSource Self}, 
-                    Path=Content.Title}" />
-    </Style>
-    <Style TargetType="TextBlock">
-        <Setter Property="FontSize" Value="14"/>
-    </Style>
-    <Style x:Key="DingbatsFontStyle" TargetType="TextBlock">
-        <!--<Setter Property="FontFamily" Value="/AvonManager;component/Fonts/BRDB1RT0.TTF#PT Dingbats 1"/>-->
-        <Setter Property="FontSize" Value="24"/>
-    </Style>
-    <SolidColorBrush x:Key="TextBrush" Color="#FFFFFFFF" />
-    <Color x:Key="TextColor">#FFFFFFFF</Color>
-    <SolidColorBrush x:Key="HeftItemBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="KundenItemBrush" Color="Transparent"/>
-
+    <helper:BusyFlagConverter x:Key="BFlagConverter"/>
+ 
     <Style x:Key="FilterButtonStyle" TargetType="ButtonBase">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -162,54 +144,7 @@
     <Style x:Key="KachelGridStyle" TargetType="Grid">
         <Setter Property="Margin" Value="3"/>
     </Style>
-    <!--<DataTemplate DataType="web:Artikel">
-        <Border Background="{Binding Path=BackgroundBrush}" Padding="3" CornerRadius="5">
-            <Grid  
-               Style="{StaticResource KachelGridStyle}" ToolTipService.ToolTip="{Binding Path=Artikelname}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Path=Serienname}" Style="{StaticResource KachelHeaderStyle}"/>
-                <TextBlock Grid.Row="1" Text="{Binding Path=Artikelname}"  Style="{StaticResource KachelTextStyle}"
-                       Foreground="{Binding Path=ForegroundBrush}"/>
-                <Grid Grid.Row="2">
-                    <ItemsControl ItemsSource="{Binding Path=Varianten}" >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Style="{StaticResource PurePictureButtonStyle}" Padding="3" Command="{Binding Path=DataContext.SelectArtikelOrVariant, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                            CommandParameter="{Binding}">
-                                        <Ellipse Fill="Black" Width="10" Height="10"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </Button>
-                                    <TextBlock Grid.Column="1" Text="{Binding Path=ArtikelNr}" MinWidth="50" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding Path=Variante}" VerticalAlignment="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
-            </Grid>
-        </Border>
-    </DataTemplate>-->
-    <!--<DataTemplate DataType="web:Hefte">
-        <Grid Background="#FF89890B"  Style="{StaticResource KachelGridStyle}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock  Text="H" Style="{StaticResource KachelHeaderStyle}"/>
-            <TextBlock Grid.Row="1" Text="{Binding Path=Titel}" Style="{StaticResource KachelTextStyle}"/>
-            <TextBlock Grid.Row="2" Text="{Binding Path=Jahr}" Style="{StaticResource KachelTextStyle}"/>
-        </Grid>
-    </DataTemplate>-->
+   
     <Style x:Key="KachelListboxStyle" TargetType="ListBox">
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
@@ -239,8 +174,8 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=FarbeARGB, Converter={StaticResource I2BrushConverter}}"
-                        ToolTipService.ToolTip="{Binding Path=Titel}"/>
+                    <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=ColorCode, Converter={StaticResource I2BrushConverter}}"
+                        ToolTipService.ToolTip="{Binding Path=MarkingTitle}"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>

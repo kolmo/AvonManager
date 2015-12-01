@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="AvonManager.Bestellungen.Views.OrderSearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:local="clr-namespace:AvonManager.Bestellungen.Views"
+             xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
+             mc:Ignorable="d" 
+             d:DesignHeight="500" Width="250">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadSupplementData" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
+            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#FFE7F4F5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="textBox" TextWrapping="Wrap" Text="{Binding Path=Criteria.FullText}" VerticalAlignment="Center" ToolTipService.ToolTip="Suche in Artikelbeschreibung, FDG"/>
+            <Button x:Name="buttonSearch" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top" Command="{Binding StarSearchCommand}" Grid.Column="1">
+                <Image Style="{StaticResource SearchImage}"/>
+            </Button>
+            <Button x:Name="buttonReset" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top"  Command="{Binding ResetSearchCommand}" Grid.Column="2">
+                <Image Style="{StaticResource ClearFilterImage}"/>
+            </Button>
+        </Grid>
+        <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">
+            <TabControl SelectedIndex="{Binding SelectedTab}">
+                <TabItem Header="Liste">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ListBox ItemsSource="{Binding AllOrders}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border  Margin="3" CornerRadius="2" BorderThickness="0" Background="#FFFFCACA">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid >
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="{Binding CustomerName}" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                                                                   DeleteCommand="{Binding DeleteOrderCommand}" DeleteCommandParameter="{Binding}"
+                                                                   EditCommand="{Binding EditOrderCommand}" EditCommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid Grid.Row="1" Margin="0,3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button  Command="{Binding LoadMoreCommand}" Grid.Column="1" ToolTipService.ToolTip="Mehr laden...">
+                                <Image Style="{StaticResource LoadMoreImage}"/>
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="Erweiterte Suche">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <GroupBox Margin="3"  Header="Kundin">
+                                <ComboBox  x:Name="KundenCombo" ItemsSource="{Binding Path=CustomersWithOrders}" DisplayMemberPath="Nachname" 
+                                       SelectedValuePath="KundenId"
+                                                          SelectedValue="{Binding Path=Criteria.CustomerId, Mode=TwoWay}">
+                                </ComboBox>
+                            </GroupBox>
+                            <GroupBox Margin="3" Header="Artikel-Nummer">
+                                <TextBox 
+                                         Text="{Binding Path=Criteria.ArticleNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="Suche in Artikel-Nummer"/>
+                            </GroupBox>
+                            <GroupBox Margin="3" Header="Campagne">
+                                <TextBox  
+                                         Text="{Binding Path=Criteria.Campaign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="Suche in Campagne"/>
+                            </GroupBox>
+                            <GroupBox Margin="3" Header="Löschvormerkung">
+                                <CheckBox 
+                                         IsChecked="{Binding Path=Criteria.DeletionReserved, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True"
+                                              ToolTipService.ToolTip="Mit Löschvormerkung"/>
+                            </GroupBox>
+                        </StackPanel>
+                        <GroupBox Grid.Row="1" Margin="3" Header="Jahr"  ToolTipService.ToolTip="Suche in Jahr">
+                            <ListBox ItemsSource="{Binding Path=OrderYears}" >
+                                <ListBox.Resources>
+                                    <Style TargetType="CheckBox"/>
+                                </ListBox.Resources>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" VerticalContentAlignment="Center">
+                                            <TextBlock  Text="{Binding Path=Year}"/>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </GroupBox>
+                    </Grid>
+
+                </TabItem>
+            </TabControl>
+        </xctk:BusyIndicator>
+    </Grid>
+</UserControl>

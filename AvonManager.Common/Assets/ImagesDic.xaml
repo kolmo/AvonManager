@@ -5,7 +5,7 @@
     <Style x:Key="LogoImageBaseStyle" TargetType="Image">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Height" Value="80"/>
+        <!--<Setter Property="Height" Value="50"/>-->
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
     <Style x:Key="ArtikelLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
@@ -32,8 +32,30 @@
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/BestellungLogo.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Bestellungen verwalten"/>
     </Style>
+    <Style x:Key="LoadMoreImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/More-26.png"/>
+    </Style>
+    <Style x:Key="AddImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Plus-26.png"/>
+    </Style>
+    <Style x:Key="SearchImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Search-26.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Suche starten"/>
+    </Style>
+    <Style x:Key="ClearFilterImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Broom-26.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Suche zurücksetzen"/>
+    </Style>
     <Style x:Key="SaveImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/SaveIcon.png"/>
+    </Style>
+    <Style x:Key="EditImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Edit-26.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Bearbeiten"/>
+    </Style>
+    <Style x:Key="DeleteImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Trash-26.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Löschen"/>
     </Style>
     <Style x:Key="CancelImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/AbbruchIcon.png"/>
@@ -58,8 +80,8 @@
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ResultstoText_9948.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Zur Bestellung hinzufügen"/>
     </Style>
-    <Style x:Key="InfoImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/info.png"/>
+    <Style x:Key="InfoImage" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Info-50.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Information"/>
     </Style>
 

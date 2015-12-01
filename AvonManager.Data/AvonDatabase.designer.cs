@@ -33,9 +33,6 @@ namespace AvonManager.Data
     partial void InsertArtikel(Artikel instance);
     partial void UpdateArtikel(Artikel instance);
     partial void DeleteArtikel(Artikel instance);
-    partial void InsertArtikelVarianten(ArtikelVarianten instance);
-    partial void UpdateArtikelVarianten(ArtikelVarianten instance);
-    partial void DeleteArtikelVarianten(ArtikelVarianten instance);
     partial void InsertKunden(Kunden instance);
     partial void UpdateKunden(Kunden instance);
     partial void DeleteKunden(Kunden instance);
@@ -54,6 +51,24 @@ namespace AvonManager.Data
     partial void InsertKategorien_x_Artikel(Kategorien_x_Artikel instance);
     partial void UpdateKategorien_x_Artikel(Kategorien_x_Artikel instance);
     partial void DeleteKategorien_x_Artikel(Kategorien_x_Artikel instance);
+    partial void InsertHefte(Hefte instance);
+    partial void UpdateHefte(Hefte instance);
+    partial void DeleteHefte(Hefte instance);
+    partial void InsertHefte_x_Kunden(Hefte_x_Kunden instance);
+    partial void UpdateHefte_x_Kunden(Hefte_x_Kunden instance);
+    partial void DeleteHefte_x_Kunden(Hefte_x_Kunden instance);
+    partial void InsertEntitaeten(Entitaeten instance);
+    partial void UpdateEntitaeten(Entitaeten instance);
+    partial void DeleteEntitaeten(Entitaeten instance);
+    partial void InsertBestellung(Bestellung instance);
+    partial void UpdateBestellung(Bestellung instance);
+    partial void DeleteBestellung(Bestellung instance);
+    partial void InsertBestelldetail(Bestelldetail instance);
+    partial void UpdateBestelldetail(Bestelldetail instance);
+    partial void DeleteBestelldetail(Bestelldetail instance);
+    partial void InsertBestellstatus(Bestellstatus instance);
+    partial void UpdateBestellstatus(Bestellstatus instance);
+    partial void DeleteBestellstatus(Bestellstatus instance);
     #endregion
 		
 		public AvonDatabaseDataContext() : 
@@ -91,14 +106,6 @@ namespace AvonManager.Data
 			get
 			{
 				return this.GetTable<Artikel>();
-			}
-		}
-		
-		public System.Data.Linq.Table<ArtikelVarianten> ArtikelVariantens
-		{
-			get
-			{
-				return this.GetTable<ArtikelVarianten>();
 			}
 		}
 		
@@ -149,6 +156,54 @@ namespace AvonManager.Data
 				return this.GetTable<Kategorien_x_Artikel>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Hefte> Heftes
+		{
+			get
+			{
+				return this.GetTable<Hefte>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Hefte_x_Kunden> Hefte_x_Kundens
+		{
+			get
+			{
+				return this.GetTable<Hefte_x_Kunden>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Entitaeten> Entitaetens
+		{
+			get
+			{
+				return this.GetTable<Entitaeten>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Bestellung> Bestellungs
+		{
+			get
+			{
+				return this.GetTable<Bestellung>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Bestelldetail> Bestelldetails
+		{
+			get
+			{
+				return this.GetTable<Bestelldetail>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Bestellstatus> Bestellstatus
+		{
+			get
+			{
+				return this.GetTable<Bestellstatus>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Artikel")]
@@ -175,7 +230,7 @@ namespace AvonManager.Data
 		
 		private System.Data.Linq.Binary _Bild;
 		
-		private EntitySet<ArtikelVarianten> _ArtikelVariantens;
+		private System.DateTime _ChangedAt;
 		
 		private EntitySet<Markierungen_x_Artikel> _Markierungen_x_Artikels;
 		
@@ -205,11 +260,12 @@ namespace AvonManager.Data
     partial void OnSerienIdChanged();
     partial void OnBildChanging(System.Data.Linq.Binary value);
     partial void OnBildChanged();
+    partial void OnChangedAtChanging(System.DateTime value);
+    partial void OnChangedAtChanged();
     #endregion
 		
 		public Artikel()
 		{
-			this._ArtikelVariantens = new EntitySet<ArtikelVarianten>(new Action<ArtikelVarianten>(this.attach_ArtikelVariantens), new Action<ArtikelVarianten>(this.detach_ArtikelVariantens));
 			this._Markierungen_x_Artikels = new EntitySet<Markierungen_x_Artikel>(new Action<Markierungen_x_Artikel>(this.attach_Markierungen_x_Artikels), new Action<Markierungen_x_Artikel>(this.detach_Markierungen_x_Artikels));
 			this._Kategorien_x_Artikels = new EntitySet<Kategorien_x_Artikel>(new Action<Kategorien_x_Artikel>(this.attach_Kategorien_x_Artikels), new Action<Kategorien_x_Artikel>(this.detach_Kategorien_x_Artikels));
 			this._Serien = default(EntityRef<Serien>);
@@ -380,7 +436,7 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bild", DbType="Image", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bild", DbType="Image", UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary Bild
 		{
 			get
@@ -400,16 +456,23 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artikel_ArtikelVarianten", Storage="_ArtikelVariantens", ThisKey="ArtikelId", OtherKey="ArtikelId")]
-		public EntitySet<ArtikelVarianten> ArtikelVariantens
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChangedAt", DbType="datetime")]
+		public System.DateTime ChangedAt
 		{
 			get
 			{
-				return this._ArtikelVariantens;
+				return this._ChangedAt;
 			}
 			set
 			{
-				this._ArtikelVariantens.Assign(value);
+				if ((this._ChangedAt != value))
+				{
+					this.OnChangedAtChanging(value);
+					this.SendPropertyChanging();
+					this._ChangedAt = value;
+					this.SendPropertyChanged("ChangedAt");
+					this.OnChangedAtChanged();
+				}
 			}
 		}
 		
@@ -493,18 +556,6 @@ namespace AvonManager.Data
 			}
 		}
 		
-		private void attach_ArtikelVariantens(ArtikelVarianten entity)
-		{
-			this.SendPropertyChanging();
-			entity.Artikel = this;
-		}
-		
-		private void detach_ArtikelVariantens(ArtikelVarianten entity)
-		{
-			this.SendPropertyChanging();
-			entity.Artikel = null;
-		}
-		
 		private void attach_Markierungen_x_Artikels(Markierungen_x_Artikel entity)
 		{
 			this.SendPropertyChanging();
@@ -527,229 +578,6 @@ namespace AvonManager.Data
 		{
 			this.SendPropertyChanging();
 			entity.Artikel = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ArtikelVarianten")]
-	public partial class ArtikelVarianten : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _VariantenId;
-		
-		private int _ArtikelId;
-		
-		private string _ArtikelNr;
-		
-		private string _Variante;
-		
-		private System.Nullable<int> _Lagerbestand;
-		
-		private System.Nullable<decimal> _Einzelpreis;
-		
-		private EntityRef<Artikel> _Artikel;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnVariantenIdChanging(int value);
-    partial void OnVariantenIdChanged();
-    partial void OnArtikelIdChanging(int value);
-    partial void OnArtikelIdChanged();
-    partial void OnArtikelNrChanging(string value);
-    partial void OnArtikelNrChanged();
-    partial void OnVarianteChanging(string value);
-    partial void OnVarianteChanged();
-    partial void OnLagerbestandChanging(System.Nullable<int> value);
-    partial void OnLagerbestandChanged();
-    partial void OnEinzelpreisChanging(System.Nullable<decimal> value);
-    partial void OnEinzelpreisChanged();
-    #endregion
-		
-		public ArtikelVarianten()
-		{
-			this._Artikel = default(EntityRef<Artikel>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariantenId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int VariantenId
-		{
-			get
-			{
-				return this._VariantenId;
-			}
-			set
-			{
-				if ((this._VariantenId != value))
-				{
-					this.OnVariantenIdChanging(value);
-					this.SendPropertyChanging();
-					this._VariantenId = value;
-					this.SendPropertyChanged("VariantenId");
-					this.OnVariantenIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArtikelId", DbType="Int NOT NULL")]
-		public int ArtikelId
-		{
-			get
-			{
-				return this._ArtikelId;
-			}
-			set
-			{
-				if ((this._ArtikelId != value))
-				{
-					if (this._Artikel.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnArtikelIdChanging(value);
-					this.SendPropertyChanging();
-					this._ArtikelId = value;
-					this.SendPropertyChanged("ArtikelId");
-					this.OnArtikelIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArtikelNr", DbType="NVarChar(10)")]
-		public string ArtikelNr
-		{
-			get
-			{
-				return this._ArtikelNr;
-			}
-			set
-			{
-				if ((this._ArtikelNr != value))
-				{
-					this.OnArtikelNrChanging(value);
-					this.SendPropertyChanging();
-					this._ArtikelNr = value;
-					this.SendPropertyChanged("ArtikelNr");
-					this.OnArtikelNrChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Variante", DbType="NVarChar(255)")]
-		public string Variante
-		{
-			get
-			{
-				return this._Variante;
-			}
-			set
-			{
-				if ((this._Variante != value))
-				{
-					this.OnVarianteChanging(value);
-					this.SendPropertyChanging();
-					this._Variante = value;
-					this.SendPropertyChanged("Variante");
-					this.OnVarianteChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Lagerbestand", DbType="Int")]
-		public System.Nullable<int> Lagerbestand
-		{
-			get
-			{
-				return this._Lagerbestand;
-			}
-			set
-			{
-				if ((this._Lagerbestand != value))
-				{
-					this.OnLagerbestandChanging(value);
-					this.SendPropertyChanging();
-					this._Lagerbestand = value;
-					this.SendPropertyChanged("Lagerbestand");
-					this.OnLagerbestandChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Einzelpreis", DbType="Money")]
-		public System.Nullable<decimal> Einzelpreis
-		{
-			get
-			{
-				return this._Einzelpreis;
-			}
-			set
-			{
-				if ((this._Einzelpreis != value))
-				{
-					this.OnEinzelpreisChanging(value);
-					this.SendPropertyChanging();
-					this._Einzelpreis = value;
-					this.SendPropertyChanged("Einzelpreis");
-					this.OnEinzelpreisChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Artikel_ArtikelVarianten", Storage="_Artikel", ThisKey="ArtikelId", OtherKey="ArtikelId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
-		public Artikel Artikel
-		{
-			get
-			{
-				return this._Artikel.Entity;
-			}
-			set
-			{
-				Artikel previousValue = this._Artikel.Entity;
-				if (((previousValue != value) 
-							|| (this._Artikel.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Artikel.Entity = null;
-						previousValue.ArtikelVariantens.Remove(this);
-					}
-					this._Artikel.Entity = value;
-					if ((value != null))
-					{
-						value.ArtikelVariantens.Add(this);
-						this._ArtikelId = value.ArtikelId;
-					}
-					else
-					{
-						this._ArtikelId = default(int);
-					}
-					this.SendPropertyChanged("Artikel");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -791,6 +619,10 @@ namespace AvonManager.Data
 		
 		private System.Nullable<bool> _Inaktiv;
 		
+		private EntitySet<Hefte_x_Kunden> _Hefte_x_Kundens;
+		
+		private EntitySet<Bestellung> _Bestellungs;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -831,6 +663,8 @@ namespace AvonManager.Data
 		
 		public Kunden()
 		{
+			this._Hefte_x_Kundens = new EntitySet<Hefte_x_Kunden>(new Action<Hefte_x_Kunden>(this.attach_Hefte_x_Kundens), new Action<Hefte_x_Kunden>(this.detach_Hefte_x_Kundens));
+			this._Bestellungs = new EntitySet<Bestellung>(new Action<Bestellung>(this.attach_Bestellungs), new Action<Bestellung>(this.detach_Bestellungs));
 			OnCreated();
 		}
 		
@@ -1114,7 +948,7 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bild", DbType="Image", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bild", DbType="Image", UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary Bild
 		{
 			get
@@ -1154,6 +988,32 @@ namespace AvonManager.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kunden_Hefte_x_Kunden", Storage="_Hefte_x_Kundens", ThisKey="KundenId", OtherKey="KundenId")]
+		public EntitySet<Hefte_x_Kunden> Hefte_x_Kundens
+		{
+			get
+			{
+				return this._Hefte_x_Kundens;
+			}
+			set
+			{
+				this._Hefte_x_Kundens.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kunden_Bestellung", Storage="_Bestellungs", ThisKey="KundenId", OtherKey="KundenId")]
+		public EntitySet<Bestellung> Bestellungs
+		{
+			get
+			{
+				return this._Bestellungs;
+			}
+			set
+			{
+				this._Bestellungs.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1172,6 +1032,30 @@ namespace AvonManager.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Hefte_x_Kundens(Hefte_x_Kunden entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kunden = this;
+		}
+		
+		private void detach_Hefte_x_Kundens(Hefte_x_Kunden entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kunden = null;
+		}
+		
+		private void attach_Bestellungs(Bestellung entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kunden = this;
+		}
+		
+		private void detach_Bestellungs(Bestellung entity)
+		{
+			this.SendPropertyChanging();
+			entity.Kunden = null;
 		}
 	}
 	
@@ -1319,7 +1203,7 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logo", DbType="Image", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logo", DbType="Image", UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary Logo
 		{
 			get
@@ -1571,6 +1455,8 @@ namespace AvonManager.Data
 		
 		private EntitySet<Markierungen_x_Artikel> _Markierungen_x_Artikels;
 		
+		private EntityRef<Entitaeten> _Entitaeten;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1590,6 +1476,7 @@ namespace AvonManager.Data
 		public Markierungen()
 		{
 			this._Markierungen_x_Artikels = new EntitySet<Markierungen_x_Artikel>(new Action<Markierungen_x_Artikel>(this.attach_Markierungen_x_Artikels), new Action<Markierungen_x_Artikel>(this.detach_Markierungen_x_Artikels));
+			this._Entitaeten = default(EntityRef<Entitaeten>);
 			OnCreated();
 		}
 		
@@ -1624,6 +1511,10 @@ namespace AvonManager.Data
 			{
 				if ((this._EntitaetId != value))
 				{
+					if (this._Entitaeten.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnEntitaetIdChanging(value);
 					this.SendPropertyChanging();
 					this._EntitaetId = value;
@@ -1703,6 +1594,40 @@ namespace AvonManager.Data
 			set
 			{
 				this._Markierungen_x_Artikels.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Entitaeten_Markierungen", Storage="_Entitaeten", ThisKey="EntitaetId", OtherKey="EntitaetId", IsForeignKey=true)]
+		public Entitaeten Entitaeten
+		{
+			get
+			{
+				return this._Entitaeten.Entity;
+			}
+			set
+			{
+				Entitaeten previousValue = this._Entitaeten.Entity;
+				if (((previousValue != value) 
+							|| (this._Entitaeten.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Entitaeten.Entity = null;
+						previousValue.Markierungens.Remove(this);
+					}
+					this._Entitaeten.Entity = value;
+					if ((value != null))
+					{
+						value.Markierungens.Add(this);
+						this._EntitaetId = value.EntitaetId;
+					}
+					else
+					{
+						this._EntitaetId = default(int);
+					}
+					this.SendPropertyChanged("Entitaeten");
+				}
 			}
 		}
 		
@@ -1893,7 +1818,7 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logo", DbType="Image", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logo", DbType="Image", UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary Logo
 		{
 			get
@@ -2183,6 +2108,1295 @@ namespace AvonManager.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Hefte")]
+	public partial class Hefte : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _HeftId;
+		
+		private string _Titel;
+		
+		private string _Beschreibung;
+		
+		private System.Nullable<int> _Jahr;
+		
+		private System.Data.Linq.Binary _Bild;
+		
+		private EntitySet<Hefte_x_Kunden> _Hefte_x_Kundens;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnHeftIdChanging(int value);
+    partial void OnHeftIdChanged();
+    partial void OnTitelChanging(string value);
+    partial void OnTitelChanged();
+    partial void OnBeschreibungChanging(string value);
+    partial void OnBeschreibungChanged();
+    partial void OnJahrChanging(System.Nullable<int> value);
+    partial void OnJahrChanged();
+    partial void OnBildChanging(System.Data.Linq.Binary value);
+    partial void OnBildChanged();
+    #endregion
+		
+		public Hefte()
+		{
+			this._Hefte_x_Kundens = new EntitySet<Hefte_x_Kunden>(new Action<Hefte_x_Kunden>(this.attach_Hefte_x_Kundens), new Action<Hefte_x_Kunden>(this.detach_Hefte_x_Kundens));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeftId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int HeftId
+		{
+			get
+			{
+				return this._HeftId;
+			}
+			set
+			{
+				if ((this._HeftId != value))
+				{
+					this.OnHeftIdChanging(value);
+					this.SendPropertyChanging();
+					this._HeftId = value;
+					this.SendPropertyChanged("HeftId");
+					this.OnHeftIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Titel", DbType="NVarChar(100)")]
+		public string Titel
+		{
+			get
+			{
+				return this._Titel;
+			}
+			set
+			{
+				if ((this._Titel != value))
+				{
+					this.OnTitelChanging(value);
+					this.SendPropertyChanging();
+					this._Titel = value;
+					this.SendPropertyChanged("Titel");
+					this.OnTitelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Beschreibung", DbType="NVarChar(500)")]
+		public string Beschreibung
+		{
+			get
+			{
+				return this._Beschreibung;
+			}
+			set
+			{
+				if ((this._Beschreibung != value))
+				{
+					this.OnBeschreibungChanging(value);
+					this.SendPropertyChanging();
+					this._Beschreibung = value;
+					this.SendPropertyChanged("Beschreibung");
+					this.OnBeschreibungChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jahr", DbType="Int")]
+		public System.Nullable<int> Jahr
+		{
+			get
+			{
+				return this._Jahr;
+			}
+			set
+			{
+				if ((this._Jahr != value))
+				{
+					this.OnJahrChanging(value);
+					this.SendPropertyChanging();
+					this._Jahr = value;
+					this.SendPropertyChanged("Jahr");
+					this.OnJahrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bild", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Bild
+		{
+			get
+			{
+				return this._Bild;
+			}
+			set
+			{
+				if ((this._Bild != value))
+				{
+					this.OnBildChanging(value);
+					this.SendPropertyChanging();
+					this._Bild = value;
+					this.SendPropertyChanged("Bild");
+					this.OnBildChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Hefte_Hefte_x_Kunden", Storage="_Hefte_x_Kundens", ThisKey="HeftId", OtherKey="HeftId")]
+		public EntitySet<Hefte_x_Kunden> Hefte_x_Kundens
+		{
+			get
+			{
+				return this._Hefte_x_Kundens;
+			}
+			set
+			{
+				this._Hefte_x_Kundens.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Hefte_x_Kundens(Hefte_x_Kunden entity)
+		{
+			this.SendPropertyChanging();
+			entity.Hefte = this;
+		}
+		
+		private void detach_Hefte_x_Kundens(Hefte_x_Kunden entity)
+		{
+			this.SendPropertyChanging();
+			entity.Hefte = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Hefte_x_Kunden")]
+	public partial class Hefte_x_Kunden : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _HeftId;
+		
+		private int _KundenId;
+		
+		private System.Nullable<System.DateTime> _Erhalten;
+		
+		private System.Nullable<bool> _HatBestellt;
+		
+		private EntityRef<Hefte> _Hefte;
+		
+		private EntityRef<Kunden> _Kunden;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnHeftIdChanging(int value);
+    partial void OnHeftIdChanged();
+    partial void OnKundenIdChanging(int value);
+    partial void OnKundenIdChanged();
+    partial void OnErhaltenChanging(System.Nullable<System.DateTime> value);
+    partial void OnErhaltenChanged();
+    partial void OnHatBestelltChanging(System.Nullable<bool> value);
+    partial void OnHatBestelltChanged();
+    #endregion
+		
+		public Hefte_x_Kunden()
+		{
+			this._Hefte = default(EntityRef<Hefte>);
+			this._Kunden = default(EntityRef<Kunden>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HeftId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int HeftId
+		{
+			get
+			{
+				return this._HeftId;
+			}
+			set
+			{
+				if ((this._HeftId != value))
+				{
+					if (this._Hefte.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnHeftIdChanging(value);
+					this.SendPropertyChanging();
+					this._HeftId = value;
+					this.SendPropertyChanged("HeftId");
+					this.OnHeftIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KundenId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int KundenId
+		{
+			get
+			{
+				return this._KundenId;
+			}
+			set
+			{
+				if ((this._KundenId != value))
+				{
+					if (this._Kunden.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnKundenIdChanging(value);
+					this.SendPropertyChanging();
+					this._KundenId = value;
+					this.SendPropertyChanged("KundenId");
+					this.OnKundenIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Erhalten", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Erhalten
+		{
+			get
+			{
+				return this._Erhalten;
+			}
+			set
+			{
+				if ((this._Erhalten != value))
+				{
+					this.OnErhaltenChanging(value);
+					this.SendPropertyChanging();
+					this._Erhalten = value;
+					this.SendPropertyChanged("Erhalten");
+					this.OnErhaltenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HatBestellt", DbType="Bit")]
+		public System.Nullable<bool> HatBestellt
+		{
+			get
+			{
+				return this._HatBestellt;
+			}
+			set
+			{
+				if ((this._HatBestellt != value))
+				{
+					this.OnHatBestelltChanging(value);
+					this.SendPropertyChanging();
+					this._HatBestellt = value;
+					this.SendPropertyChanged("HatBestellt");
+					this.OnHatBestelltChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Hefte_Hefte_x_Kunden", Storage="_Hefte", ThisKey="HeftId", OtherKey="HeftId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Hefte Hefte
+		{
+			get
+			{
+				return this._Hefte.Entity;
+			}
+			set
+			{
+				Hefte previousValue = this._Hefte.Entity;
+				if (((previousValue != value) 
+							|| (this._Hefte.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Hefte.Entity = null;
+						previousValue.Hefte_x_Kundens.Remove(this);
+					}
+					this._Hefte.Entity = value;
+					if ((value != null))
+					{
+						value.Hefte_x_Kundens.Add(this);
+						this._HeftId = value.HeftId;
+					}
+					else
+					{
+						this._HeftId = default(int);
+					}
+					this.SendPropertyChanged("Hefte");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kunden_Hefte_x_Kunden", Storage="_Kunden", ThisKey="KundenId", OtherKey="KundenId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Kunden Kunden
+		{
+			get
+			{
+				return this._Kunden.Entity;
+			}
+			set
+			{
+				Kunden previousValue = this._Kunden.Entity;
+				if (((previousValue != value) 
+							|| (this._Kunden.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Kunden.Entity = null;
+						previousValue.Hefte_x_Kundens.Remove(this);
+					}
+					this._Kunden.Entity = value;
+					if ((value != null))
+					{
+						value.Hefte_x_Kundens.Add(this);
+						this._KundenId = value.KundenId;
+					}
+					else
+					{
+						this._KundenId = default(int);
+					}
+					this.SendPropertyChanged("Kunden");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Entitaeten")]
+	public partial class Entitaeten : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _EntitaetId;
+		
+		private string _Name;
+		
+		private EntitySet<Markierungen> _Markierungens;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEntitaetIdChanging(int value);
+    partial void OnEntitaetIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Entitaeten()
+		{
+			this._Markierungens = new EntitySet<Markierungen>(new Action<Markierungen>(this.attach_Markierungens), new Action<Markierungen>(this.detach_Markierungens));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EntitaetId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int EntitaetId
+		{
+			get
+			{
+				return this._EntitaetId;
+			}
+			set
+			{
+				if ((this._EntitaetId != value))
+				{
+					this.OnEntitaetIdChanging(value);
+					this.SendPropertyChanging();
+					this._EntitaetId = value;
+					this.SendPropertyChanged("EntitaetId");
+					this.OnEntitaetIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(20)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Entitaeten_Markierungen", Storage="_Markierungens", ThisKey="EntitaetId", OtherKey="EntitaetId")]
+		public EntitySet<Markierungen> Markierungens
+		{
+			get
+			{
+				return this._Markierungens;
+			}
+			set
+			{
+				this._Markierungens.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Markierungens(Markierungen entity)
+		{
+			this.SendPropertyChanging();
+			entity.Entitaeten = this;
+		}
+		
+		private void detach_Markierungens(Markierungen entity)
+		{
+			this.SendPropertyChanging();
+			entity.Entitaeten = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Bestellung")]
+	public partial class Bestellung : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _BestellId;
+		
+		private System.Nullable<int> _KundenId;
+		
+		private System.Nullable<System.DateTime> _Datum;
+		
+		private string _Bemerkung;
+		
+		private System.Nullable<int> _StatusId;
+		
+		private System.Nullable<bool> _Loeschvormerkung;
+		
+		private System.DateTime _ChangedAt;
+		
+		private EntitySet<Bestelldetail> _Bestelldetails;
+		
+		private EntityRef<Kunden> _Kunden;
+		
+		private EntityRef<Bestellstatus> _Bestellstatus;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnBestellIdChanging(int value);
+    partial void OnBestellIdChanged();
+    partial void OnKundenIdChanging(System.Nullable<int> value);
+    partial void OnKundenIdChanged();
+    partial void OnDatumChanging(System.Nullable<System.DateTime> value);
+    partial void OnDatumChanged();
+    partial void OnBemerkungChanging(string value);
+    partial void OnBemerkungChanged();
+    partial void OnStatusIdChanging(System.Nullable<int> value);
+    partial void OnStatusIdChanged();
+    partial void OnLoeschvormerkungChanging(System.Nullable<bool> value);
+    partial void OnLoeschvormerkungChanged();
+    partial void OnChangedAtChanging(System.DateTime value);
+    partial void OnChangedAtChanged();
+    #endregion
+		
+		public Bestellung()
+		{
+			this._Bestelldetails = new EntitySet<Bestelldetail>(new Action<Bestelldetail>(this.attach_Bestelldetails), new Action<Bestelldetail>(this.detach_Bestelldetails));
+			this._Kunden = default(EntityRef<Kunden>);
+			this._Bestellstatus = default(EntityRef<Bestellstatus>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BestellId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int BestellId
+		{
+			get
+			{
+				return this._BestellId;
+			}
+			set
+			{
+				if ((this._BestellId != value))
+				{
+					this.OnBestellIdChanging(value);
+					this.SendPropertyChanging();
+					this._BestellId = value;
+					this.SendPropertyChanged("BestellId");
+					this.OnBestellIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KundenId", DbType="Int")]
+		public System.Nullable<int> KundenId
+		{
+			get
+			{
+				return this._KundenId;
+			}
+			set
+			{
+				if ((this._KundenId != value))
+				{
+					if (this._Kunden.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnKundenIdChanging(value);
+					this.SendPropertyChanging();
+					this._KundenId = value;
+					this.SendPropertyChanged("KundenId");
+					this.OnKundenIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Datum", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Datum
+		{
+			get
+			{
+				return this._Datum;
+			}
+			set
+			{
+				if ((this._Datum != value))
+				{
+					this.OnDatumChanging(value);
+					this.SendPropertyChanging();
+					this._Datum = value;
+					this.SendPropertyChanged("Datum");
+					this.OnDatumChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bemerkung", DbType="NVarChar(50)")]
+		public string Bemerkung
+		{
+			get
+			{
+				return this._Bemerkung;
+			}
+			set
+			{
+				if ((this._Bemerkung != value))
+				{
+					this.OnBemerkungChanging(value);
+					this.SendPropertyChanging();
+					this._Bemerkung = value;
+					this.SendPropertyChanged("Bemerkung");
+					this.OnBemerkungChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusId", DbType="Int")]
+		public System.Nullable<int> StatusId
+		{
+			get
+			{
+				return this._StatusId;
+			}
+			set
+			{
+				if ((this._StatusId != value))
+				{
+					if (this._Bestellstatus.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStatusIdChanging(value);
+					this.SendPropertyChanging();
+					this._StatusId = value;
+					this.SendPropertyChanged("StatusId");
+					this.OnStatusIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Loeschvormerkung", DbType="Bit")]
+		public System.Nullable<bool> Loeschvormerkung
+		{
+			get
+			{
+				return this._Loeschvormerkung;
+			}
+			set
+			{
+				if ((this._Loeschvormerkung != value))
+				{
+					this.OnLoeschvormerkungChanging(value);
+					this.SendPropertyChanging();
+					this._Loeschvormerkung = value;
+					this.SendPropertyChanged("Loeschvormerkung");
+					this.OnLoeschvormerkungChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ChangedAt", DbType="DateTime")]
+		public System.DateTime ChangedAt
+		{
+			get
+			{
+				return this._ChangedAt;
+			}
+			set
+			{
+				if ((this._ChangedAt != value))
+				{
+					this.OnChangedAtChanging(value);
+					this.SendPropertyChanging();
+					this._ChangedAt = value;
+					this.SendPropertyChanged("ChangedAt");
+					this.OnChangedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bestellung_Bestelldetail", Storage="_Bestelldetails", ThisKey="BestellId", OtherKey="BestellId")]
+		public EntitySet<Bestelldetail> Bestelldetails
+		{
+			get
+			{
+				return this._Bestelldetails;
+			}
+			set
+			{
+				this._Bestelldetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Kunden_Bestellung", Storage="_Kunden", ThisKey="KundenId", OtherKey="KundenId", IsForeignKey=true)]
+		public Kunden Kunden
+		{
+			get
+			{
+				return this._Kunden.Entity;
+			}
+			set
+			{
+				Kunden previousValue = this._Kunden.Entity;
+				if (((previousValue != value) 
+							|| (this._Kunden.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Kunden.Entity = null;
+						previousValue.Bestellungs.Remove(this);
+					}
+					this._Kunden.Entity = value;
+					if ((value != null))
+					{
+						value.Bestellungs.Add(this);
+						this._KundenId = value.KundenId;
+					}
+					else
+					{
+						this._KundenId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Kunden");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bestellstatus_Bestellung", Storage="_Bestellstatus", ThisKey="StatusId", OtherKey="StatusId", IsForeignKey=true)]
+		public Bestellstatus Bestellstatus
+		{
+			get
+			{
+				return this._Bestellstatus.Entity;
+			}
+			set
+			{
+				Bestellstatus previousValue = this._Bestellstatus.Entity;
+				if (((previousValue != value) 
+							|| (this._Bestellstatus.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bestellstatus.Entity = null;
+						previousValue.Bestellungs.Remove(this);
+					}
+					this._Bestellstatus.Entity = value;
+					if ((value != null))
+					{
+						value.Bestellungs.Add(this);
+						this._StatusId = value.StatusId;
+					}
+					else
+					{
+						this._StatusId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Bestellstatus");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Bestelldetails(Bestelldetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bestellung = this;
+		}
+		
+		private void detach_Bestelldetails(Bestelldetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bestellung = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Bestelldetails")]
+	public partial class Bestelldetail : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _DetailId;
+		
+		private int _BestellId;
+		
+		private string _Campagne;
+		
+		private System.Nullable<int> _Jahr;
+		
+		private System.Nullable<int> _Seite;
+		
+		private string _ArtikelNr;
+		
+		private System.Nullable<int> _Menge;
+		
+		private string _Artikelbeschr;
+		
+		private string _FGD;
+		
+		private System.Nullable<decimal> _Einzelpreis;
+		
+		private EntityRef<Bestellung> _Bestellung;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDetailIdChanging(int value);
+    partial void OnDetailIdChanged();
+    partial void OnBestellIdChanging(int value);
+    partial void OnBestellIdChanged();
+    partial void OnCampagneChanging(string value);
+    partial void OnCampagneChanged();
+    partial void OnJahrChanging(System.Nullable<int> value);
+    partial void OnJahrChanged();
+    partial void OnSeiteChanging(System.Nullable<int> value);
+    partial void OnSeiteChanged();
+    partial void OnArtikelNrChanging(string value);
+    partial void OnArtikelNrChanged();
+    partial void OnMengeChanging(System.Nullable<int> value);
+    partial void OnMengeChanged();
+    partial void OnArtikelbeschrChanging(string value);
+    partial void OnArtikelbeschrChanged();
+    partial void OnFGDChanging(string value);
+    partial void OnFGDChanged();
+    partial void OnEinzelpreisChanging(System.Nullable<decimal> value);
+    partial void OnEinzelpreisChanged();
+    #endregion
+		
+		public Bestelldetail()
+		{
+			this._Bestellung = default(EntityRef<Bestellung>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DetailId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int DetailId
+		{
+			get
+			{
+				return this._DetailId;
+			}
+			set
+			{
+				if ((this._DetailId != value))
+				{
+					this.OnDetailIdChanging(value);
+					this.SendPropertyChanging();
+					this._DetailId = value;
+					this.SendPropertyChanged("DetailId");
+					this.OnDetailIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BestellId", DbType="Int NOT NULL")]
+		public int BestellId
+		{
+			get
+			{
+				return this._BestellId;
+			}
+			set
+			{
+				if ((this._BestellId != value))
+				{
+					if (this._Bestellung.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBestellIdChanging(value);
+					this.SendPropertyChanging();
+					this._BestellId = value;
+					this.SendPropertyChanged("BestellId");
+					this.OnBestellIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Campagne", DbType="NVarChar(50)")]
+		public string Campagne
+		{
+			get
+			{
+				return this._Campagne;
+			}
+			set
+			{
+				if ((this._Campagne != value))
+				{
+					this.OnCampagneChanging(value);
+					this.SendPropertyChanging();
+					this._Campagne = value;
+					this.SendPropertyChanged("Campagne");
+					this.OnCampagneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Jahr", DbType="Int")]
+		public System.Nullable<int> Jahr
+		{
+			get
+			{
+				return this._Jahr;
+			}
+			set
+			{
+				if ((this._Jahr != value))
+				{
+					this.OnJahrChanging(value);
+					this.SendPropertyChanging();
+					this._Jahr = value;
+					this.SendPropertyChanged("Jahr");
+					this.OnJahrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Seite", DbType="Int")]
+		public System.Nullable<int> Seite
+		{
+			get
+			{
+				return this._Seite;
+			}
+			set
+			{
+				if ((this._Seite != value))
+				{
+					this.OnSeiteChanging(value);
+					this.SendPropertyChanging();
+					this._Seite = value;
+					this.SendPropertyChanged("Seite");
+					this.OnSeiteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArtikelNr", DbType="NVarChar(50)")]
+		public string ArtikelNr
+		{
+			get
+			{
+				return this._ArtikelNr;
+			}
+			set
+			{
+				if ((this._ArtikelNr != value))
+				{
+					this.OnArtikelNrChanging(value);
+					this.SendPropertyChanging();
+					this._ArtikelNr = value;
+					this.SendPropertyChanged("ArtikelNr");
+					this.OnArtikelNrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Menge", DbType="Int")]
+		public System.Nullable<int> Menge
+		{
+			get
+			{
+				return this._Menge;
+			}
+			set
+			{
+				if ((this._Menge != value))
+				{
+					this.OnMengeChanging(value);
+					this.SendPropertyChanging();
+					this._Menge = value;
+					this.SendPropertyChanged("Menge");
+					this.OnMengeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Artikelbeschr", DbType="NVarChar(100)")]
+		public string Artikelbeschr
+		{
+			get
+			{
+				return this._Artikelbeschr;
+			}
+			set
+			{
+				if ((this._Artikelbeschr != value))
+				{
+					this.OnArtikelbeschrChanging(value);
+					this.SendPropertyChanging();
+					this._Artikelbeschr = value;
+					this.SendPropertyChanged("Artikelbeschr");
+					this.OnArtikelbeschrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FGD", DbType="NVarChar(50)")]
+		public string FGD
+		{
+			get
+			{
+				return this._FGD;
+			}
+			set
+			{
+				if ((this._FGD != value))
+				{
+					this.OnFGDChanging(value);
+					this.SendPropertyChanging();
+					this._FGD = value;
+					this.SendPropertyChanged("FGD");
+					this.OnFGDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Einzelpreis", DbType="Money")]
+		public System.Nullable<decimal> Einzelpreis
+		{
+			get
+			{
+				return this._Einzelpreis;
+			}
+			set
+			{
+				if ((this._Einzelpreis != value))
+				{
+					this.OnEinzelpreisChanging(value);
+					this.SendPropertyChanging();
+					this._Einzelpreis = value;
+					this.SendPropertyChanged("Einzelpreis");
+					this.OnEinzelpreisChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bestellung_Bestelldetail", Storage="_Bestellung", ThisKey="BestellId", OtherKey="BestellId", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public Bestellung Bestellung
+		{
+			get
+			{
+				return this._Bestellung.Entity;
+			}
+			set
+			{
+				Bestellung previousValue = this._Bestellung.Entity;
+				if (((previousValue != value) 
+							|| (this._Bestellung.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Bestellung.Entity = null;
+						previousValue.Bestelldetails.Remove(this);
+					}
+					this._Bestellung.Entity = value;
+					if ((value != null))
+					{
+						value.Bestelldetails.Add(this);
+						this._BestellId = value.BestellId;
+					}
+					else
+					{
+						this._BestellId = default(int);
+					}
+					this.SendPropertyChanged("Bestellung");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Bestellstatus")]
+	public partial class Bestellstatus : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _StatusId;
+		
+		private string _Status;
+		
+		private string _Beschreibung;
+		
+		private EntitySet<Bestellung> _Bestellungs;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStatusIdChanging(int value);
+    partial void OnStatusIdChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnBeschreibungChanging(string value);
+    partial void OnBeschreibungChanged();
+    #endregion
+		
+		public Bestellstatus()
+		{
+			this._Bestellungs = new EntitySet<Bestellung>(new Action<Bestellung>(this.attach_Bestellungs), new Action<Bestellung>(this.detach_Bestellungs));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int StatusId
+		{
+			get
+			{
+				return this._StatusId;
+			}
+			set
+			{
+				if ((this._StatusId != value))
+				{
+					this.OnStatusIdChanging(value);
+					this.SendPropertyChanging();
+					this._StatusId = value;
+					this.SendPropertyChanged("StatusId");
+					this.OnStatusIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="NVarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Beschreibung", DbType="NVarChar(255)")]
+		public string Beschreibung
+		{
+			get
+			{
+				return this._Beschreibung;
+			}
+			set
+			{
+				if ((this._Beschreibung != value))
+				{
+					this.OnBeschreibungChanging(value);
+					this.SendPropertyChanging();
+					this._Beschreibung = value;
+					this.SendPropertyChanged("Beschreibung");
+					this.OnBeschreibungChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Bestellstatus_Bestellung", Storage="_Bestellungs", ThisKey="StatusId", OtherKey="StatusId")]
+		public EntitySet<Bestellung> Bestellungs
+		{
+			get
+			{
+				return this._Bestellungs;
+			}
+			set
+			{
+				this._Bestellungs.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Bestellungs(Bestellung entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bestellstatus = this;
+		}
+		
+		private void detach_Bestellungs(Bestellung entity)
+		{
+			this.SendPropertyChanging();
+			entity.Bestellstatus = null;
 		}
 	}
 }

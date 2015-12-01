@@ -1,12 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
+using Microsoft.Practices.Unity;
 using System;
-using System.Reflection;
-using System.ComponentModel.Composition.Hosting;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace AvonManager.Desktop
 {
@@ -15,7 +12,7 @@ namespace AvonManager.Desktop
       
         protected override DependencyObject CreateShell()
         {
-            return new Shell();
+            return new Shell(Container);
         }
 
         protected override void InitializeShell()
@@ -28,19 +25,16 @@ namespace AvonManager.Desktop
         {
             return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/AvonManager.Desktop;component/ModulesCatalog.xaml", UriKind.Relative));
         }
-        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
-        {
-            var mappings = base.ConfigureRegionAdapterMappings();
-
-            //mappings.RegisterMapping(typeof(TabControl), Container.TryResolve<TabControlAdapter>());
-
-            return mappings;
-        }
-        protected override void ConfigureContainer()
-        {
-            base.ConfigureContainer();
-            //ViewModelLocationProvider.SetDefaultViewModelFactory(viewModelType => this.Container.Resolve(viewModelType));
-        }
+        //protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        //{
+        //    var mappings = base.ConfigureRegionAdapterMappings();
+        //    return mappings;
+        //}
+        //protected override void ConfigureContainer()
+        //{
+        //    base.ConfigureContainer();
+        //    //ViewModelLocationProvider.SetDefaultViewModelFactory(viewModelType => this.Container.Resolve(viewModelType));
+        //}
     }
 
 }
