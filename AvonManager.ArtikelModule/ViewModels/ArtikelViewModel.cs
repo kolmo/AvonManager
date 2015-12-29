@@ -1,35 +1,42 @@
 ﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
-    public class ArtikelViewModel : BindableBase
+    public class ArticleViewModel : BindableBase
     {
         private ArtikelDto _artikel;
-        public ArtikelViewModel(ArtikelDto artikel, Action<ArtikelViewModel> selectArtikel,
-            Action<ArtikelViewModel> deleteArticle)
+        public ArticleViewModel(ArtikelDto artikel)
         {
             _artikel = artikel;
-            SelectArtikel = new DelegateCommand<ArtikelViewModel>(selectArtikel);
-            DeleteArtikel = new DelegateCommand<ArtikelViewModel>(deleteArticle);
         }
-
+        public ArtikelDto Dto { get { return _artikel; } }
         /// <summary>
         /// Gets or sets the Markierungen.
         /// </summary>
         /// <value>
         /// The Markierungen.
         /// </value>
-        public List<ArticleMarkingViewModel> Markierungen { get; } = new List<ArticleMarkingViewModel>();
+        public ObservableCollection<ArticleMarkingViewModel> Markierungen { get; } = new ObservableCollection<ArticleMarkingViewModel>();
       
         public string Artikelname { get { return _artikel.Name; } }
+
+        private string _serie;
+        /// <summary>
+        /// Gets or sets the Serie.
+        /// </summary>
+        /// <value>
+        /// The Serie.
+        /// </value>
+        public string Serie
+        {
+            get { return _serie; }
+            set { SetProperty(ref _serie, value); }
+        }
+
         public int? Lagerbestand { get { return _artikel.Lagerbestand; } }
         public decimal? Einzelpreis { get { return _artikel.Einzelpreis; } }
         public int ArtikelId { get { return _artikel.ArtikelId; } }
-        public DelegateCommand<ArtikelViewModel> SelectArtikel { get; }
-        public DelegateCommand<ArtikelViewModel> DeleteArtikel { get; }
     }
 }

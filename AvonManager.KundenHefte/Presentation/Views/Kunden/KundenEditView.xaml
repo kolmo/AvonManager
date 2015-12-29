@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AvonManager.KundenHefte.Views"
              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="531.742" d:DesignWidth="353.479">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,67 +14,78 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </UserControl.Resources>  <xceed:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <GroupBox x:Name="kundenDataForm" >
-
+    </UserControl.Resources>
+    <xceed:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+        <Border Style="{DynamicResource CustomerEditBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <TabControl  SelectedIndex="{Binding DataContext.SelectedTabItem, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type GroupBox}}}">
                     <TabItem Header="Allgemein">
-                        <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
                             <GroupBox  Header="Nachname">
                                 <TextBox Text="{Binding Nachname, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox Header="Vorname">
+                            <GroupBox Header="Vorname" Grid.Row="1">
                                 <TextBox Text="{Binding Vorname, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox Header="Geburtsdatum">
+                            <GroupBox Header="Geburtsdatum" Grid.Row="2">
                                 <DatePicker SelectedDate="{Binding Geburtsdatum, Mode=TwoWay}" Language="de-DE" SelectedDateFormat="Short"/>
                             </GroupBox>
-                            <GroupBox Header="Erhält Heft">
+                            <GroupBox Header="Erhält Heft" Margin="0,1" Grid.Row="3">
                                 <CheckBox IsChecked="{Binding BekommtHeft, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Inaktiv">
+                            <GroupBox  Header="Inaktiv" Grid.Row="4">
                                 <CheckBox IsChecked="{Binding Inaktiv, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Anmerkungen">
+                            <GroupBox  Header="Anmerkungen" Grid.Row="6">
                                 <TextBox Text="{Binding Anmerkungen, Mode=TwoWay}"/>
                             </GroupBox>
-                        </StackPanel>
-                    </TabItem>
-                    <TabItem Header="Kontakt">
-                        <StackPanel>
-                            <GroupBox  Header="Strasse">
+                            <GroupBox  Header="Strasse" Grid.Column="1">
                                 <TextBox Text="{Binding Adresse, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="PLZ">
+                            <GroupBox  Header="PLZ" Grid.Row="1" Grid.Column="1">
                                 <TextBox Text="{Binding Postleitzahl, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Ort">
+                            <GroupBox  Header="Ort" Grid.Row="2" Grid.Column="1">
                                 <TextBox Text="{Binding Ort, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Tel. privat">
+                            <GroupBox  Header="Tel. privat" Grid.Row="3" Grid.Column="1">
                                 <TextBox Text="{Binding TelefonPrivat, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Tel. beruflich">
+                            <GroupBox  Header="Tel. beruflich" Grid.Row="4" Grid.Column="1">
                                 <TextBox Text="{Binding TelefonBeruflich, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Mobil">
+                            <GroupBox  Header="Mobil" Grid.Row="5" Grid.Column="1">
                                 <TextBox Text="{Binding MobilesTelefon, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Fax">
+                            <GroupBox  Header="Fax" Grid.Row="5">
                                 <TextBox Text="{Binding Faxnummer, Mode=TwoWay}"/>
                             </GroupBox>
-                            <GroupBox  Header="Email">
+                            <GroupBox  Header="Email" Grid.Row="6" Grid.Column="1">
                                 <TextBox Text="{Binding EmailAdresse, Mode=TwoWay}"/>
                             </GroupBox>
-                        </StackPanel>
+                        </Grid>
                     </TabItem>
+                    <TabItem Header="Kontakt"/>
                 </TabControl>
-            </GroupBox>
-        </Grid>
+            </Grid>
+        </Border>
     </xceed:BusyIndicator>
 </UserControl>

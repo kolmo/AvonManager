@@ -9,6 +9,8 @@ namespace AvonManager.Data.Interfaces
 {
     public interface IObjectMapper
     {
+        ArticleCategoryDto  Map(Kategorien_x_Artikel source);
+        Kategorien_x_Artikel Map(ArticleCategoryDto source);
         Markierungen_x_Artikel Map(ArtikelMarkierungenDto source);
         Bestellung Map(BestellungDto source);
         BestellungDto Map(Bestellung source);

@@ -9,5 +9,6 @@ namespace AvonManager.Interfaces
     public interface ICriteriaBase
     {
         void Reset();
+        //bool HasValues();
     }
 }

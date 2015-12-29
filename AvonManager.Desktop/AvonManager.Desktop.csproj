@@ -31,7 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -53,6 +53,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>AvonManager.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\Images\lipstick.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -163,10 +166,6 @@
     <Compile Include="Views\ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Assets\ImagesDic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -182,7 +181,6 @@
     <Compile Include="Helpers\InitialSelektor.cs" />
     <Compile Include="Helpers\IsCheckedToTextConverter.cs" />
     <Compile Include="Helpers\JahrSelektor.cs" />
-    <Compile Include="Helpers\ListBoxBehavoir.cs" />
     <Compile Include="Helpers\MessageStringMarkupExtension.cs" />
     <Compile Include="Helpers\Messages\BestellungEditMessage.cs" />
     <Compile Include="Helpers\Messages\KundinAddedRemovedMessage.cs" />
@@ -316,6 +314,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Assets\Images\lipstick400.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\lipstick.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

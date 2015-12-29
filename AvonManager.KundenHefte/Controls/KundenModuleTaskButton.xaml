@@ -9,10 +9,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Button Command="{Binding Path=ShowArtikelModule}" Margin="5,3">
+    <Button Command="{Binding Path=ShowArtikelModule}" Margin="5,3" Style="{DynamicResource PurePictureButtonStyle}">
         <Image x:Name="image" Height="Auto" Style="{DynamicResource KundenLogoStyle}"/>
     </Button>
 </UserControl>

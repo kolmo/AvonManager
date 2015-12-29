@@ -603,7 +603,7 @@
         <Setter Property="FontSize"
                 Value="{StaticResource ContentFontSize}" />
         <Setter Property="BorderThickness"
-                Value="1" />
+                Value="0" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="MinHeight"
@@ -1626,8 +1626,8 @@
                 Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode"
                 Value="ClearType" />
-        <!--<Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>-->
+        <!--<Setter Property="Foreground" Value="{StaticResource TextBrush}"/>-->
+        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
     </Style>
 
     <!--ScrollBar Styles & Templates-->
@@ -2315,7 +2315,7 @@
         <Setter Property="Foreground"
                 Value="{StaticResource TextBrush}" />
         <Setter Property="Background"
-                Value="{StaticResource ControlBackgroundBrush}" />
+                Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
@@ -2325,7 +2325,7 @@
         <Setter Property="Padding"
                 Value="4" />
         <Setter Property="BorderThickness"
-                Value="1" />
+                Value="0" />
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <SolidColorBrush Color="{StaticResource Gray4}"

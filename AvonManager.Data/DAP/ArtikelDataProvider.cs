@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AvonManager.BusinessObjects;
 using System;
 using AvonManager.Interfaces.Criteria;
+using AvonManager.Common.Helpers;
+using System.Diagnostics;
 
 namespace AvonManager.Data
 {
@@ -40,13 +42,13 @@ namespace AvonManager.Data
                     database.Kategorien_x_Artikels.DeleteOnSubmit(detail);
                 }
                 var query2 = from b in database.Markierungen_x_Artikels
-                            where b.ArtikelId == articleId
-                            select b;
+                             where b.ArtikelId == articleId
+                             select b;
                 foreach (var detail in query2)
                 {
                     database.Markierungen_x_Artikels.DeleteOnSubmit(detail);
                 }
-                var article = database.Artikels.Single(x => x.ArtikelId== articleId);
+                var article = database.Artikels.Single(x => x.ArtikelId == articleId);
                 database.Artikels.DeleteOnSubmit(article);
                 database.SubmitChanges();
             }
@@ -100,22 +102,30 @@ namespace AvonManager.Data
                             orderby b.Artikelname
                             select b;
                 Artikel artikel = query.FirstOrDefault(x => x.ArtikelId == dto.ArtikelId);
-                artikel.Artikelbeschreibung = dto.Beschreibung;
-                artikel.Artikelname = dto.Name;
-                artikel.ArtikelNr = dto.Nummer;
-                artikel.Bild = dto.Bild;
-                artikel.Einzelpreis = dto.Einzelpreis;
-                artikel.Inhalt = dto.Inhalt;
-                artikel.Lagerbestand = dto.Lagerbestand;
-                artikel.SerienId = dto.SerienId;
-                artikel.ChangedAt = DateTime.Now;
-                try
+                if (artikel != null)
                 {
-                    database.SubmitChanges();
+                    artikel.Artikelbeschreibung = dto.Beschreibung;
+                    artikel.Artikelname = dto.Name;
+                    artikel.ArtikelNr = dto.Nummer;
+                    artikel.Bild = dto.Bild;
+                    artikel.Einzelpreis = dto.Einzelpreis;
+                    artikel.Inhalt = dto.Inhalt;
+                    artikel.Lagerbestand = dto.Lagerbestand;
+                    artikel.SerienId = dto.SerienId;
+                    artikel.ChangedAt = DateTime.Now;
+                    try
+                    {
+                        database.SubmitChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Current.Write($"Fehler beim Speichern des Artikel mit ID '{dto.ArtikelId}' in der Datenbank: {ex}!", severity: TraceEventType.Error);
+                        throw ex;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw ex;
+                    Logger.Current.Write($"Keinen Artikel mit ID '{dto.ArtikelId}' in der Datenbank gefunden!", severity: TraceEventType.Error);
                 }
             }
         }
@@ -130,7 +140,7 @@ namespace AvonManager.Data
                                 select b;
                     if (searchCriteria != null)
                     {
-                        if (searchCriteria.Categories?.Count() > 0)
+                        if (searchCriteria.Categories?.Count() > 0 && !searchCriteria.WithoutCategory)
                         {
                             query = from a in query
                                     join k in database.Kategorien_x_Artikels
@@ -138,29 +148,52 @@ namespace AvonManager.Data
                                     where searchCriteria.Categories.Contains(k.KategorieId)
                                     select a;
                         }
-                        if (searchCriteria.Markups?.Count() > 0)
+                        if (searchCriteria.WithoutCategory)
                         {
-                            //if (!invertedMarkups)
-                            //{
+                          var groupquery = from a in query
+                                    join k in database.Kategorien_x_Artikels
+                                    on a.ArtikelId equals k.ArtikelId into ak
+                                    from subk in ak.DefaultIfEmpty()
+                                    select new { ArticleId = a.ArtikelId, Cat = subk };
+
+                            query = from a in query
+                                    join gr in groupquery
+                                    on a.ArtikelId equals gr.ArticleId
+                                    where gr.Cat == null
+                                    select a;
+                        }
+                        if (searchCriteria.Markups?.Count() > 0 && !searchCriteria.WithoutMarkups)
+                        {
                             query = from a in query
                                     join m in database.Markierungen_x_Artikels
                                     on a.ArtikelId equals m.ArtikelId
                                     where searchCriteria.Markups.Contains(m.MarkierungId)
                                     select a;
-                            //}
-                            //else
-                            //{
-                            //    query = from a in query
-                            //            join m in database.Markierungen_x_Artikels
-                            //            on a.ArtikelId equals m.ArtikelId
-                            //            where !markups.Contains(m.MarkierungId)
-                            //            select a;
-                            //}
                         }
-                        if (searchCriteria.Series?.Count() > 0)
+                        if (searchCriteria.WithoutMarkups)
+                        {
+                            var groupMarkquery = from a in query
+                                             join m in database.Markierungen_x_Artikels
+                                             on a.ArtikelId equals m.ArtikelId into ak
+                                             from subk in ak.DefaultIfEmpty()
+                                             select new { ArticleId = a.ArtikelId, Markup = subk };
+
+                            query = from a in query
+                                    join gr in groupMarkquery
+                                    on a.ArtikelId equals gr.ArticleId
+                                    where gr.Markup == null
+                                    select a;
+                        }
+                        if (searchCriteria.Series?.Count() > 0 && !searchCriteria.WithoutSeries)
                         {
                             query = from a in query
                                     where a.SerienId.HasValue && searchCriteria.Series.Contains(a.SerienId.Value)
+                                    select a;
+                        }
+                        if (searchCriteria.WithoutSeries)
+                        {
+                            query = from a in query
+                                    where !a.SerienId.HasValue
                                     select a;
                         }
                         if (!string.IsNullOrWhiteSpace(searchCriteria.FullText))
@@ -171,9 +204,9 @@ namespace AvonManager.Data
                                     select a;
                         }
                     }
-                    List<BusinessObjects.ArtikelDto> artikelList = new List<BusinessObjects.ArtikelDto>();
+                    List<ArtikelDto> artikelList = new List<ArtikelDto>();
                     int recsToSkip = (page - 1) * pageSize;
-                    var resultList = query.OrderByDescending(x=>x.ChangedAt).Skip(recsToSkip).Take(pageSize);
+                    var resultList = query.OrderBy(x => x.Artikelname).Skip(recsToSkip).Take(pageSize);
                     foreach (Artikel artikel in resultList)
                     {
                         artikelList.Add(_mapper.Map(artikel));

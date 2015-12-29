@@ -32,7 +32,29 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Types, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Utilities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -67,6 +89,8 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +99,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Messages1.Designer.cs">
@@ -82,17 +107,35 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Base\DeleteConfirmation.cs" />
     <Compile Include="Base\DeleteEntityConfirmation.cs" />
     <Compile Include="Base\ErrorAwareBaseViewModel.cs" />
     <Compile Include="Base\FilterEntryBase.cs" />
     <Compile Include="Base\ListEntryBaseViewModel.cs" />
+    <Compile Include="Base\TakePictureConfirmation.cs" />
     <Compile Include="Base\YearSelector.cs" />
+    <Compile Include="Controls\ConfirmDeleteControl.xaml.cs">
+      <DependentUpon>ConfirmDeleteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EditDeleteCmdControl.xaml.cs">
       <DependentUpon>EditDeleteCmdControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FileLoader.xaml.cs">
       <DependentUpon>FileLoader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InitialsSelector.xaml.cs">
+      <DependentUpon>InitialsSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PicturePreviewControl.xaml.cs">
+      <DependentUpon>PicturePreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WebCamClientControl.xaml.cs">
+      <DependentUpon>WebCamClientControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchStarterControl.xaml.cs">
+      <DependentUpon>SearchStarterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Events\ArticleChangedEvent.cs" />
     <Compile Include="Events\NavigationCompletedEvent.cs" />
     <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\BusyFlagsManager.cs" />
@@ -113,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\ConfirmDeleteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\EditDeleteCmdControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +167,22 @@
     <Page Include="Controls\FileLoader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\InitialsSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PicturePreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WebCamClientControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SearchStarterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +226,7 @@
     <Resource Include="Assets\Images\coins.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Images\Delete.PNG" />
+    <Resource Include="Assets\Images\Delete.PNG" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Filter.png" />
@@ -185,9 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Kategorie.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\KundenLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\MC900433239.jpg" />
@@ -219,9 +279,6 @@
     <Resource Include="Assets\Images\Trash-26.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Lipstick-50.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\Categorize-50.png" />
   </ItemGroup>
   <ItemGroup>
@@ -249,10 +306,80 @@
     <Resource Include="Assets\Images\Broom-26.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Plus-26.png" />
+    <Resource Include="Assets\Images\More-26.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\More-26.png" />
+    <Resource Include="Assets\Images\Rolodex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lupe32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lupe48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lupe64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lupe128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Muelleimer128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Muelleimer64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Besen64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Besen128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Schwamm128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\ClipBoard64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Plus128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Lupe96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Schwamm96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Plus96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Marker128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Rolodex128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\HefteLogo128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebCamClient\WebCamClient.Library\WebCamClient.Library.csproj">
+      <Project>{f315447f-543d-4a0f-be76-0d693fce8350}</Project>
+      <Name>WebCamClient.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvonManager.BusinessObjects\AvonManager.BusinessObjects.csproj">
+      <Project>{0a681fbe-e84b-403d-8f55-23281a882a8a}</Project>
+      <Name>AvonManager.BusinessObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\lipstick24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\TrashBin24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\TrashBin64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

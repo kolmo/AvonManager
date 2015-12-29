@@ -34,17 +34,17 @@
 
 
 
-        private int? _customerId;
+        private int[] _customerIds;
         /// <summary>
         /// Gets or sets the CustomerId.
         /// </summary>
         /// <value>
         /// The CustomerId.
         /// </value>
-        public int? CustomerId
+        public int[] CustomerIds
         {
-            get { return _customerId; }
-            set { SetProperty(ref _customerId, value); }
+            get { return _customerIds; }
+            set { SetProperty(ref _customerIds, value); }
         }
 
 
@@ -94,7 +94,7 @@
         public override void Reset()
         {
             FullText = null;
-            CustomerId = null;
+            CustomerIds = null;
             DeletionReserved = null;
             Campaign = null;
             ArticleNumber = null;

@@ -9,7 +9,7 @@ namespace AvonManager.Interfaces
     public interface IOrderSearchCriteria : ICriteriaBase
     {
         bool? DeletionReserved { get; set; }
-        int? CustomerId { get; set; }
+        int[] CustomerIds { get; set; }
         string FullText { get; set; }
         string ArticleNumber { get; set; }
         string Campaign { get; set; }

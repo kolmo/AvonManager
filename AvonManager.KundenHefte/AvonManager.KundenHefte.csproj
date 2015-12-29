@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -95,7 +96,6 @@
   <ItemGroup>
     <Compile Include="Common\EditHeftEvent.cs" />
     <Compile Include="Common\EditKundeEvent.cs" />
-    <Compile Include="Common\InitialSelektor.cs" />
     <Compile Include="Controls\KundenModuleTaskButton.xaml.cs">
       <DependentUpon>KundenModuleTaskButton.xaml</DependentUpon>
     </Compile>

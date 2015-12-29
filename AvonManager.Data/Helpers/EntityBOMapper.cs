@@ -139,6 +139,26 @@ namespace AvonManager.Data.Helpers
             return target;
         }
 
+        public BO.ArticleCategoryDto Map(Kategorien_x_Artikel source)
+        {
+            BO.ArticleCategoryDto target = new BO.ArticleCategoryDto()
+            {
+                ArtikelId = source.ArtikelId,
+                CategoryId = source.KategorieId
+            };
+            return target;
+        }
+
+        public Kategorien_x_Artikel Map(BO.ArticleCategoryDto source)
+        {
+            Kategorien_x_Artikel target = new Kategorien_x_Artikel()
+            {
+                ArtikelId = source.ArtikelId,
+                KategorieId = source.CategoryId
+            };
+            return target;
+        }
+
         public Bestelldetail Map(BO.BestelldetailDto source)
         {
             Bestelldetail target = new Bestelldetail

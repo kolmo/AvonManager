@@ -23,6 +23,8 @@ namespace AvonManager.KundenHefte.ViewModels
         public string Vorname { get { return _kunde.Vorname; } }
         public string Nachname { get { return _kunde.Nachname; } }
         public string DisplayName { get { return $"{_kunde.Nachname}, {_kunde.Vorname}"; } }
+        public bool? Inaktiv { get { return _kunde.Inaktiv; } }
+        public bool? GetsBrochure { get { return _kunde.BekommtHeft; } }
         public DelegateCommand<KundeViewModel> EditKundeCommand { get; private set; }
         public DelegateCommand<KundeViewModel> DeleteCustomerCommand { get; private set; }
     }

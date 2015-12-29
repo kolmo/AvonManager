@@ -14,12 +14,20 @@ namespace AvonManager.Common.Base
 
             set
             {
-                if (_isSelected != value)
-                {
-                    _isSelected = value;
-                    OnPropertyChanged(nameof(IsSelected));
-                }
+                SetProperty(ref _isSelected, value);
             }
+        }
+        private bool _isSelectionEnabled;
+        /// <summary>
+        /// Gets or sets the IsSelectionEnabled.
+        /// </summary>
+        /// <value>
+        /// The IsSelectionEnabled.
+        /// </value>
+        public bool IsSelectionEnabled
+        {
+            get { return _isSelectionEnabled; }
+            set { SetProperty(ref _isSelectionEnabled, value); }
         }
     }
 }

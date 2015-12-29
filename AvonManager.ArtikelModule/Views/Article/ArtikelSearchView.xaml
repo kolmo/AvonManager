@@ -20,6 +20,9 @@
         </i:EventTrigger>
         <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
             <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <Controls:ConfirmDeleteControl />
+                </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
@@ -32,142 +35,207 @@
             <Style TargetType="ListBoxItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             </Style>
-            <Style x:Key="ButtonBaseStyle1" TargetType="ButtonBase">
-            </Style>
-            <System:Double x:Key="ListMaxHeight">100</System:Double>
             <DataTemplate x:Key="ArtikelItemTemplate">
-                <Border Padding="3" CornerRadius="5" BorderBrush="Black" BorderThickness="1" d:DesignWidth="115.738" d:DesignHeight="98.194">
+                <Border Style="{StaticResource ArtikelEditBorderStyle}" d:DesignWidth="373.133" d:DesignHeight="108.379" >
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ItemsControl ItemsSource="{Binding Path=Markierungen}" Style="{StaticResource MarkierungsSpotListStyle}"/>
-                        <Grid Grid.Column="1" Style="{StaticResource KachelGridStyle}" ToolTipService.ToolTip="{Binding Path=Artikelname}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding Artikelname}" Style="{StaticResource KachelHeaderStyle}" TextTrimming="CharacterEllipsis"/>
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Path=Artikelname}" Style="{StaticResource KachelHeaderStyle}" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxWidth="200"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=Lagerbestand, StringFormat='Bestand: {0}'}"  Style="{StaticResource KachelTextStyle}" />
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Einzelpreis, StringFormat=C2}" Style="{StaticResource KachelHeaderStyle}" HorizontalAlignment="Right"/>
+                            <Grid Grid.Column="0" Style="{StaticResource KachelGridStyle}" ToolTipService.ToolTip="{Binding Artikelname}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding Serie}" />
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Lagerbestand}" />
+                                    <TextBlock Text="{Binding Einzelpreis, StringFormat=C2}"  Grid.Column="2"/>
+                                </Grid>
+                                <ItemsControl ItemsSource="{Binding Markierungen}" Style="{StaticResource MarkierungsSpotListStyle}" Grid.Row="2" Margin="0,5,0,0"/>
+                            </Grid>
+                            <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                				DeleteCommand="{Binding DataContext.DeleteArtikel, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
+                				EditCommand="{Binding DataContext.SelectArtikel, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" EditCommandParameter="{Binding}"/>
                         </Grid>
-                        <Controls:EditDeleteCmdControl Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                                                                   DeleteCommand="{Binding DeleteArtikel}" DeleteCommandParameter="{Binding}"
-                                                                   EditCommand="{Binding SelectArtikel}" EditCommandParameter="{Binding}"/>
                     </Grid>
                 </Border>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <xctk:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">
-    <Grid>
-        <Border  Style="{StaticResource ArtikelBorderStyle}">
-            <Grid x:Name="ArtikellisteGrid" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <GroupBox Header="Suche">
-                    <Grid Margin="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox 
-                			Text="{Binding Path=Criteria.FullText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="Suche in Artikel und Varianten" VerticalAlignment="Center"/>
-                            <Button Grid.Column="1"  Margin="3" Command="{Binding SearchArticlesCommand}" VerticalAlignment="Center">
-                                <Image Style="{StaticResource SearchImage}"/>
-                            </Button>
-                            <Button Grid.Column="2"  Margin="3" Command="{Binding ResetFiltersCommand}" VerticalAlignment="Center">
-                                <Image Style="{StaticResource ClearFilterImage}"/>
-                            </Button>
-                        </Grid>
-                </GroupBox>
-                <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedTab}">
-                    <TabItem Header="Liste">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ScrollViewer Margin="0,0,0,3" >
-                                <ItemsControl ItemsSource="{Binding ArtikelListe}" Background="{x:Null}" BorderThickness="0"
-                        			ItemTemplate="{StaticResource ArtikelItemTemplate}"   />
-                            </ScrollViewer>
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                    <Button  Command="{Binding LoadMoreArticlesCommand}" Grid.Column="2" ToolTipService.ToolTip="Mehr Artikel laden">
-                                        <Image Style="{StaticResource LoadMoreImage}"/>
-                                    </Button>
-                                    <Button  Command="{Binding AddNewArticleCommand}" ToolTipService.ToolTip="Neuer Artikel">
-                                        <Image Style="{StaticResource AddImage}"/>
-                                    </Button>
-                                </Grid>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Erweiterte Suche">
-                        <Grid x:Name="FilterGrid">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <GroupBox Margin="3" Header="Serien">
-                                <ComboBox  ItemsSource="{Binding SerienFilter}"
-                						SelectedItem="{Binding SelectedSerienFilterEntry, Mode=TwoWay}" DisplayMemberPath="DisplayName"/>
-                            </GroupBox>
-                            <GroupBox Grid.Row="1" Margin="3" Header="Kategorien" >
-                                <ListBox ItemsSource="{Binding KategorienFilter}" ToolTipService.ToolTip="Filter für Kategorien" Background="{x:Null}" BorderThickness="0">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <CheckBox Margin="3" IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">
-                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                        <!--<Image Source="{Binding Path=Logo, Converter={StaticResource ByteToImageConverter}}" MaxHeight="30" VerticalAlignment="Center" />-->
-                                                        <TextBlock Margin="3,0" HorizontalAlignment="Left"  Text="{Binding DisplayName}" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </CheckBox>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </GroupBox>
-                            <GroupBox Grid.Row="2" Margin="3" Header="Markierungen">
-                                <Border BorderThickness="1" BorderBrush="LightBlue" Padding="0,3" CornerRadius="3">
-                                    <ComboBox  ItemsSource="{Binding MarkierungenFilter}"
-                							SelectedItem="{Binding SelectedMarkierungFilterEntry, Mode=TwoWay}"
-                							ToolTipService.ToolTip="Filter für Markierungen" 
-                							Background="{x:Null}" BorderThickness="0">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <Ellipse Margin="2,0" Height="15" Width="15" Fill="{Binding ColorCode, Converter={StaticResource I2BrushConverter}}"/>
-                                                    <TextBlock Margin="3" HorizontalAlignment="Left"  Text="{Binding DisplayName}" VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
+    <xctk:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border>
+                <Grid x:Name="ArtikellisteGrid" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                        <Controls:SearchStarterControl StartSearchCommand="{Binding SearchArticlesCommand}" 
+                			ResetSearchCommand="{Binding ResetFiltersCommand}"
+                			SearchString="{Binding Criteria.FullText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                			ImageStyle="{StaticResource ArtikelLogoStyle}"/>
+                    </Border>
+                    <TabControl Grid.Row="1" Padding="0">
+                        <TabItem Header="Kategorien">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                                    <Controls:InitialsSelector ItemsSource="{Binding CategoryInitialsList}"
+                            			FilterCommand="{Binding FilterCategoryInitialsCommand}"/>
                                 </Border>
-                            </GroupBox>
-                            <CheckBox Margin="3" Content="NICHT mit selektierten Markierungen" IsChecked="{Binding MarkierungInverted, Mode=TwoWay}" Grid.Row="3"/>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                                <Border Grid.Row="1" Style="{DynamicResource ArtikelSearchBorderStyle}" >
+                                    <ScrollViewer>
+                                        <ItemsControl x:Name="categoryList" ItemsSource="{Binding FilteredCategoryFilter}" ToolTipService.ToolTip="Filter für Kategorien" Background="{x:Null}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,0,0,3" VerticalAlignment="Center">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Kategoriename}" VerticalAlignment="Center"/>
+                                                        <Button Grid.Column="1" Command="{Binding DataContext.SelectCategoryCommand, ElementName=categoryList}" CommandParameter="{Binding}" Style="{StaticResource SelectArticlesButtonStyle}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                                <Border Grid.Row="2" Style="{DynamicResource ArtikelSearchBorderStyle}" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Kategorie" VerticalAlignment="Center"/>
+                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectCategoryCommand}" Style="{DynamicResource SelectArticlesButtonStyle}"/>
+
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Serien">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                                    <Controls:InitialsSelector ItemsSource="{Binding SeriesInitialsList}"
+                            			FilterCommand="{Binding FilterInitialsCommand}"/>
+                                </Border>
+                                <Border Grid.Row="1" Style="{DynamicResource ArtikelSearchBorderStyle}" >
+                                    <ScrollViewer>
+                                        <ItemsControl x:Name="seriesListBox"  ItemsSource="{Binding FilteredSeriesFilter}" Background="{x:Null}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                                        <Button Width="Auto" Grid.Column="1" Command="{Binding DataContext.SelectSeriesCommand, ElementName=seriesListBox}" CommandParameter="{Binding}" Style="{DynamicResource SelectArticlesButtonStyle}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                                <Border  Grid.Row="2" Style="{DynamicResource ArtikelSearchBorderStyle}" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Serie" VerticalAlignment="Center"/>
+                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectSeriesCommand}" Style="{DynamicResource SelectArticlesButtonStyle}">
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Markierungen">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                                    <ScrollViewer>
+                                        <ItemsControl x:Name="markingsList"  ItemsSource="{Binding MarkierungenFilter}"
+                            				ToolTipService.ToolTip="Filter für Markierungen" >
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=FarbeARGB, Converter={StaticResource I2BrushConverter}}"
+                                                         />
+                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Titel}" VerticalAlignment="Center" Grid.Column="1"/>
+                                                        <Button Width="Auto" Grid.Column="2" Command="{Binding DataContext.SelectMarkingCommand, ElementName=markingsList}" CommandParameter="{Binding}" Style="{DynamicResource SelectArticlesButtonStyle}">
+                                                        </Button>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                                <Border Grid.Row="1" Style="{DynamicResource ArtikelSearchBorderStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Markierungen" VerticalAlignment="Center"/>
+                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectMarkingCommand}" Style="{DynamicResource SelectArticlesButtonStyle}">
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Margin="0,0,0,3" >
+                    <ItemsControl ItemsSource="{Binding ArtikelListe}" Background="{x:Null}" BorderThickness="0"
+            			ItemTemplate="{StaticResource ArtikelItemTemplate}"   />
+                </ScrollViewer>
+                <Button Content="Neuer Artikel" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewArticleCommand}"/>
             </Grid>
-        </Border>
-    </Grid>
+
+        </Grid>
     </xctk:BusyIndicator>
 </UserControl>

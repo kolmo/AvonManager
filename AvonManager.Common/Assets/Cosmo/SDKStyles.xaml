@@ -856,7 +856,7 @@
         <Setter Property="FontSize"
                 Value="{StaticResource ContentFontSize}" />
         <Setter Property="Background"
-                Value="{StaticResource WhiteColorBrush}" />
+                Value="{x:Null}" />
         <Setter Property="BorderBrush"
                 Value="{StaticResource ThumbBrush}" />
         <Setter Property="BorderThickness"

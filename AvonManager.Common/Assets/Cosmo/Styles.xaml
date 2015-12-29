@@ -79,7 +79,7 @@
         <Setter Property="TextOptions.TextHintingMode"
                 Value="Animated" />
         <Setter Property="Margin"
-                Value="43,3,0,0" />
+                Value="43,0,0,0" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
         <Setter Property="HorizontalAlignment"

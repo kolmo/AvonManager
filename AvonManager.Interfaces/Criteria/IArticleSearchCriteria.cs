@@ -11,7 +11,9 @@ namespace AvonManager.Interfaces.Criteria
         int[] Categories { get; set; }
         int[] Markups { get; set; }
         int[] Series { get; set; }
-        bool? InvertMarkups { get; set; }
+        bool WithoutMarkups { get; set; }
         string FullText { get; set; }
+        bool WithoutSeries { get; set; }
+        bool WithoutCategory { get; set; }
     }
 }

@@ -1,69 +1,71 @@
 ﻿using AvonManager.BusinessObjects;
 using AvonManager.Common.Base;
+using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using AvonManager.KundenHefte.Common;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AvonManager.KundenHefte.ViewModels
 {
-    public class KundenSearchViewModel : BindableBase
+    public class KundenSearchViewModel : ErrorAwareBaseViewModel
     {
         #region Private fields
+        private const string LOAD = "LOAD";
         IKundenDataProvider _dataProvider;
         private readonly IRegionManager _regionManager;
         ICustomerSearchCriteria _customercriteria;
         #endregion
         public KundenSearchViewModel() { }
         public KundenSearchViewModel(IKundenDataProvider provider, IRegionManager regionManager,
-                    ICustomerSearchCriteria customercriteria)
+                    ICustomerSearchCriteria customercriteria,
+                    BusyFlagsManager busyFlagsManager):base(busyFlagsManager)
         {
             _dataProvider = provider;
             _regionManager = regionManager;
             _customercriteria = customercriteria;
-            StarSearchCommand = new DelegateCommand(StartSearch);
+            StartSearchCommand = new DelegateCommand(StartSearch);
             ResetSearchCommand = new DelegateCommand(ResetSearchAction);
+            SelectInitialCommand = new DelegateCommand<string>(LoadCustomersByInital);
         }
         #region Properties
-        public ObservableCollection<InitialSelektor> InitialSelectors { get; } = new ObservableCollection<InitialSelektor>();
+        public ObservableCollection<string> InitialSelectors { get; set; } = new ObservableCollection<string>();
         public InteractionRequest<DeleteEntityConfirmation<KundeViewModel>> DeleteEntityRequest { get; } = new InteractionRequest<DeleteEntityConfirmation<KundeViewModel>>();
-        public ICommand StarSearchCommand { get; private set; }
+        public ICommand StartSearchCommand { get; private set; }
         public ICommand ResetSearchCommand { get; private set; }
-        private int _selectedTab = 0;
-        /// <summary>
-        /// Gets or sets the SelectedTab.
-        /// </summary>
-        /// <value>
-        /// The SelectedTab.
-        /// </value>
-        public int SelectedTab
-        {
-            get { return _selectedTab; }
-            set { SetProperty(ref _selectedTab, value); }
-        }
         public ICustomerSearchCriteria Criteria { get { return _customercriteria; } }
-      
+
         public ObservableCollection<KundeViewModel> AlleKunden { get; set; } = new ObservableCollection<KundeViewModel>();
 
+        private ICommand _selectInitialCommand;
+        /// <summary>
+        /// Gets or sets the IsSelected.
+        /// </summary>
+        /// <value>
+        /// The IsSelected.
+        /// </value>
+        public ICommand SelectInitialCommand
+        {
+            get { return _selectInitialCommand; }
+            set
+            {
+                SetProperty(ref _selectInitialCommand, value);
+            }
+        }
         #endregion
         #region Public Methods
         public async void LoadData()
         {
             var initials = await _dataProvider.GetAllCustomerInitials();
             InitialSelectors.Clear();
-            initials.ForEach(x => InitialSelectors.Add(new InitialSelektor { Initial = x, SelectInitialCommand = new DelegateCommand<string>(LoadCustomersByInital) }));
-            _customercriteria.ActiveCustomersOnly = true;
-            _customercriteria.InActiveCustomersOnly = false;
+            InitialSelectors.Add("#");
+            initials.ForEach(x => InitialSelectors.Add(x));
+            LoadCustomersByInital(InitialSelectors[0]);
         }
         #endregion
 
@@ -71,11 +73,13 @@ namespace AvonManager.KundenHefte.ViewModels
         private void LoadCustomersByInital(string initial)
         {
             ResetSearchAction();
-            _customercriteria.Initial = initial;
+            _customercriteria.Initial = initial!= "#" ? initial : null;
             StartSearch();
         }
         private async void StartSearch()
         {
+            BusyFlagsMgr.ResetAllBusyFlags();
+            BusyFlagsMgr.IncBusyFlag(LOAD);
             var result = await _dataProvider.SearchKunden(_customercriteria);
             AlleKunden.Clear();
             foreach (KundeDto heft in result)
@@ -83,22 +87,19 @@ namespace AvonManager.KundenHefte.ViewModels
                 KundeViewModel vm = new KundeViewModel(heft, EditKundeAction, DeleteCustomerAction);
                 AlleKunden.Add(vm);
             }
-            SelectedTab = 0;
+            BusyFlagsMgr.DecBusyFlag(LOAD);
         }
         private void ResetSearchAction()
         {
             AlleKunden.Clear();
-            _customercriteria.Reset();
-            _customercriteria.ActiveCustomersOnly = true;
-            _customercriteria.InActiveCustomersOnly = false;
         }
         private void EditKundeAction(KundeViewModel customer)
         {
-          
-                NavigationParameters pars = new NavigationParameters();
-                pars.Add("customers", customer);
-                var moduleAWorkspace = new Uri("KundenEditView", UriKind.Relative);
-                _regionManager.RequestNavigate("KundenDetailsRegion", moduleAWorkspace, pars);
+
+            NavigationParameters pars = new NavigationParameters();
+            pars.Add("customers", customer);
+            var moduleAWorkspace = new Uri("KundenEditView", UriKind.Relative);
+            _regionManager.RequestNavigate("KundenDetailsRegion", moduleAWorkspace, pars);
         }
         private void DeleteCustomerAction(KundeViewModel customer)
         {

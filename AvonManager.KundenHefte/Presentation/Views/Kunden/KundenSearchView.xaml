@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
              xmlns:prism="http://www.codeplex.com/prism"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -15,6 +16,20 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="inactive" TargetType="Image">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Inaktiv}" Value="True">
+                        <Setter Property="Source" Value="{StaticResource InactiveImage}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="getsBrochure" TargetType="Image">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=GetsBrochure}" Value="True">
+                        <Setter Property="Source" Value="{StaticResource BrochureImage}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -26,46 +41,24 @@
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <GroupBox x:Name="groupBoxTitel" Header="Suche" Margin="3">
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="textBox" TextWrapping="Wrap" Text="{Binding SuchString}" VerticalAlignment="Center"/>
-                <Button x:Name="buttonSearch" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top" Command="{Binding StarSearchCommand}" Grid.Column="1">
-                    <Image Style="{StaticResource SearchImage}"/>
-                </Button>
-                <Button x:Name="buttonReset" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top"  Command="{Binding ResetSearchCommand}" Grid.Column="2">
-                    <Image Style="{StaticResource ClearFilterImage}"/>
-                </Button>
-            </Grid>
-        </GroupBox>
-
-        <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedTab}">
-            <TabItem Header="Liste">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <ItemsControl Margin="3" ItemsSource="{Binding Path=InitialSelectors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Content="{Binding Path=Initial}" Command="{Binding Path=SelectInitialCommand}" CommandParameter="{Binding Path=Initial}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <ListBox ItemsSource="{Binding AlleKunden, Mode=OneWay}" 
-            			TextSearch.TextPath="DisplayName"  Grid.Column="1" Margin="3">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
+    <xctk:BusyIndicator IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{DynamicResource CustomerSearchBorderStyle}">
+                <Controls:InitialsSelector ItemsSource="{Binding InitialSelectors}"
+				FilterCommand="{Binding SelectInitialCommand}"
+				ImageStyle="{StaticResource KundenLogoStyle}"/>
+            </Border>
+            <ScrollViewer Grid.Row="1" >
+                <ItemsControl ItemsSource="{Binding AlleKunden, Mode=OneWay}" 
+        			TextSearch.TextPath="DisplayName" Background="{x:Null}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource CustomerSearchBorderStyle}">
                                 <Grid d:DesignWidth="303.744" d:DesignHeight="94.913">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -75,35 +68,25 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition/>
-                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                            <Image Height="32" Style="{StaticResource inactive}"/>
+                                            <Image Height="32" Style="{StaticResource getsBrochure}"/>
+
+                                        </StackPanel>
                                     </Grid>
-                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                                                                   DeleteCommand="{Binding DeleteCustomerCommand}" DeleteCommandParameter="{Binding}"
-                                                                   EditCommand="{Binding EditKundeCommand}" EditCommandParameter="{Binding}"/>
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+        							DeleteCommand="{Binding DeleteCustomerCommand}" DeleteCommandParameter="{Binding}"
+        							EditCommand="{Binding EditKundeCommand}" EditCommandParameter="{Binding}"/>
                                 </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Erweitert">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <GroupBox Header="Aktiv">
-                        <StackPanel>
-                            <RadioButton GroupName="NurAktiveKunden" IsChecked="{Binding Path=Criteria.ActiveCustomersOnly, Mode=TwoWay}" Content="Nur aktive Kunden" />
-                            <RadioButton GroupName="NurAktiveKunden" IsChecked="{Binding Path=Criteria.InActiveCustomersOnly, Mode=TwoWay}" Content="Nur inaktive Kunden" />
-                            <RadioButton GroupName="NurAktiveKunden" Content="Alle Kunden" />
-                        </StackPanel>
-                    </GroupBox>
-                </Grid>
-            </TabItem>
-
-        </TabControl>
-    </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Content="Neue Kundin" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3"/>
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>

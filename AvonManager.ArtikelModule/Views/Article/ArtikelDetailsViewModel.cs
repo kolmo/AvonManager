@@ -2,7 +2,6 @@
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.Regions;
 using System.Runtime.CompilerServices;
-using System;
 using System.Linq;
 using AvonManager.Interfaces;
 using System.Collections.Generic;
@@ -11,14 +10,15 @@ using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using AvonManager.ArtikelModule.Notifications;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using AvonManager.Common.Base;
-using AvonManager.ArtikelModule.Common;
 using AvonManager.Common.Helpers;
 using AvonManager.ArtikelModule.Views;
+using AvonManager.Common.Base;
+using Microsoft.Practices.Prism.PubSubEvents;
+using AvonManager.Common.Events;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
-    public class ArtikelDetailsViewModel : BindableBase, INavigationAware
+    public class ArtikelDetailsViewModel : ErrorAwareBaseViewModel, INavigationAware
     {
         private const string LOAD = "LOAD";
         private struct BackingFields
@@ -39,20 +39,22 @@ namespace AvonManager.ArtikelModule.ViewModels
         private ArtikelDto _artikel;
         private bool _isInitializing = false;
         private List<MarkierungDto> _allMarkings;
+        private List<KategorieDto> _allCategories;
         IArtikelDataProvider _dataProvider;
         IMarkierungenDataProvider _markierungenDataProvider;
         ISerienDataProvider _seriendataProvider;
         IKategorieProvider _kategorienProvider;
-        BusyFlagsManager _busyFlagsManager;
+        IEventAggregator _eventAggregator;
         #region Constructors
         public ArtikelDetailsViewModel() { }
         public ArtikelDetailsViewModel(IArtikelDataProvider dataProvider
             , IMarkierungenDataProvider markierungenDataProvider
             , ISerienDataProvider seriendataProvider
             , IKategorieProvider kategProvider
-            , BusyFlagsManager bFlagsManager)
+            , IEventAggregator eventAggregator
+            , BusyFlagsManager bFlagsManager) : base(bFlagsManager)
         {
-            _busyFlagsManager = bFlagsManager;
+            _eventAggregator = eventAggregator;
             _dataProvider = dataProvider;
             _markierungenDataProvider = markierungenDataProvider;
             _seriendataProvider = seriendataProvider;
@@ -63,14 +65,14 @@ namespace AvonManager.ArtikelModule.ViewModels
 
         #endregion
         #region Properties
-        public BusyFlagsManager Mgr { get { return _busyFlagsManager; } }
 
         public InteractionRequest<AssignmentSelectionNotification> ArtikelAssignmentSelectionRequest { get; } = new InteractionRequest<AssignmentSelectionNotification>();
         public List<ArticleMarkingViewModel> ArticleMarkingSelectionList { get; } = new List<ArticleMarkingViewModel>();
         public List<ArticleMarkingViewModel> ArticleMarkingAssignments { get { return ArticleMarkingSelectionList.Where(x => x.IsAssigned).ToList(); } }
+        public List<ArticleCategoryViewModel> ArticleCategorySelectionList { get; } = new List<ArticleCategoryViewModel>();
+        public List<ArticleCategoryViewModel> ArticleCategoryAssignments { get { return ArticleCategorySelectionList.Where(x => x.IsAssigned).ToList(); } }
         public ObservableCollection<SeriesListEntryViewModel> AlleSerien { get; } = new ObservableCollection<SeriesListEntryViewModel>();
-        public ObservableCollection<CategoryViewModel> Kategorien { get; } = new ObservableCollection<CategoryViewModel>();
-        public ObservableCollection<ArticleMarkingViewModel> Markierungen { get; } = new ObservableCollection<ArticleMarkingViewModel>();
+        public ObservableCollection<CategoryListEntryViewModel> Kategorien { get; } = new ObservableCollection<CategoryListEntryViewModel>();
         /// <summary>
         /// Gets or sets the Beschreibung.
         /// </summary>
@@ -274,20 +276,21 @@ namespace AvonManager.ArtikelModule.ViewModels
                 _artikel.Nummer = Nummer;
                 _artikel.SerienId = SerienId;
                 _dataProvider.SaveArtikel(_artikel);
+                _eventAggregator.GetEvent<ArticleChangedEvent>().Publish(_artikel);
             }
         }
         private async void LoadArtikel(int? artikelId)
         {
             if (artikelId.HasValue)
             {
-                _busyFlagsManager.IncBusyFlag(LOAD);
+                BusyFlagsMgr.IncBusyFlag(LOAD);
                 _isInitializing = true;
                 _artikel = await _dataProvider.LoadArtikel(artikelId.Value);
                 LoadMarkierungen();
                 LoadKategorien();
                 InitProperties();
                 _isInitializing = false;
-                _busyFlagsManager.DecBusyFlag(LOAD);
+                BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
         private async void LoadMarkierungen()
@@ -310,26 +313,42 @@ namespace AvonManager.ArtikelModule.ViewModels
                 ArticleMarkingSelectionList.Add(new ArticleMarkingViewModel(_artikel, marking, hkd, _markierungenDataProvider, isAssigned));
             }
             OnPropertyChanged(() => ArticleMarkingAssignments);
+            _eventAggregator.GetEvent<ArticleChangedEvent>().Publish(_artikel);
         }
         private async void LoadKategorien()
         {
             var kategorien = await _kategorienProvider.ListKategorienByArtikel(_artikel.ArtikelId);
-            Kategorien.Clear();
-            kategorien.ForEach(x => Kategorien.Add(new CategoryViewModel(x)));
+            _allCategories = await _kategorienProvider.ListAllKategorien();
+            ArticleCategorySelectionList.Clear();
+            foreach (KategorieDto category in _allCategories)
+            {
+                bool isAssigned = false;
+                ArticleCategoryDto hkd = kategorien.FirstOrDefault(x => x.CategoryId == category.KategorieId);
+                if (hkd != null)
+                {
+                    isAssigned = true;
+                }
+                else
+                {
+                    hkd = new ArticleCategoryDto { CategoryId = category.KategorieId, ArtikelId = _artikel.ArtikelId };
+                }
+                ArticleCategorySelectionList.Add(new ArticleCategoryViewModel(_artikel, category, hkd, _kategorienProvider, isAssigned));
+            }
+            OnPropertyChanged(nameof(ArticleCategoryAssignments));
         }
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _busyFlagsManager.ResetBusyflag(LOAD);
+            BusyFlagsMgr.ResetBusyflag(LOAD);
             var artikelParameter = navigationContext.Parameters.FirstOrDefault();
-            if (artikelParameter.Value is ArtikelViewModel)
+            if (artikelParameter.Value is ArticleViewModel)
             {
-                int artikelID = ((ArtikelViewModel)artikelParameter.Value).ArtikelId;
+                int artikelID = ((ArticleViewModel)artikelParameter.Value).ArtikelId;
                 LoadArtikel(artikelID);
             }
             else
             {
                 // Leere und deaktiviere die View
-                _busyFlagsManager.IncBusyFlag(LOAD);
+                BusyFlagsMgr.IncBusyFlag(LOAD);
                 _artikel = new ArtikelDto();
                 InitProperties();
             }
@@ -346,7 +365,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
         private void RaiseMarkierungenSelection()
         {
-          
+
             AssignmentSelectionNotification notification = new AssignmentSelectionNotification(ArticleMarkingSelectionList);
 
             notification.Title = "Markierungen";
@@ -365,25 +384,12 @@ namespace AvonManager.ArtikelModule.ViewModels
                     }
                 });
         }
-        private async void RaiseKategorienSelection()
+        private void RaiseKategorienSelection()
         {
-            // Here we have a custom implementation of INotification which allows us to pass custom data in the 
-            // parameter of the interaction request. In this case, we are passing a list of items.
-            var markierungen = await _kategorienProvider.ListAllKategorien();
-            List<FilterEntryBase> alleKats = new List<FilterEntryBase>();
-            foreach (var item in markierungen)
-            {
-                FilterEntryBase vm = new KategorieFilterEntry(item);
-                vm.IsSelected = Kategorien.Any(x => x.KategorieId == item.KategorieId);
-                alleKats.Add(vm);
-            }
+            AssignmentSelectionNotification notification = new AssignmentSelectionNotification(ArticleCategorySelectionList);
 
-            AssignmentSelectionNotification notification = new AssignmentSelectionNotification(alleKats);
             notification.Title = "Kategorien";
 
-            // The custom popup view in this case has its own view model which implements the IInteractionRequestAware interface
-            // therefore, its Notification property will be automatically populated with this notification by the PopupWindowAction.
-            // Like this that view model is able to recieve data from this one without knowing each other.
             this.InteractionResultMessage = "";
             this.ArtikelAssignmentSelectionRequest.Raise(notification,
                 returned =>
@@ -397,18 +403,6 @@ namespace AvonManager.ArtikelModule.ViewModels
                         this.InteractionResultMessage = "The user cancelled the operation or didn't select an item.";
                     }
                 });
-        }
-        private void UpdateArtikelMarkierung(int markierungId, bool insert)
-        {
-            //if (insert)
-            //    _markierungenDataProvider.AddMarkierungArtikel(_artikel.ArtikelId, markierungId, insert);
-            //else
-            //    _markierungenDataProvider.DeleteMarkierungArtikel(_artikel.ArtikelId, markierungId, insert);
-
-        }
-        private void UpdateArtikelKategorie(int kategorieId, bool insert)
-        {
-            _kategorienProvider.UpdateKategorieArtikel(_artikel.ArtikelId, kategorieId, insert);
         }
         #endregion
     }

@@ -9,7 +9,8 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
     x:Class="AvonManager.KundenHefte.Views.HefteSearchView"
-             mc:Ignorable="d" 
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
+            mc:Ignorable="d" 
              d:DataContext="{d:DesignData Source=/DesignTimeData/HeftDesignTimeData.xaml}"
              d:DesignHeight="300" Margin="5">
     <UserControl.Resources>
@@ -19,7 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="JahreEntryTemplate">
-                <CheckBox x:Name="checkBox" Content="{Binding Year}" IsChecked="{Binding IsSelected}"/>
+                <CheckBox Content="{Binding Year}" IsChecked="{Binding IsSelected}"/>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -31,33 +32,17 @@
             <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True"/>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <GroupBox x:Name="groupBoxTitel" Header="Suche" Margin="3">
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="textBox" TextWrapping="Wrap" Text="{Binding Criteria.FullText}" VerticalAlignment="Center"/>
-                <Button x:Name="buttonSearch" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top" Command="{Binding StarSearchCommand}" Grid.Column="1">
-                    <Image Style="{StaticResource SearchImage}"/>
-                </Button>
-                <Button x:Name="buttonReset" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top"  Command="{Binding ResetSearchCommand}" Grid.Column="2">
-                    <Image Style="{StaticResource ClearFilterImage}"/>
-                </Button>
-            </Grid>
-        </GroupBox>
-        <TabControl Grid.Row="1" SelectedIndex="{Binding SelectedTab}">
-            <TabItem Header="Liste">
-                <ScrollViewer>
-                    <ItemsControl ItemsSource="{Binding AlleHefte}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+    <xctk:BusyIndicator IsBusy="{Binding Mgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0">
+                <ItemsControl ItemsSource="{Binding AlleHefte}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -72,21 +57,16 @@
                                         <TextBlock Grid.Row="1" Text="{Binding Jahr, Mode=OneWay}" Margin="3"/>
                                     </Grid>
                                     <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                                                                   DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
-                                                                   EditCommand="{Binding EditHeftCommand}" EditCommandParameter="{Binding}"/>
+                    				DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
+                    				EditCommand="{Binding EditHeftCommand}" EditCommandParameter="{Binding}"/>
 
                                 </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </TabItem>
-            <!--<Image  Grid.Column="2" Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}" MaxHeight="100" Grid.RowSpan="1"/>-->
-            <TabItem Header="Erweiterte Suche">
-                <GroupBox x:Name="groupBoxJahre" Header="Jahre">
-                    <ListBox x:Name="listBoxJahre" ItemsSource="{Binding AlleJahre}" ItemTemplate="{DynamicResource JahreEntryTemplate}"/>
-                </GroupBox>
-            </TabItem>
-        </TabControl>
-    </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Content="Neues Heft" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddBrochureCommand}"/>
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>

@@ -7,7 +7,7 @@
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:local="clr-namespace:AvonManager.ArtikelModule.Views"
              xmlns:controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common"
-             xmlns:commonHelper="clr-namespace:AvonManager.Common.Helpers;assembly=AvonManager.Common"
+             xmlns:commonHelper="clr-namespace:AvonManager.ArtikelModule.Helpers"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
@@ -31,84 +31,83 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <commonHelper:CategoryCollectionToStringConverter x:Key="coll2string"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <xceed:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+    <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+        <Border Style="{DynamicResource ArtikelEditBorderStyle}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <GroupBox Header="Serie" >
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox Margin="3"
-							ItemsSource="{Binding AlleSerien}"
-							SelectedValue="{Binding SerienId, Mode=TwoWay}"
-							SelectedValuePath="SerienId" VerticalAlignment="Center" />
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Grid.Row="1"  Header="Name" BorderThickness="0" FontSize="8" >
-                        <TextBox Text="{Binding Artikelname, Mode=TwoWay}" FontSize="12"/>
-                    </GroupBox>
-                    <GroupBox Grid.Row="2" Header="Artikel-Nr."  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0"  Header="Name" >
+                    <TextBox Text="{Binding Artikelname, Mode=TwoWay}" FontSize="30"/>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Serie" >
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Margin="3"
+        						ItemsSource="{Binding AlleSerien}"
+        						SelectedValue="{Binding SerienId, Mode=TwoWay}"
+        						SelectedValuePath="SerienId" VerticalAlignment="Center" />
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="2" Header="Beschreibung" >
+                    <TextBox Text="{Binding Beschreibung}"/>
+                </GroupBox>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Artikel-Nr."  >
                         <TextBox Text="{Binding Nummer}"/>
                     </GroupBox>
-                    <GroupBox Grid.Row="3"  Header="Inhalt" >
-                        <TextBox Text="{Binding Inhalt, Mode=TwoWay}"/>
-                    </GroupBox>
-                    <GroupBox Grid.Row="4"  Header="Preis" >
-                        <TextBox Text="{Binding Einzelpreis, ConverterCulture=de-DE, Mode=TwoWay, StringFormat=C2}"/>
-                    </GroupBox>
-                    <GroupBox Grid.Row="5" Header="Bestand" >
-                        <TextBox   Text="{Binding Lagerbestand, Mode=TwoWay}"/>
-                    </GroupBox>
-                    <GroupBox Grid.Row="6" Header="Beschreibung" Grid.RowSpan="2" >
-                        <TextBox Text="{Binding Beschreibung}"/>
+                    <GroupBox  Header="Inhalt"  Grid.Column="1" >
+                        <TextBox Text="{Binding Inhalt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </GroupBox>
                 </Grid>
-                <Grid Grid.Column="1"  >
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <GroupBox Header="Kategorien" >
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ListBox ItemsSource="{Binding Kategorien}" Margin="3,0,-3,0" >
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                <Image Source="{Binding Logo, Converter={StaticResource ByteToImageConverter}}" MaxHeight="30" VerticalAlignment="Center" />
-                                                <TextBlock Margin="3" HorizontalAlignment="Left"  Text="{Binding Kategoriename}" VerticalAlignment="Center"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <Button x:Name="button" Content="Bearbeiten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="75" Command="{Binding RaiseKategorienSelectionCommand}" Margin="3"/>
-                        </Grid>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox  Header="Preis" >
+                        <TextBox Text="{Binding Einzelpreis, ConverterCulture=de-DE, Mode=TwoWay, StringFormat=C2}"/>
                     </GroupBox>
-                    <GroupBox Header="Markierungen" Grid.Row="1"  >
+                    <GroupBox Header="Bestand" Grid.Column="1" >
+                        <TextBox   Text="{Binding Lagerbestand, Mode=TwoWay}"/>
+                    </GroupBox>
+                </Grid>
+                <GroupBox Grid.Row="5" Header="Kategorien" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding ArticleCategoryAssignments, Converter={StaticResource coll2string}, Mode=OneWay}" VerticalAlignment="Center"/>
+                        <Button x:Name="button"  HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Command="{Binding RaiseKategorienSelectionCommand}" Margin="3">
+                            <Image Style="{StaticResource EditImage}" VerticalAlignment="Center"/>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+                <Grid Grid.Row="6"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Markierungen" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -125,22 +124,24 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <Button x:Name="buttonEditMarkierungen" Content="Bearbeiten" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="75" 
-							Command="{Binding RaiseMarkierungenSelectionCommand}" Margin="3"/>
+                            <Button x:Name="buttonEditMarkierungen" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"
+        							Command="{Binding RaiseMarkierungenSelectionCommand}" Margin="3">
+                                <Image Style="{StaticResource EditImage}"/>
+                            </Button>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Bild" Grid.Row="2">
+                    <GroupBox Header="Bild" Grid.Column="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Image Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}"/>
-                            <controls:FileLoader Grid.Row="1" FileData="{Binding Bild, Mode=TwoWay}"  HorizontalAlignment="Left" EnableWebcam="False"/>
+                            <controls:FileLoader Grid.Row="1" FileData="{Binding Bild, Mode=TwoWay}"  HorizontalAlignment="Left" EnableWebcam="True"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
             </Grid>
-        </xceed:BusyIndicator>
-    </Grid>
+        </Border>
+    </xceed:BusyIndicator>
 </UserControl>

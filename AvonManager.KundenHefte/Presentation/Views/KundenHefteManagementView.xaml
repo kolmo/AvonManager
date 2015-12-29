@@ -15,15 +15,19 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Left" >
+        <TabControl TabStripPlacement="Top" >
             <TabItem Header="Hefte">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <ContentControl  prism:RegionManager.RegionName="HefteSearchRegion" />
-                    <ContentControl prism:RegionManager.RegionName="HeftDetailsRegion" Grid.Column="1"/>
+                    <Border Style="{DynamicResource ArtikelBorderStyle}">
+                        <ContentControl  prism:RegionManager.RegionName="HefteSearchRegion" />
+                    </Border>
+                    <Border Grid.Column="1">
+                        <ContentControl prism:RegionManager.RegionName="HeftDetailsRegion"/>
+                    </Border>
                 </Grid>
             </TabItem>
             <TabItem Header="Kunden">
@@ -32,8 +36,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <ContentControl  prism:RegionManager.RegionName="KundenSearchRegion"/>
-                    <ContentControl prism:RegionManager.RegionName="KundenDetailsRegion" Grid.Column="1"/>
+                    <Border Style="{DynamicResource ArtikelBorderStyle}">
+                        <ContentControl  prism:RegionManager.RegionName="KundenSearchRegion"/>
+                    </Border>
+                    <Border Grid.Column="1">
+                        <ContentControl prism:RegionManager.RegionName="KundenDetailsRegion"/>
+                    </Border>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -95,6 +96,7 @@
   <ItemGroup>
     <Compile Include="BestellungenModule.cs" />
     <Compile Include="Common\Commands\DeleteEntityCommand.cs" />
+    <Compile Include="Common\CustomerListEntry.cs" />
     <Compile Include="Presentation\Controls\OrderModulTaskButtonViewModel.cs" />
     <Compile Include="Presentation\Controls\OrderModuleTaskButton.xaml.cs">
       <DependentUpon>OrderModuleTaskButton.xaml</DependentUpon>

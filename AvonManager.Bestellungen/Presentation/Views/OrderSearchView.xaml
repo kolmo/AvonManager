@@ -9,8 +9,8 @@
              xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
-             mc:Ignorable="d" 
-             d:DesignHeight="500" Width="250">
+             mc:Ignorable="d" d:DesignWidth="381.241" d:DesignHeight="354.229" 
+             >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadSupplementData" TargetObject="{Binding}"/>
@@ -28,115 +28,83 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#FFE7F4F5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBox x:Name="textBox" TextWrapping="Wrap" Text="{Binding Path=Criteria.FullText}" VerticalAlignment="Center" ToolTipService.ToolTip="Suche in Artikelbeschreibung, FDG"/>
-            <Button x:Name="buttonSearch" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top" Command="{Binding StarSearchCommand}" Grid.Column="1">
-                <Image Style="{StaticResource SearchImage}"/>
-            </Button>
-            <Button x:Name="buttonReset" HorizontalAlignment="Center" Margin="3" VerticalAlignment="Top"  Command="{Binding ResetSearchCommand}" Grid.Column="2">
-                <Image Style="{StaticResource ClearFilterImage}"/>
-            </Button>
-        </Grid>
-        <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">
-            <TabControl SelectedIndex="{Binding SelectedTab}">
-                <TabItem Header="Liste">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <ListBox ItemsSource="{Binding AllOrders}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border  Margin="3" CornerRadius="2" BorderThickness="0" Background="#FFFFCACA">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Style="{DynamicResource ArtikelSearchBorderStyle}" Height="90">
+                <Controls:InitialsSelector ItemsSource="{Binding CustomerInitialsList}"
+                			FilterCommand="{Binding SelectInitialCommand}"
+                ImageStyle="{Binding Mode=OneWay, Source={StaticResource BestellungLogoStyle}}" />
+            </Border>
+            <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding Mgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Style="{DynamicResource ArtikelSearchBorderStyle}">
+                        <ScrollViewer>
+                            <ItemsControl  ItemsSource="{Binding CustomersWithOrders}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <Grid >
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="{Binding CustomerName}" VerticalAlignment="Center"/>
-                                            </Grid>
-                                            <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                                                                   DeleteCommand="{Binding DeleteOrderCommand}" DeleteCommandParameter="{Binding}"
-                                                                   EditCommand="{Binding EditOrderCommand}" EditCommandParameter="{Binding}"/>
+                                            <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                                            <Button Content="N" Width="Auto" Grid.Column="1" Command="{Binding Path=CreateOrderCommand}" CommandParameter="{Binding}" Foreground="{DynamicResource NewEntityBrush}"/>
+                                            <Button Content="A" Width="Auto" Grid.Column="2" Command="{Binding Path=SelectCommand}" CommandParameter="{Binding}"/>
                                         </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <Grid Grid.Row="1" Margin="0,3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button  Command="{Binding LoadMoreCommand}" Grid.Column="1" ToolTipService.ToolTip="Mehr laden...">
-                                <Image Style="{StaticResource LoadMoreImage}"/>
-                            </Button>
-                        </Grid>
-                    </Grid>
-
-                </TabItem>
-                <TabItem Header="Erweiterte Suche">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0">
-                            <GroupBox Margin="3"  Header="Kundin">
-                                <ComboBox  x:Name="KundenCombo" ItemsSource="{Binding Path=CustomersWithOrders}" DisplayMemberPath="Nachname" 
-                                       SelectedValuePath="KundenId"
-                                                          SelectedValue="{Binding Path=Criteria.CustomerId, Mode=TwoWay}">
-                                </ComboBox>
-                            </GroupBox>
-                            <GroupBox Margin="3" Header="Artikel-Nummer">
-                                <TextBox 
-                                         Text="{Binding Path=Criteria.ArticleNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="Suche in Artikel-Nummer"/>
-                            </GroupBox>
-                            <GroupBox Margin="3" Header="Campagne">
-                                <TextBox  
-                                         Text="{Binding Path=Criteria.Campaign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ToolTip="Suche in Campagne"/>
-                            </GroupBox>
-                            <GroupBox Margin="3" Header="Löschvormerkung">
-                                <CheckBox 
-                                         IsChecked="{Binding Path=Criteria.DeletionReserved, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsThreeState="True"
-                                              ToolTipService.ToolTip="Mit Löschvormerkung"/>
-                            </GroupBox>
-                        </StackPanel>
-                        <GroupBox Grid.Row="1" Margin="3" Header="Jahr"  ToolTipService.ToolTip="Suche in Jahr">
-                            <ListBox ItemsSource="{Binding Path=OrderYears}" >
-                                <ListBox.Resources>
-                                    <Style TargetType="CheckBox"/>
-                                </ListBox.Resources>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <CheckBox IsChecked="{Binding Path=IsSelected, Mode=TwoWay}" VerticalContentAlignment="Center">
-                                            <TextBlock  Text="{Binding Path=Year}"/>
-                                        </CheckBox>
                                     </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </GroupBox>
-                    </Grid>
-
-                </TabItem>
-            </TabControl>
-        </xctk:BusyIndicator>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </xctk:BusyIndicator>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding AllOrders}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource EntityBackgroundBorderStyle}" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="{Binding CustomerName}" VerticalAlignment="Center"/>
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderDate, StringFormat=d}" VerticalAlignment="Center" Grid.Row="1"/>
+                                    </Grid>
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+										DeleteCommand="{Binding DeleteOrderCommand}" DeleteCommandParameter="{Binding}"
+										EditCommand="{Binding EditOrderCommand}" EditCommandParameter="{Binding}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

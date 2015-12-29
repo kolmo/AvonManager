@@ -18,9 +18,11 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ContentControl  prism:RegionManager.RegionName="ArtikelSearchRegion"/>
-        <ContentControl prism:RegionManager.RegionName="ArtikelDetailsRegion" Grid.Column="1"/>
+        <Border Style="{StaticResource ArtikelBorderStyle}">
+            <ContentControl  prism:RegionManager.RegionName="ArtikelSearchRegion"/>
+        </Border>
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="ArtikelDetailsRegion"/>
     </Grid>
 </UserControl>

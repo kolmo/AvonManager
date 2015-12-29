@@ -1,13 +1,17 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+using Microsoft.Win32;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using AvonManager.Common.Base;
 
 namespace AvonManager.Common.Controls
 {
-    public partial class FileLoader :  UserControl
+    public partial class FileLoader : UserControl
     {
 
+        public InteractionRequest<TakePictureConfirmation> TakeSnapshotRequest { get; } = new InteractionRequest<TakePictureConfirmation>();
+        public InteractionRequest<Notification> PreviewPictureRequest { get; } = new InteractionRequest<Notification>();
         #region Constructors
         public FileLoader()
         {
@@ -137,7 +141,8 @@ namespace AvonManager.Common.Controls
         {
             if (EnableWebcam)
             {
-                //MediaDeviceManager.Current.CaptureImageFromWebcam();
+                TakePictureConfirmation confirmation = new TakePictureConfirmation() {Title="Bild aufnehmen" };
+                TakeSnapshotRequest.Raise(confirmation, TakeSnapshotAction);
             }
         }
 
@@ -153,22 +158,33 @@ namespace AvonManager.Common.Controls
             //}
             SetWebcamButtonVisibility(this.EnableWebcam);
         }
-
+        private void TakeSnapshotAction(TakePictureConfirmation confirmation)
+        {
+            if (confirmation.Confirmed)
+            {
+                FileData = confirmation.ImageData;
+            }
+        }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (EnableWebcam)
             {
-                //MediaDeviceManager.Current.StopWebcam();
+
             }
         }
 
         private void deletePic_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Wirklich löschen?", "Bild löschen",  MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel) == MessageBoxResult.OK)
+            if (MessageBox.Show("Wirklich löschen?", "Bild löschen", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel) == MessageBoxResult.OK)
             {
                 this.FileData = null;
             }
         }
 
+        private void preview_Click(object sender, RoutedEventArgs e)
+        {
+            Notification previewPictureNotif = new Notification() { Title = "Vorschau", Content = FileData };
+            PreviewPictureRequest.Raise(previewPictureNotif, null);
+        }
     }
 }

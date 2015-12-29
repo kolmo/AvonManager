@@ -36,24 +36,22 @@ namespace AvonManager.Data
             task.Start();
             return task;
         }
-        public Task<List<KategorieDto>> ListKategorienByArtikel(int artikelId)
+        public Task<List<ArticleCategoryDto>> ListKategorienByArtikel(int artikelId)
         {
-            Task<List<KategorieDto>> task = new Task<List<KategorieDto>>(() =>
+            Task<List<ArticleCategoryDto>> task = new Task<List<ArticleCategoryDto>>(() =>
             {
                 using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
                 {
                     var query = from b in database.Kategorien_x_Artikels
-                                join c in database.Kategoriens
-                                on b.KategorieId equals c.KategorieId
                                 where b.ArtikelId == artikelId
-                                select c;
+                                select b;
 
-                    List<KategorieDto> markierungenList = new List<KategorieDto>();
-                    foreach (Kategorien mark in query)
+                    List<ArticleCategoryDto> list = new List<ArticleCategoryDto>();
+                    foreach (Kategorien_x_Artikel mark in query)
                     {
-                        markierungenList.Add(_mapper.Map(mark));
+                        list.Add(_mapper.Map(mark));
                     }
-                    return markierungenList;
+                    return list;
                 };
             });
             task.Start();
@@ -176,6 +174,40 @@ namespace AvonManager.Data
             task.Start();
             return task;
 
+        }
+
+        public void AddCategoryArtikel(ArticleCategoryDto articleCategory)
+        {
+            using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+            {
+                var entity = database.Kategorien_x_Artikels.SingleOrDefault(b => b.KategorieId == articleCategory.CategoryId && b.ArtikelId == articleCategory.ArtikelId);
+
+                if (entity == null)
+                {
+                    database.Kategorien_x_Artikels.InsertOnSubmit(_mapper.Map(articleCategory));
+                }
+                try
+                {
+                    database.SubmitChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public void DeleteCategoryArtikel(ArticleCategoryDto articleCategory)
+        {
+            using (AvonDatabaseDataContext database = new AvonDatabaseDataContext())
+            {
+                var entity = database.Kategorien_x_Artikels.SingleOrDefault(b => b.KategorieId == articleCategory.CategoryId && b.ArtikelId == articleCategory.ArtikelId);
+                if (entity != null)
+                {
+                    database.Kategorien_x_Artikels.DeleteOnSubmit(entity);
+                    database.SubmitChanges();
+                }
+            }
         }
     }
 }

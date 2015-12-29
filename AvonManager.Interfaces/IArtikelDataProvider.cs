@@ -10,7 +10,7 @@ namespace AvonManager.Interfaces
     public interface IArtikelDataProvider
     {
         Task<List<ArtikelDto>> ListAllArtikel();
-        Task<List<ArtikelDto>> SearchArticles(Criteria.IArticleSearchCriteria searchCriteria, int pageSize, int page);
+        Task<List<ArtikelDto>> SearchArticles(Criteria.IArticleSearchCriteria searchCriteria, int pageSize = 100, int page = 1);
         int AddArticle(ArtikelDto newArticle);
         Task<ArtikelDto> LoadArtikel(int artikelId);
         void SaveArtikel(ArtikelDto artikel);
