@@ -61,7 +61,7 @@ namespace AvonManager.Common.Helpers
                     , (byte)(iCol)));
             }
             else
-                return null;
+                return new SolidColorBrush(Colors.Black);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

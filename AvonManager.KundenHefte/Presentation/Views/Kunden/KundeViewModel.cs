@@ -13,11 +13,9 @@ namespace AvonManager.KundenHefte.ViewModels
     {
         public KundeViewModel() { }
         KundeDto _kunde;
-        public KundeViewModel(KundeDto kunde, Action<KundeViewModel> editKunde, Action<KundeViewModel> deleteCustomerAction)
+        public KundeViewModel(KundeDto kunde)
         {
             _kunde = kunde;
-            EditKundeCommand = new DelegateCommand<KundeViewModel>(editKunde);
-            DeleteCustomerCommand = new DelegateCommand<KundeViewModel>(deleteCustomerAction);
         }
         public int KundeId { get { return _kunde.KundenId; } }
         public string Vorname { get { return _kunde.Vorname; } }
@@ -25,7 +23,12 @@ namespace AvonManager.KundenHefte.ViewModels
         public string DisplayName { get { return $"{_kunde.Nachname}, {_kunde.Vorname}"; } }
         public bool? Inaktiv { get { return _kunde.Inaktiv; } }
         public bool? GetsBrochure { get { return _kunde.BekommtHeft; } }
-        public DelegateCommand<KundeViewModel> EditKundeCommand { get; private set; }
-        public DelegateCommand<KundeViewModel> DeleteCustomerCommand { get; private set; }
+        private int _orderCount;
+     
+        public int OrderCount
+        {
+            get { return _orderCount; }
+            set { SetProperty(ref _orderCount, value); }
+        }
     }
 }

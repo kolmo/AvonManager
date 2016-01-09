@@ -23,6 +23,10 @@ namespace AvonManager.Common.Controls
         public EditDeleteCmdControl()
         {
             InitializeComponent();
+            buttonEdit.SetBinding(Button.CommandProperty, new Binding("EditCommand") { Source = this });
+            buttonEdit.SetBinding(Button.CommandParameterProperty, new Binding("EditCommandParameter") { Source = this });
+            buttonDelete.SetBinding(Button.CommandProperty, new Binding("DeleteCommand") { Source = this });
+            buttonDelete.SetBinding(Button.CommandParameterProperty, new Binding("DeleteCommandParameter") { Source = this });
         }
 
 
@@ -35,13 +39,7 @@ namespace AvonManager.Common.Controls
 
         // Using a DependencyProperty as the backing store for EditCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EditCommandProperty =
-            DependencyProperty.Register("EditCommand", typeof(ICommand), typeof(EditDeleteCmdControl), new PropertyMetadata(null, new PropertyChangedCallback(EditCommandChanged)));
-
-        private static void EditCommandChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {
-            var control = sender as EditDeleteCmdControl;
-            control.buttonEdit.Command = args.NewValue as ICommand;
-        }
+            DependencyProperty.Register("EditCommand", typeof(ICommand), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
 
 
         public object EditCommandParameter
@@ -52,13 +50,7 @@ namespace AvonManager.Common.Controls
 
         // Using a DependencyProperty as the backing store for EditCommandParameter.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EditCommandParameterProperty =
-            DependencyProperty.Register("EditCommandParameter", typeof(object), typeof(EditDeleteCmdControl), new PropertyMetadata(null, new PropertyChangedCallback(EditCommandParameterChanged)));
-
-        private static void EditCommandParameterChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {
-            var control = sender as EditDeleteCmdControl;
-            control.buttonEdit.CommandParameter = args.NewValue;
-        }
+            DependencyProperty.Register("EditCommandParameter", typeof(object), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
 
         public ICommand DeleteCommand
         {
@@ -68,14 +60,7 @@ namespace AvonManager.Common.Controls
 
         // Using a DependencyProperty as the backing store for DeleteCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DeleteCommandProperty =
-            DependencyProperty.Register("DeleteCommand", typeof(ICommand), typeof(EditDeleteCmdControl), new PropertyMetadata(null, new PropertyChangedCallback(DeleteCommandChanged)));
-
-        private static void DeleteCommandChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {
-            var control = sender as EditDeleteCmdControl;
-            control.buttonDelete.Command = args.NewValue as ICommand;
-        }
-
+            DependencyProperty.Register("DeleteCommand", typeof(ICommand), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
 
 
         public object DeleteCommandParameter
@@ -86,13 +71,7 @@ namespace AvonManager.Common.Controls
 
         // Using a DependencyProperty as the backing store for DeleteCommandParameter.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DeleteCommandParameterProperty =
-            DependencyProperty.Register("DeleteCommandParameter", typeof(object), typeof(EditDeleteCmdControl), new PropertyMetadata(null, new PropertyChangedCallback(DeleteCommandParameterChanged)));
-
-        private static void DeleteCommandParameterChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {
-            var control = sender as EditDeleteCmdControl;
-            control.buttonDelete.CommandParameter = args.NewValue;
-        }
+            DependencyProperty.Register("DeleteCommandParameter", typeof(object), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
 
     }
 }

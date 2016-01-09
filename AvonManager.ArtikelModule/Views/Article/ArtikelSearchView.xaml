@@ -25,6 +25,10 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding ShowErrorRequest, Mode=OneWay}">
+            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
     <UserControl.Resources>
         <ResourceDictionary>
@@ -110,29 +114,20 @@
                                         <ItemsControl x:Name="categoryList" ItemsSource="{Binding FilteredCategoryFilter}" ToolTipService.ToolTip="Filter für Kategorien" Background="{x:Null}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Grid Margin="0,0,0,3" VerticalAlignment="Center">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Kategoriename}" VerticalAlignment="Center"/>
-                                                        <Button Grid.Column="1" Command="{Binding DataContext.SelectCategoryCommand, ElementName=categoryList}" CommandParameter="{Binding}" Style="{StaticResource SelectArticlesButtonStyle}"/>
-                                                    </Grid>
+                                                    <TextBlock HorizontalAlignment="Left"  VerticalAlignment="Center">
+                                                        <Hyperlink Command="{Binding DataContext.SelectCategoryCommand, ElementName=categoryList}" CommandParameter="{Binding}">
+                                                        <TextBlock TextWrapping="Wrap" Text="{Binding Kategoriename}" />                                                            
+                                                        </Hyperlink>
+                                                       </TextBlock>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </ScrollViewer>
                                 </Border>
                                 <Border Grid.Row="2" Style="{DynamicResource ArtikelSearchBorderStyle}" >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Kategorie" VerticalAlignment="Center"/>
-                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectCategoryCommand}" Style="{DynamicResource SelectArticlesButtonStyle}"/>
-
-                                    </Grid>
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Hyperlink Command="{Binding SelectCategoryCommand}">Ohne Kategorie</Hyperlink>
+                                    </TextBlock>
                                 </Border>
                             </Grid>
                         </TabItem>
@@ -152,29 +147,20 @@
                                         <ItemsControl x:Name="seriesListBox"  ItemsSource="{Binding FilteredSeriesFilter}" Background="{x:Null}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                                        <Button Width="Auto" Grid.Column="1" Command="{Binding DataContext.SelectSeriesCommand, ElementName=seriesListBox}" CommandParameter="{Binding}" Style="{DynamicResource SelectArticlesButtonStyle}"/>
-                                                    </Grid>
+                                                    <TextBlock HorizontalAlignment="Left"  VerticalAlignment="Center">
+                                                        <Hyperlink Command="{Binding DataContext.SelectSeriesCommand, ElementName=seriesListBox}" CommandParameter="{Binding}">
+                                                        <TextBlock TextWrapping="Wrap" Text="{Binding Name}" />                                                            
+                                                        </Hyperlink>
+                                                       </TextBlock>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </ScrollViewer>
                                 </Border>
                                 <Border  Grid.Row="2" Style="{DynamicResource ArtikelSearchBorderStyle}" >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Serie" VerticalAlignment="Center"/>
-                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectSeriesCommand}" Style="{DynamicResource SelectArticlesButtonStyle}">
-                                        </Button>
-                                    </Grid>
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Hyperlink Command="{Binding SelectSeriesCommand}">Ohne Serie</Hyperlink>
+                                    </TextBlock>
                                 </Border>
                             </Grid>
                         </TabItem>
@@ -194,13 +180,14 @@
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=FarbeARGB, Converter={StaticResource I2BrushConverter}}"
+                                                        <Ellipse Margin="4" Height="15" Width="15" Fill="{Binding Path=FarbeARGB, Converter={StaticResource I2BrushConverter}}"
                                                          />
-                                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Titel}" VerticalAlignment="Center" Grid.Column="1"/>
-                                                        <Button Width="Auto" Grid.Column="2" Command="{Binding DataContext.SelectMarkingCommand, ElementName=markingsList}" CommandParameter="{Binding}" Style="{DynamicResource SelectArticlesButtonStyle}">
-                                                        </Button>
+                                                        <TextBlock HorizontalAlignment="Left" Grid.Column="1">
+                                                      <Hyperlink Command="{Binding DataContext.SelectMarkingCommand, ElementName=markingsList}" CommandParameter="{Binding}">
+                                                        <TextBlock TextWrapping="Wrap" Text="{Binding Titel}" />                                                            
+                                                        </Hyperlink>    
+                                                        </TextBlock>
                                                     </Grid>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
@@ -208,15 +195,9 @@
                                     </ScrollViewer>
                                 </Border>
                                 <Border Grid.Row="1" Style="{DynamicResource ArtikelSearchBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Ohne Markierungen" VerticalAlignment="Center"/>
-                                        <Button Width="Auto" Grid.Column="1" Command="{Binding SelectMarkingCommand}" Style="{DynamicResource SelectArticlesButtonStyle}">
-                                        </Button>
-                                    </Grid>
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <Hyperlink Command="{Binding SelectMarkingCommand}">Ohne Markierungen</Hyperlink>
+                                    </TextBlock>
                                 </Border>
                             </Grid>
                         </TabItem>

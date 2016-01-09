@@ -15,6 +15,7 @@ using AvonManager.ArtikelModule.Views;
 using AvonManager.Common.Base;
 using Microsoft.Practices.Prism.PubSubEvents;
 using AvonManager.Common.Events;
+using System;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
@@ -44,7 +45,6 @@ namespace AvonManager.ArtikelModule.ViewModels
         IMarkierungenDataProvider _markierungenDataProvider;
         ISerienDataProvider _seriendataProvider;
         IKategorieProvider _kategorienProvider;
-        IEventAggregator _eventAggregator;
         #region Constructors
         public ArtikelDetailsViewModel() { }
         public ArtikelDetailsViewModel(IArtikelDataProvider dataProvider
@@ -52,9 +52,8 @@ namespace AvonManager.ArtikelModule.ViewModels
             , ISerienDataProvider seriendataProvider
             , IKategorieProvider kategProvider
             , IEventAggregator eventAggregator
-            , BusyFlagsManager bFlagsManager) : base(bFlagsManager)
+            , BusyFlagsManager bFlagsManager) : base(bFlagsManager, eventAggregator)
         {
-            _eventAggregator = eventAggregator;
             _dataProvider = dataProvider;
             _markierungenDataProvider = markierungenDataProvider;
             _seriendataProvider = seriendataProvider;
@@ -233,12 +232,20 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
         public async void Initialize()
         {
-            var serien = await _seriendataProvider.ListAllSerien();
-            AlleSerien.Clear();
-            AlleSerien.Add(new SeriesListEntryViewModel(null));
-            if (serien != null)
+            try
             {
-                serien.ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                var serien = await _seriendataProvider.ListAllSerien();
+                AlleSerien.Clear();
+                AlleSerien.Add(new SeriesListEntryViewModel(null));
+                if (serien != null)
+                {
+                    serien.ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+                ShowException(ex);
             }
         }
         #endregion
@@ -275,8 +282,16 @@ namespace AvonManager.ArtikelModule.ViewModels
                 _artikel.Name = Artikelname;
                 _artikel.Nummer = Nummer;
                 _artikel.SerienId = SerienId;
-                _dataProvider.SaveArtikel(_artikel);
-                _eventAggregator.GetEvent<ArticleChangedEvent>().Publish(_artikel);
+                try
+                {
+                    _dataProvider.SaveArtikel(_artikel);
+                    EventAggregator.GetEvent<ArticleChangedEvent>().Publish(new ArticleChangedEventArgs { Article = _artikel, ChangedType = ChangedType.Update });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Write(ex);
+                    ShowException(ex);
+                }
             }
         }
         private async void LoadArtikel(int? artikelId)
@@ -285,56 +300,84 @@ namespace AvonManager.ArtikelModule.ViewModels
             {
                 BusyFlagsMgr.IncBusyFlag(LOAD);
                 _isInitializing = true;
-                _artikel = await _dataProvider.LoadArtikel(artikelId.Value);
-                LoadMarkierungen();
-                LoadKategorien();
-                InitProperties();
-                _isInitializing = false;
-                BusyFlagsMgr.DecBusyFlag(LOAD);
+                try
+                {
+                    _artikel = await _dataProvider.LoadArtikel(artikelId.Value);
+                    LoadMarkierungen();
+                    LoadKategorien();
+                    InitProperties();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Write(ex);
+                    ShowException(ex);
+                }
+                finally
+                {
+                    BusyFlagsMgr.DecBusyFlag(LOAD);
+                    _isInitializing = false;
+                }
             }
         }
         private async void LoadMarkierungen()
         {
-            List<ArtikelMarkierungenDto> articelAssignments = await _markierungenDataProvider.ListMarkierungenByArtikel(_artikel.ArtikelId);
-            _allMarkings = await _markierungenDataProvider.ListAllMarkierungen(EntitaetDto.Artikel);
-            ArticleMarkingSelectionList.Clear();
-            foreach (MarkierungDto marking in _allMarkings)
+            try
             {
-                bool isAssigned = false;
-                ArtikelMarkierungenDto hkd = articelAssignments.FirstOrDefault(x => x.MarkierungId == marking.MarkierungId);
-                if (hkd != null)
+                List<ArtikelMarkierungenDto> articelAssignments = await _markierungenDataProvider.ListMarkierungenByArtikel(_artikel.ArtikelId);
+                _allMarkings = await _markierungenDataProvider.ListAllMarkierungen(EntitaetDto.Artikel);
+                ArticleMarkingSelectionList.Clear();
+                foreach (MarkierungDto marking in _allMarkings)
                 {
-                    isAssigned = true;
+                    bool isAssigned = false;
+                    ArtikelMarkierungenDto hkd = articelAssignments.FirstOrDefault(x => x.MarkierungId == marking.MarkierungId);
+                    if (hkd != null)
+                    {
+                        isAssigned = true;
+                    }
+                    else
+                    {
+                        hkd = new ArtikelMarkierungenDto { MarkierungId = marking.MarkierungId, ArtikelId = _artikel.ArtikelId };
+                    }
+                    ArticleMarkingSelectionList.Add(new ArticleMarkingViewModel(_artikel, marking, hkd, _markierungenDataProvider, isAssigned));
                 }
-                else
-                {
-                    hkd = new ArtikelMarkierungenDto { MarkierungId = marking.MarkierungId, ArtikelId = _artikel.ArtikelId };
-                }
-                ArticleMarkingSelectionList.Add(new ArticleMarkingViewModel(_artikel, marking, hkd, _markierungenDataProvider, isAssigned));
+                OnPropertyChanged(() => ArticleMarkingAssignments);
+                EventAggregator.GetEvent<ArticleChangedEvent>().Publish(new ArticleChangedEventArgs { Article = _artikel, ChangedType = ChangedType.Update });
+
             }
-            OnPropertyChanged(() => ArticleMarkingAssignments);
-            _eventAggregator.GetEvent<ArticleChangedEvent>().Publish(_artikel);
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+                ShowException(ex);
+            }
         }
         private async void LoadKategorien()
         {
-            var kategorien = await _kategorienProvider.ListKategorienByArtikel(_artikel.ArtikelId);
-            _allCategories = await _kategorienProvider.ListAllKategorien();
-            ArticleCategorySelectionList.Clear();
-            foreach (KategorieDto category in _allCategories)
+            try
             {
-                bool isAssigned = false;
-                ArticleCategoryDto hkd = kategorien.FirstOrDefault(x => x.CategoryId == category.KategorieId);
-                if (hkd != null)
+                var kategorien = await _kategorienProvider.ListKategorienByArtikel(_artikel.ArtikelId);
+                _allCategories = await _kategorienProvider.ListAllKategorien();
+                ArticleCategorySelectionList.Clear();
+                foreach (KategorieDto category in _allCategories)
                 {
-                    isAssigned = true;
+                    bool isAssigned = false;
+                    ArticleCategoryDto hkd = kategorien.FirstOrDefault(x => x.CategoryId == category.KategorieId);
+                    if (hkd != null)
+                    {
+                        isAssigned = true;
+                    }
+                    else
+                    {
+                        hkd = new ArticleCategoryDto { CategoryId = category.KategorieId, ArtikelId = _artikel.ArtikelId };
+                    }
+                    ArticleCategorySelectionList.Add(new ArticleCategoryViewModel(_artikel, category, hkd, _kategorienProvider, isAssigned));
                 }
-                else
-                {
-                    hkd = new ArticleCategoryDto { CategoryId = category.KategorieId, ArtikelId = _artikel.ArtikelId };
-                }
-                ArticleCategorySelectionList.Add(new ArticleCategoryViewModel(_artikel, category, hkd, _kategorienProvider, isAssigned));
+                OnPropertyChanged(nameof(ArticleCategoryAssignments));
             }
-            OnPropertyChanged(nameof(ArticleCategoryAssignments));
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+                ShowException(ex);
+            }
         }
         public void OnNavigatedTo(NavigationContext navigationContext)
         {

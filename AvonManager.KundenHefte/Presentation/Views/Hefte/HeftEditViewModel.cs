@@ -1,17 +1,19 @@
 ﻿using AvonManager.BusinessObjects;
+using AvonManager.Common.Base;
+using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using AvonManager.KundenHefte.Presentation;
 using AvonManager.KundenHefte.Presentation.Views;
-using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AvonManager.KundenHefte.ViewModels
 {
-    public class HeftEditViewModel : BindableBase, INavigationAware
+    public class HeftEditViewModel : ErrorAwareBaseViewModel, INavigationAware
     {
         private const string LOAD = "LOAD";
         private HeftDto _currentHeft;
@@ -19,20 +21,18 @@ namespace AvonManager.KundenHefte.ViewModels
         private bool isInitialized = false;
         IKundenDataProvider _kundenDataProvider;
         ICustomerSearchCriteria _customercriteria;
-        BusyFlagsManager _busyFlagsManager;
         public HeftEditViewModel(IHefteDataProvider dataProvider, 
             IKundenDataProvider kundenDataProvider,
-            ICustomerSearchCriteria criteria
-             , BusyFlagsManager bFlagsManager)
+            ICustomerSearchCriteria criteria,
+            IEventAggregator eventAggregator
+             , BusyFlagsManager bFlagsManager):base(bFlagsManager, eventAggregator)
         {
-            _busyFlagsManager = bFlagsManager;
             _dataProvider = dataProvider;
             _kundenDataProvider = kundenDataProvider;
             _customercriteria = criteria;
         }
 
         #region Properties
-        public BusyFlagsManager Mgr { get { return _busyFlagsManager; } }
         public ObservableCollection<HeftKundeViewModel> SortedKundenListe { get; private set; } = new ObservableCollection<HeftKundeViewModel>();
         public int HeftId { get { return _currentHeft.HeftId; } }
         private string _titel;
@@ -83,31 +83,39 @@ namespace AvonManager.KundenHefte.ViewModels
         }
         public async void LoadCurrentHeft(int heftId)
         {
-            _busyFlagsManager.IncBusyFlag(LOAD);
-            isInitialized = false;
-            _currentHeft = await _dataProvider.LoadHeft(heftId);
-            InitProperties();
-            _customercriteria.Reset();
-            _customercriteria.GetsBrochure = true;
-            var kundenListe = await _kundenDataProvider.SearchKunden(_customercriteria);
-            var assignments = await _dataProvider.ListHeftKunden(heftId);
-            SortedKundenListe.Clear();
-            foreach (KundeDto kunde in kundenListe)
+            BusyFlagsMgr.IncBusyFlag(LOAD);
+            try
             {
-                bool isAssigned = false;
-                HeftKundeDto hkd = assignments.FirstOrDefault(x => x.KundenId == kunde.KundenId);
-                if (hkd != null)
+                isInitialized = false;
+                _currentHeft = await _dataProvider.LoadHeft(heftId);
+                InitProperties();
+                _customercriteria.Reset();
+                _customercriteria.GetsBrochure = true;
+                var kundenListe = await _kundenDataProvider.SearchKunden(_customercriteria);
+                var assignments = await _dataProvider.ListHeftKunden(heftId);
+                SortedKundenListe.Clear();
+                foreach (KundeDto kunde in kundenListe)
                 {
-                    isAssigned = true;
+                    bool isAssigned = false;
+                    HeftKundeDto hkd = assignments.FirstOrDefault(x => x.KundenId == kunde.KundenId);
+                    if (hkd != null)
+                    {
+                        isAssigned = true;
+                    }
+                    else
+                    {
+                        hkd = new HeftKundeDto { KundenId = kunde.KundenId, HeftId = _currentHeft.HeftId };
+                    }
+                    SortedKundenListe.Add(new HeftKundeViewModel(kunde, _currentHeft, hkd, _dataProvider, isAssigned));
                 }
-                else
-                {
-                    hkd = new HeftKundeDto { KundenId = kunde.KundenId, HeftId = _currentHeft.HeftId };
-                }
-                SortedKundenListe.Add(new HeftKundeViewModel(kunde, _currentHeft, hkd, _dataProvider, isAssigned));
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+                ShowException(ex);
             }
             isInitialized = true;
-            _busyFlagsManager.DecBusyFlag(LOAD);
+            BusyFlagsMgr.DecBusyFlag(LOAD);
 
         }
 
@@ -121,7 +129,16 @@ namespace AvonManager.KundenHefte.ViewModels
 
         private void SaveHeft()
         {
-            _dataProvider.SaveHeft(_currentHeft);
+            try
+            {
+                _dataProvider.SaveHeft(_currentHeft);
+                EventAggregator.GetEvent<BrochureChangedEvent>().Publish(new BrochureChangedEventArgs { Brochure = _currentHeft, ChangedType = ChangedType.Update });
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+                ShowException(ex);
+            }
         }
 
         public void BeginEdit()
@@ -148,7 +165,7 @@ namespace AvonManager.KundenHefte.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _busyFlagsManager.ResetBusyflag(LOAD);
+            BusyFlagsMgr.ResetBusyflag(LOAD);
             var brochureParameter = navigationContext.Parameters.FirstOrDefault();
             if (brochureParameter.Value is HeftViewModel)
             {
@@ -158,7 +175,7 @@ namespace AvonManager.KundenHefte.ViewModels
             else
             {
                 // Leere und deaktiviere die View
-                _busyFlagsManager.IncBusyFlag(LOAD);
+                BusyFlagsMgr.IncBusyFlag(LOAD);
                 _currentHeft = new HeftDto();
                 InitProperties();
             }

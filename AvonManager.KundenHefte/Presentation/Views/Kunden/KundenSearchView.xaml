@@ -30,6 +30,14 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+            <Style x:Key="CustomerListEntryBorderStyle" TargetType="Border" BasedOn="{StaticResource CustomerSearchBorderStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Inaktiv}" Value="True">
+                        <Setter Property="BorderBrush" Value="Red"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -38,6 +46,9 @@
         </i:EventTrigger>
         <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
             <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <Controls:ConfirmDeleteControl/>
+                </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
@@ -58,7 +69,7 @@
         			TextSearch.TextPath="DisplayName" Background="{x:Null}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{DynamicResource CustomerSearchBorderStyle}">
+                            <Border Style="{DynamicResource CustomerListEntryBorderStyle}">
                                 <Grid d:DesignWidth="303.744" d:DesignHeight="94.913">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -70,7 +81,8 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding DisplayName}" Style="{StaticResource KachelHeaderStyle}"/>
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderCount, StringFormat=\{0\} Bestellungen}" VerticalAlignment="Center" Grid.Row="1"/>
                                         <StackPanel Grid.Row="2" Orientation="Horizontal">
                                             <Image Height="32" Style="{StaticResource inactive}"/>
                                             <Image Height="32" Style="{StaticResource getsBrochure}"/>
@@ -78,15 +90,15 @@
                                         </StackPanel>
                                     </Grid>
                                     <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
-        							DeleteCommand="{Binding DeleteCustomerCommand}" DeleteCommandParameter="{Binding}"
-        							EditCommand="{Binding EditKundeCommand}" EditCommandParameter="{Binding}"/>
+        							DeleteCommand="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
+        							EditCommand="{Binding DataContext.EditKundeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" EditCommandParameter="{Binding}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Button Content="Neue Kundin" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3"/>
+            <Button Content="Neue Kundin" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding Path=AddCustomerCommand}"/>
         </Grid>
     </xctk:BusyIndicator>
 </UserControl>

@@ -108,7 +108,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Base\DeleteConfirmation.cs" />
-    <Compile Include="Base\DeleteEntityConfirmation.cs" />
     <Compile Include="Base\ErrorAwareBaseViewModel.cs" />
     <Compile Include="Base\FilterEntryBase.cs" />
     <Compile Include="Base\ListEntryBaseViewModel.cs" />
@@ -135,8 +134,15 @@
     <Compile Include="Controls\SearchStarterControl.xaml.cs">
       <DependentUpon>SearchStarterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Events\ArticleChangedEvent.cs" />
+    <Compile Include="Events\ArticleChangedEventArgs.cs" />
+    <Compile Include="Events\BrochureChangedEventArgs.cs" />
+    <Compile Include="Events\CategoryChangedEventArgs.cs" />
+    <Compile Include="Events\ChangedBaseEventArgs.cs" />
+    <Compile Include="Events\ChangedEvents.cs" />
+    <Compile Include="Events\CustomerChangedEventArgs.cs" />
+    <Compile Include="Events\MarkingChangedEventArgs.cs" />
     <Compile Include="Events\NavigationCompletedEvent.cs" />
+    <Compile Include="Events\SeriesChangedEventArgs.cs" />
     <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\BusyFlagsManager.cs" />
     <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
@@ -229,12 +235,6 @@
     <Resource Include="Assets\Images\Delete.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Filter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\FilterLoesch.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\Find_VS.png" />
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Edit-26.png" />
-    <Resource Include="Assets\Images\Trash-26.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Categorize-50.png" />
@@ -380,6 +379,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\TrashBin64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Wegwerfen128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Wegwerfen64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\ZoomIn_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Camera_32xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\folder_Open_32xLG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

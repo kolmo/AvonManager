@@ -5,7 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using WebcamControl;
 using System;
+using System.Linq;
 using AvonManager.Common.Base;
+using System.Collections.ObjectModel;
 
 namespace AvonManager.Common.Controls
 {
@@ -15,13 +17,12 @@ namespace AvonManager.Common.Controls
     public partial class WebCamClientControl : UserControl, IInteractionRequestAware
     {
         private TakePictureConfirmation _confirmation;
+        private Collection<EncoderDevice> _videoDevices;
         public WebCamClientControl()
         {
             InitializeComponent();
+            _videoDevices = EncoderDevices.FindDevices(EncoderDeviceType.Video);
 
-            Binding binding_1 = new Binding("SelectedValue");
-            binding_1.Source = VideoDevicesComboBox;
-            WebcamCtrl.SetBinding(Webcam.VideoDeviceProperty, binding_1);
             WebcamCtrl.FrameRate = 30;
             var audioDevices = EncoderDevices.FindDevices(EncoderDeviceType.Audio);
             if (audioDevices?.Count > 0)
@@ -42,9 +43,6 @@ namespace AvonManager.Common.Controls
                 if (value is TakePictureConfirmation)
                 {
                     _confirmation = value as TakePictureConfirmation;
-                    var videoDevices = EncoderDevices.FindDevices(EncoderDeviceType.Video);
-                    VideoDevicesComboBox.ItemsSource = videoDevices;
-                    VideoDevicesComboBox.SelectedIndex = 0;
                 }
             }
         }
@@ -74,7 +72,11 @@ namespace AvonManager.Common.Controls
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WebcamCtrl.StartPreview();
+            if (_videoDevices?.Any() == true)
+            {
+                WebcamCtrl.VideoDevice = _videoDevices.First();
+                WebcamCtrl.StartPreview();
+            }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)

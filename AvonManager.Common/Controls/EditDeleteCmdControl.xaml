@@ -15,15 +15,14 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="buttonEdit" HorizontalAlignment="Left" Grid.Row="0" Style="{DynamicResource PurePictureButtonStyle}">
+        <Button x:Name="buttonEdit"  Grid.Row="0" Style="{DynamicResource PurePictureButtonStyle}">
             <Image Style="{StaticResource EditImage}"/>
         </Button>
-        <Button x:Name="buttonDelete" HorizontalAlignment="Left" Grid.Row="2" Style="{DynamicResource PurePictureButtonStyle}">
-            <Image Style="{StaticResource DeleteImage}" Stretch="None"/>
+        <Button x:Name="buttonDelete" Grid.Row="1" Style="{DynamicResource PurePictureButtonStyle}">
+            <Image Style="{StaticResource DeleteImage}"/>
         </Button>
     </Grid>
 </UserControl>

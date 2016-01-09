@@ -25,16 +25,25 @@
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>   
-    <StackPanel x:Name="LayoutRoot" Background="White" Orientation="Horizontal">
-        <Button Content="Datei laden" Margin="3" Padding="10,2" Name="openFileDialog" Click="openFileDialog_Click" ToolTipService.ToolTip="Datei laden" >
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="openFileDialog" Click="openFileDialog_Click" Style="{DynamicResource PurePictureButtonStyle}"  >
+            <Image Style="{DynamicResource OpenFolderImageStyle}" Height="20"/>
         </Button>
-        <Button Margin="3" Content="Webcam" Padding="10,2" Name="capturePicFromWebcam" ToolTipService.ToolTip="Webcam" Click="capturePicFromWebcam_Click">
+        <Button Name="capturePicFromWebcam"  Click="capturePicFromWebcam_Click" Style="{DynamicResource PurePictureButtonStyle}" Grid.Column="1">
+            <Image Style="{DynamicResource CameraImageStyle}" Height="20"/>
         </Button>
-        <Button Margin="3" Padding="10,2" Name="deletePic" ToolTipService.ToolTip="Bild löschen" Click="deletePic_Click">
-            <Image Height="20" Source="/Assets/Images/Delete.PNG" Stretch="UniformToFill" />
+        <Button Name="preview" ToolTipService.ToolTip="Vorschau" Click="preview_Click" Style="{DynamicResource PurePictureButtonStyle}" Grid.Column="2">
+            <Image Style="{DynamicResource ZoomInImageStyle}" Height="20"/>
         </Button>
-        <Button Margin="3" Padding="10,2" Name="preview" ToolTipService.ToolTip="Vorschau" Click="preview_Click" Style="{DynamicResource PurePictureButtonStyle}">
-            <Image Style="{DynamicResource SearchImage}" />
+        <Button Name="deletePic" Click="deletePic_Click" Style="{DynamicResource PurePictureButtonStyle}" Grid.Column="4">
+            <Image Style="{DynamicResource DeleteImage}"   />
         </Button>
-    </StackPanel>
+    </Grid>
 </UserControl>

@@ -83,16 +83,19 @@ namespace AvonManager.Data
                             orderby b.Titel
                             select b;
                 Markierungen markierung = query.FirstOrDefault(x => x.MarkierungId == dto.MarkierungId);
-                markierung.Titel = dto.Titel;
-                markierung.Bemerkung = dto.Bemerkung;
-                markierung.FarbeARGB = dto.FarbeARGB;
-                try
+                if (markierung != null)
                 {
-                    database.SubmitChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
+                    markierung.Titel = dto.Titel;
+                    markierung.Bemerkung = dto.Bemerkung;
+                    markierung.FarbeARGB = dto.FarbeARGB;
+                    try
+                    {
+                        database.SubmitChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
         }

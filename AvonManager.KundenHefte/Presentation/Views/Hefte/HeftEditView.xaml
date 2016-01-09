@@ -21,7 +21,7 @@
             <Helpers:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <xceed:BusyIndicator IsBusy="{Binding Path=Mgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+    <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
         <Border Style="{DynamicResource CustomerEditBorderStyle}">
             <Grid>
                 <Grid.RowDefinitions>

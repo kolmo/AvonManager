@@ -29,10 +29,14 @@
             <ei:CallMethodAction MethodName="LoadData" TargetObject="{Binding}"/>
         </i:EventTrigger>
         <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
-            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True"/>
+            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <Controls:ConfirmDeleteControl/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
-    <xctk:BusyIndicator IsBusy="{Binding Mgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+    <xctk:BusyIndicator IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

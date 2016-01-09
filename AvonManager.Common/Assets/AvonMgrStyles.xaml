@@ -116,7 +116,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0" Stroke="{StaticResource AvonRosaBrush}" Fill="{TemplateBinding Background}" StrokeThickness="1"/>
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <Ellipse x:Name="DisabledVisualElement" Fill="#FFFFFFFF" IsHitTestVisible="false" Opacity="0"/>
+                        <Ellipse x:Name="DisabledVisualElement" Fill="White" IsHitTestVisible="false" Opacity="0"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -201,6 +201,7 @@
     <Style x:Key="CustomerSearchBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
+
     <Style x:Key="CustomerEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>

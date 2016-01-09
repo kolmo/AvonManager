@@ -7,7 +7,6 @@
     <Style x:Key="LogoImageBaseStyle" TargetType="Image">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
-        <!--<Setter Property="Height" Value="50"/>-->
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
     <Style x:Key="ArtikelLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
@@ -48,6 +47,10 @@
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Lupe96.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Suche starten"/>
     </Style>
+    <Style x:Key="ZoomInImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ZoomIn_48x48.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Zoom"/>
+    </Style>    
     <Style x:Key="SelectSearchImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/lipstick24.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Auswahl"/>
@@ -62,6 +65,10 @@
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Schwamm96.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Suche zurücksetzen"/>
     </Style>
+    <Style x:Key="OpenFolderImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/folder_Open_32xLG.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Datei öffnen"/>
+    </Style>
     <Style x:Key="SaveImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/SaveIcon.png"/>
     </Style>
@@ -71,9 +78,15 @@
         <Setter Property="Stretch" Value="None"/>
     </Style>
     <Style x:Key="DeleteImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/TrashBin64.png"/>
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Wegwerfen64.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Löschen"/>
+        <Setter Property="Stretch" Value="None"/>
     </Style>
+    <Style x:Key="DeleteConfirmationImage" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Wegwerfen128.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Löschen"/>
+        <Setter Property="Height" Value="128"/>
+    </Style> 
     <Style x:Key="CancelImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/AbbruchIcon.png"/>
     </Style>
@@ -92,6 +105,10 @@
     <Style x:Key="InaktivImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Inaktiv.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Inaktiv"/>
+    </Style>
+    <Style x:Key="CameraImageStyle" TargetType="Image">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Camera_32xLG.png"/>
+        <Setter Property="ToolTipService.ToolTip" Value="Webcam"/>
     </Style>
     <Style x:Key="SendToBestellungImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ResultstoText_9948.png"/>

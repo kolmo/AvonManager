@@ -47,7 +47,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <GroupBox Grid.Row="0"  Header="Name" >
-                    <TextBox Text="{Binding Artikelname, Mode=TwoWay}" FontSize="30"/>
+                    <TextBox Text="{Binding Artikelname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}" FontSize="30"/>
                 </GroupBox>
                 <GroupBox Grid.Row="1" Header="Serie" >
                     <Grid >
@@ -62,7 +62,7 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Beschreibung" >
-                    <TextBox Text="{Binding Beschreibung}"/>
+                    <TextBox Text="{Binding Beschreibung, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
                 </GroupBox>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -84,61 +84,69 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox  Header="Preis" >
-                        <TextBox Text="{Binding Einzelpreis, ConverterCulture=de-DE, Mode=TwoWay, StringFormat=C2}"/>
+                        <TextBox Text="{Binding Einzelpreis, ConverterCulture=de-DE, Mode=TwoWay, StringFormat=C2, UpdateSourceTrigger=PropertyChanged}"/>
                     </GroupBox>
                     <GroupBox Header="Bestand" Grid.Column="1" >
-                        <TextBox   Text="{Binding Lagerbestand, Mode=TwoWay}"/>
+                        <TextBox   Text="{Binding Lagerbestand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </GroupBox>
                 </Grid>
-                <GroupBox Grid.Row="5" Header="Kategorien" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding ArticleCategoryAssignments, Converter={StaticResource coll2string}, Mode=OneWay}" VerticalAlignment="Center"/>
-                        <Button x:Name="button"  HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Command="{Binding RaiseKategorienSelectionCommand}" Margin="3">
-                            <Image Style="{StaticResource EditImage}" VerticalAlignment="Center"/>
-                        </Button>
-                    </Grid>
-                </GroupBox>
+               
                 <Grid Grid.Row="6"  >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Markierungen" >
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ListBox ItemsSource="{Binding ArticleMarkingAssignments}"
-                                                                     >
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Ellipse Margin="2,0" Height="15" Width="15" Fill="{Binding ColorCode, Converter={StaticResource I2BrushConverter}}"/>
-                                            <TextBlock Margin="3"  Text="{Binding MarkingTitle}"  VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <Button x:Name="buttonEditMarkierungen" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"
-        							Command="{Binding RaiseMarkierungenSelectionCommand}" Margin="3">
-                                <Image Style="{StaticResource EditImage}"/>
-                            </Button>
-                        </Grid>
-                    </GroupBox>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="Kategorien" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding ArticleCategoryAssignments, Converter={StaticResource coll2string}, Mode=OneWay}" VerticalAlignment="Center"/>
+                                <Button x:Name="button"  HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Command="{Binding RaiseKategorienSelectionCommand}" Margin="3">
+                                    <Image Style="{StaticResource EditImage}" VerticalAlignment="Center"/>
+                                </Button>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Markierungen" Grid.Row="1" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ListBox ItemsSource="{Binding ArticleMarkingAssignments}"                                                                    >
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Ellipse Margin="2,0" Height="15" Width="15" Fill="{Binding ColorCode, Converter={StaticResource I2BrushConverter}}"/>
+                                                <TextBlock Margin="3"  Text="{Binding MarkingTitle}"  VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button x:Name="buttonEditMarkierungen" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top"
+                					Command="{Binding RaiseMarkierungenSelectionCommand}" Margin="3">
+                                    <Image Style="{StaticResource EditImage}"/>
+                                </Button>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
                     <GroupBox Header="Bild" Grid.Column="1">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Image Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}"/>
-                            <controls:FileLoader Grid.Row="1" FileData="{Binding Bild, Mode=TwoWay}"  HorizontalAlignment="Left" EnableWebcam="True"/>
-                        </Grid>
+                        <Border Background="White" CornerRadius="10" ClipToBounds="True">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}"/>
+                                <controls:FileLoader Grid.Row="1" FileData="{Binding Bild, Mode=TwoWay}"  HorizontalAlignment="Stretch" EnableWebcam="True"/>
+                            </Grid>
+                        </Border>
                     </GroupBox>
                 </Grid>
             </Grid>

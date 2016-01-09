@@ -17,6 +17,9 @@
         </i:EventTrigger>
         <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
             <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <Controls:ConfirmDeleteControl/>
+                </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
@@ -38,12 +41,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Style="{DynamicResource ArtikelSearchBorderStyle}" Height="90">
+            <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
                 <Controls:InitialsSelector ItemsSource="{Binding CustomerInitialsList}"
-                			FilterCommand="{Binding SelectInitialCommand}"
-                ImageStyle="{Binding Mode=OneWay, Source={StaticResource BestellungLogoStyle}}" />
+                			FilterCommand="{Binding SelectInitialCommand}"/>
             </Border>
-            <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding Mgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+            <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -51,19 +53,14 @@
 
                     <Border Grid.Row="0" Style="{DynamicResource ArtikelSearchBorderStyle}">
                         <ScrollViewer>
-                            <ItemsControl  ItemsSource="{Binding CustomersWithOrders}">
+                            <ItemsControl x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock x:Name="textBlock" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="{Binding DisplayName}" VerticalAlignment="Center"/>
-                                            <Button Content="N" Width="Auto" Grid.Column="1" Command="{Binding Path=CreateOrderCommand}" CommandParameter="{Binding}" Foreground="{DynamicResource NewEntityBrush}"/>
-                                            <Button Content="A" Width="Auto" Grid.Column="2" Command="{Binding Path=SelectCommand}" CommandParameter="{Binding}"/>
-                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Left"  VerticalAlignment="Center">
+                                                        <Hyperlink Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}">
+                                                        <TextBlock TextWrapping="Wrap" Text="{Binding DisplayName}" />                                                            
+                                                        </Hyperlink>
+                                        </TextBlock>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
@@ -74,10 +71,17 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ScrollViewer>
+            <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Bestellungen von"/>
+                    <TextBlock Text="{Binding CurrentCustomer}" Style="{DynamicResource DefaultHeaderStyle}" />
+                </StackPanel>
+            </Border>
+            <ScrollViewer Grid.Row="1">
                 <ItemsControl ItemsSource="{Binding AllOrders}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -105,6 +109,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
+            <Button Content="Neue Bestellung" Width="Auto" Grid.Row="2" Command="{Binding Path=CreateOrderCommand}" CommandParameter="{Binding CurrentCustomer}" Foreground="{DynamicResource NewEntityBrush}" Margin="3"/>
         </Grid>
     </Grid>
 </UserControl>
