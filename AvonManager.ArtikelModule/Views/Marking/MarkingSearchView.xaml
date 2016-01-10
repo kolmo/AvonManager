@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="AvonManager.ArtikelModule.Views.MarkingSearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AvonManager.ArtikelModule.Views"
+             xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:prism="http://www.codeplex.com/prism"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadData" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding DeleteEntityRequest, Mode=OneWay}">
+            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <Controls:ConfirmDeleteControl/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0">
+            <ItemsControl ItemsSource="{Binding Markierungen}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid VerticalAlignment="Center" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" Foreground="{Binding FarbeARGB, Converter={StaticResource I2BrushConverter}}"
+                    					FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
+                                    <TextBlock Grid.Row="1" Text="{Binding ArticleCount, Mode=OneWay, StringFormat=\{0\} Artikel}" Margin="3"/>
+                                </Grid>
+
+                                <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                    				DeleteCommand="{Binding DeleteCommand}" DeleteCommandParameter="{Binding}"
+                    				EditCommand="{Binding EditCommand}" EditCommandParameter="{Binding}"/>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button Content="Neue Markierung" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewMarkingCommand}"/>
+    </Grid>
+</UserControl>

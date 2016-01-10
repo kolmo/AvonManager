@@ -1,0 +1,70 @@
+﻿<UserControl 
+    x:Class="AvonManager.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://www.codeplex.com/prism"
+    mc:Ignorable="d" d:DesignWidth="825" d:DesignHeight="479"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
+    Language="de-DE">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="ContentControl">
+                <Setter Property="Height" Value="100"/>
+            </Style>
+        </Grid.Resources>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1">
+                <ContentControl x:Name="ArticleButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleButtonRegion}" />
+                <TextBlock Text="ARTIKEL" Style="{StaticResource ButtonLabelStyle}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3">
+                <ContentControl x:Name="CategoryButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.CategoryButtonRegion}" />             
+                <TextBlock Text="SERIEN, KATEGORIEN &amp; MARKIERUNGEN" Style="{StaticResource ButtonLabelStyle}"/>
+            </StackPanel>
+        </Grid>
+        <Image Grid.Column="1" Source="/AvonManager.Desktop;component/Assets/Images/MC900433239.jpg" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1">
+                <ContentControl x:Name="CustomerButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerButtonRegion}" />
+                <TextBlock Text="KUNDEN &amp; HEFTE" Style="{StaticResource ButtonLabelStyle}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3">
+                <ContentControl x:Name="OrderButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderButtonRegion}" />
+                <TextBlock Text="BESTELLUNGEN" Style="{StaticResource ButtonLabelStyle}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</UserControl>

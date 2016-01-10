@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="AvonManager.ArtikelModule.Controls.KategorienAdminControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AvonManager.ArtikelModule.Controls"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadData" TargetObject="{Binding}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <ContextMenu x:Key="cmenu">
+                <MenuItem Header="Löschen" Command="{Binding Path=DeleteKategorieCommand}"/>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="3" Text="{Binding Path=EntityName, StringFormat='Markierungen für {0}'}"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Margin="3" Padding="3" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
+                    <Grid Margin="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="73*"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="button" Content="Neue Kategorie" Margin="3" VerticalAlignment="Top" Command="{Binding AddNewKategorieCommand}"/>
+                        <DataGrid ItemsSource="{Binding Kategorien}" AutoGenerateColumns="False"
+                			IsReadOnly="True" SelectedItem="{Binding SelectedKategorie}" Grid.Row="1" Margin="3" ContextMenuService.ContextMenu="{StaticResource cmenu}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Kategoriename}"/>
+                                <DataGridTextColumn Header="Bemerkung" Binding="{Binding Bemerkung}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" Margin="3" Padding="3" CornerRadius="5" BorderBrush="Black" BorderThickness="1">
+                    <GroupBox >
+                        <StackPanel>
+                            <GroupBox Header="Name" >
+                                <TextBox Text="{Binding Path=Name, Mode=TwoWay}"/>
+                            </GroupBox>
+                            <GroupBox Header="Bemerkung" >
+                                <TextBox Text="{Binding Path=Bemerkung, Mode=TwoWay}" VerticalAlignment="Center">
+                                </TextBox>
+                            </GroupBox>
+                            <GroupBox Header="Icon"  >
+
+
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
