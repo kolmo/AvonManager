@@ -59,7 +59,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Border Style="{DynamicResource CustomerSearchBorderStyle}">
+            <Border Style="{StaticResource CustomerSearchBorderStyle}">
                 <Controls:InitialsSelector ItemsSource="{Binding InitialSelectors}"
 				FilterCommand="{Binding SelectInitialCommand}"
 				ImageStyle="{StaticResource KundenLogoStyle}"/>
@@ -69,7 +69,7 @@
         			TextSearch.TextPath="DisplayName" Background="{x:Null}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Style="{DynamicResource CustomerListEntryBorderStyle}">
+                            <Border Style="{StaticResource CustomerListEntryBorderStyle}">
                                 <Grid d:DesignWidth="303.744" d:DesignHeight="94.913">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>

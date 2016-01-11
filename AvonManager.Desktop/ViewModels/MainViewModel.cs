@@ -1,11 +1,8 @@
 ﻿using AvonManager.BusinessObjects;
 using AvonManager.Helpers.Messages;
-using AvonManager.Model;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace AvonManager.ViewModels
 {
@@ -71,22 +68,6 @@ namespace AvonManager.ViewModels
                 }
             }
         }
-
-        public IOrderedEnumerable<object> ClipboardList
-        {
-            get
-            {
-                if (_clipboardList == null)
-                {
-                    _clipboardList = ServiceLocator.Current.GetInstance<ClipboardManager>().Clipboard;
-                    _clipboardList.CollectionChanged += (s, e) =>
-                        {
-                            OnPropertyChanged(() => this.ClipboardList);
-                        };
-                }
-                return _clipboardList.OrderBy(x => x.ToString()); ;
-            }
-        }
         private object _selectedObject;
         /// <summary>
         /// Gets or sets the SelectedObject.
@@ -111,9 +92,7 @@ namespace AvonManager.ViewModels
         }
 
         #region Commands
-        public DelegateCommand<object> ClearClipboard { get; private set; }
         public DelegateCommand<int> SelectTab { get; private set; }
-        public DelegateCommand<object> SelectArtikelOrVariant { get; private set; }
         #endregion
         #endregion Properties
 
@@ -123,9 +102,7 @@ namespace AvonManager.ViewModels
         /// </summary>
         public MainViewModel()
         {
-            ClearClipboard = new DelegateCommand<object>(ClearClipboardAction);
             SelectTab = new DelegateCommand<int>(SelectTabAction);
-            SelectArtikelOrVariant = new DelegateCommand<object>(SelectArtikelOrVariantAction);
             //MessengerInstance.Register<BestellungEditMessage>(this, OnBestellungChanged);
         }
 
@@ -144,14 +121,7 @@ namespace AvonManager.ViewModels
         {
             SelectedTab = tab;
         }
-        private void SelectArtikelOrVariantAction(object obj)
-        {
-            if (obj is ArtikelDto)
-            {
-                //MessengerInstance.Send<PubSubEvent<Artikel>>(new PubSubEvent<Artikel>(obj as Artikel, null));
-            }
-           
-        }
+      
         #endregion Private helper methods
 
     }
