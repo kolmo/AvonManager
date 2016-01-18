@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Modularity;
+﻿using AvonManager.Common.Controls;
+using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using System.Linq;
@@ -18,9 +19,8 @@ namespace AvonManager.ArtikelModule
             regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion, typeof(Controls.ArtikelModuleTaskButton));
             regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.ArticleButtonRegion, typeof(Controls.ArtikelModuleTaskButton));
             _container.RegisterType<object, Views.ArtikelManagementView>("ArtikelModuleWorkspace");
-            //regionManager.RegisterViewWithRegion("MainRegion", typeof(Views.ArtikelManagementView));
-            regionManager.RegisterViewWithRegion("ArtikelSearchRegion", typeof(Views.ArtikelSearchView));
-            //regionManager.RegisterViewWithRegion("ArtikelDetailsRegion", typeof(Views.ArtikelDetailsView));
+            _container.RegisterType<object, NoSelectionPlaceHolderView>("NoSelectionPlaceHolder");
+            regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.ArticleSearchRegion, typeof(Views.ArtikelSearchView));
             _container.RegisterType<object, Views.ArtikelDetailsView>("ArtikelDetailsWorkspace");
         }
     }

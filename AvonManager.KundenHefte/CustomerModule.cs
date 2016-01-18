@@ -4,11 +4,11 @@ using Microsoft.Practices.Unity;
 
 namespace AvonManager.KundenHefte
 {
-    public class KundenHefteModule : IModule
+    public class CustomerModule : IModule
     {
         private readonly IRegionManager _regionManager;
         private readonly IUnityContainer _container;
-        public KundenHefteModule(IRegionManager regionManager, IUnityContainer container)
+        public CustomerModule(IRegionManager regionManager, IUnityContainer container)
         {
             _regionManager = regionManager;
             _container = container;
@@ -16,11 +16,8 @@ namespace AvonManager.KundenHefte
         public void Initialize()
         {
             _regionManager.RegisterViewWithRegion("TaskButtonRegion", typeof(Controls.KundenModuleTaskButton));
-            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerButtonRegion, typeof(Controls.KundenModuleTaskButton));
             _container.RegisterType<object, Views.KundenHefteManagementView>("KundenModuleWorkspace");
-            _regionManager.RegisterViewWithRegion("KundenSearchRegion", typeof(Views.KundenSearchView));
-            _regionManager.RegisterViewWithRegion("HefteSearchRegion", typeof(Views.HefteSearchView));
-            _container.RegisterType<object, Views.HeftEditView>("HeftEditView");
+            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerSearchRegion, typeof(Views.KundenSearchView));
             _container.RegisterType<object, Views.KundenEditView>("KundenEditView");
         }
     }

@@ -1,20 +1,14 @@
-﻿using AvonManager.ArtikelModule.Notifications;
-using AvonManager.ArtikelModule.ViewModels;
-using AvonManager.BusinessObjects;
+﻿using AvonManager.BusinessObjects;
 using AvonManager.Common.Base;
-using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -30,17 +24,14 @@ namespace AvonManager.ArtikelModule.Views
             _markierungenDataProvider = markierungenDataProvider;
             _regionManager = regionManager;
             AddNewMarkingCommand = new DelegateCommand(AddNewMarkingAction);
-            DeleteMarkingCommand = new DelegateCommand<MarkingListEntryViewModel>(DeleteMarkingAction);
-            EditMarkingCommand = new DelegateCommand<MarkingListEntryViewModel>(EditMarkingAction);
-            EventAggregator.GetEvent<MarkingChangedEvent>().Subscribe(async x => await BuildMarkingList());
+            DeleteMarkingCommand = new DelegateCommand<MarkingEditViewModel>(DeleteMarkingAction);
         }
         #region Properties
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
-        public ObservableCollection<MarkingListEntryViewModel> Markierungen { get; } = new ObservableCollection<MarkingListEntryViewModel>();
+        public ObservableCollection<MarkingEditViewModel> Markierungen { get; } = new ObservableCollection<MarkingEditViewModel>();
 
         public ICommand AddNewMarkingCommand { get; }
         public ICommand DeleteMarkingCommand { get; }
-        public ICommand EditMarkingCommand { get; }
         #endregion
 
         #region Public methods
@@ -59,7 +50,7 @@ namespace AvonManager.ArtikelModule.Views
                 Markierungen.Clear();
                 foreach (var item in liste)
                 {
-                    MarkingListEntryViewModel vm = new MarkingListEntryViewModel(item, EditMarkingAction, DeleteMarkingAction);
+                    MarkingEditViewModel vm = new MarkingEditViewModel(item, _markierungenDataProvider);
                     Markierungen.Add(vm);
                 }
                 var idArray = liste.Select(x => x.MarkierungId).ToArray();
@@ -87,9 +78,8 @@ namespace AvonManager.ArtikelModule.Views
             try
             {
                 neueMark.MarkierungId = _markierungenDataProvider.AddMarking(neueMark);
-                MarkingListEntryViewModel vm = new MarkingListEntryViewModel(neueMark, EditMarkingAction, DeleteMarkingAction);
+                MarkingEditViewModel vm = new MarkingEditViewModel(neueMark, _markierungenDataProvider);
                 Markierungen.Insert(0, vm);
-                EditMarkingAction(vm);
             }
             catch (Exception ex)
             {
@@ -97,7 +87,7 @@ namespace AvonManager.ArtikelModule.Views
                 ShowException(ex);
             }
         }
-        private void DeleteMarkingAction(MarkingListEntryViewModel marking)
+        private void DeleteMarkingAction(MarkingEditViewModel marking)
         {
             DeleteConfirmation deleteConfirmation = new DeleteConfirmation()
             {
@@ -111,26 +101,13 @@ namespace AvonManager.ArtikelModule.Views
         {
             if (confirmation?.Confirmed == true)
             {
-                MarkingListEntryViewModel vm = confirmation.Entity as MarkingListEntryViewModel;
+                MarkingEditViewModel vm = confirmation.Entity as MarkingEditViewModel;
                 try
                 {
                     _markierungenDataProvider.DeleteMarking(vm.MarkierungId);
                     int listPosition = Markierungen.IndexOf(vm);
                     int listLength = Markierungen.Count;
                     Markierungen.Remove(vm);
-                    if (listPosition + 1 < listLength)
-                    {
-                        EditMarkingAction(Markierungen[listPosition]);
-                    }
-                    else if (Markierungen.Any())
-                    {
-                        EditMarkingAction(Markierungen.Last());
-                    }
-                    else
-                    {
-                        EditMarkingAction(null);
-                    }
-
                 }
                 catch (Exception ex)
                 {
@@ -138,13 +115,6 @@ namespace AvonManager.ArtikelModule.Views
                     ShowException(ex);
                 }
             }
-        }
-        private void EditMarkingAction(MarkingListEntryViewModel marking)
-        {         
-                NavigationParameters pars = new NavigationParameters();
-                pars.Add("marking", marking);
-                var moduleAWorkspace = new Uri("MarkingEditView", UriKind.Relative);
-                _regionManager.RequestNavigate("MarkingDetailsRegion", moduleAWorkspace, pars);
         }
 
         #endregion

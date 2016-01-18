@@ -13,7 +13,10 @@
        ModuleType="AvonManager.ArtikelModule.ArtikelModule, AvonManager.ArtikelModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Modularity:ModuleInfo 
         ModuleName="KundenModule" 
-        ModuleType="AvonManager.KundenHefte.KundenHefteModule, AvonManager.KundenHefte, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+        ModuleType="AvonManager.KundenHefte.CustomerModule, AvonManager.KundenHefte, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Modularity:ModuleInfo 
+        ModuleName="BrochureModule" 
+        ModuleType="AvonManager.KundenHefte.BrochureModule, AvonManager.KundenHefte, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Modularity:ModuleInfo 
         ModuleName="KategorieModule" 
        ModuleType="AvonManager.ArtikelModule.KategorieModule, AvonManager.ArtikelModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />

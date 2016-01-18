@@ -125,6 +125,9 @@
     <Compile Include="Controls\InitialsSelector.xaml.cs">
       <DependentUpon>InitialsSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NoSelectionPlaceHolderView.xaml.cs">
+      <DependentUpon>NoSelectionPlaceHolderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PicturePreviewControl.xaml.cs">
       <DependentUpon>PicturePreviewControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
     <Compile Include="Events\ChangedEvents.cs" />
     <Compile Include="Events\CustomerChangedEventArgs.cs" />
     <Compile Include="Events\MarkingChangedEventArgs.cs" />
+    <Compile Include="Events\ModuleChangedEventArgs.cs" />
     <Compile Include="Events\NavigationCompletedEvent.cs" />
     <Compile Include="Events\SeriesChangedEventArgs.cs" />
     <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
@@ -177,6 +181,10 @@
     <Page Include="Controls\InitialsSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NoSelectionPlaceHolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PicturePreviewControl.xaml">
       <SubType>Designer</SubType>
@@ -394,6 +402,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\folder_Open_32xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Avon_Corp_Logo_2c-LO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,35 +1,31 @@
 ﻿using AvonManager.BusinessObjects;
-using AvonManager.Common.Base;
-using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.Mvvm;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AvonManager.ArtikelModule.Views
 {
-    public class SeriesEditViewModel : ErrorAwareBaseViewModel, INavigationAware
+    public class SeriesEditViewModel : BindableBase
     {
         private struct BackingFields
         {
             public int SerienId;
             public string Name;
             public string Bemerkung;
-            public byte[] Logo;
         }
         #region Private fields
         private BackingFields bFields;
         private BackingFields clone;
-        private bool _isInitializing = false;
         ISerienDataProvider _seriesProvider;
         private SerieDto _series;
         #endregion
-        public SeriesEditViewModel(ISerienDataProvider provider, IEventAggregator eventAggregator):base(eventAggregator)
+        public SeriesEditViewModel(SerieDto series, ISerienDataProvider provider)
         {
             _seriesProvider = provider;
+            _series = series;
+            InitProperties();
         }
 
         #region Properties
@@ -58,57 +54,47 @@ namespace AvonManager.ArtikelModule.Views
             set { SetProperty(ref bFields.Bemerkung, value); }
         }
 
-      
+
         public int SeriesId
         {
             get { return bFields.SerienId; }
             set { SetProperty(ref bFields.SerienId, value); }
         }
 
+        private int _articleCount;
         /// <summary>
-        /// Gets or sets the Logo.
+        /// Gets or sets the ArticleCount.
         /// </summary>
         /// <value>
-        /// The Logo.
+        /// The ArticleCount.
         /// </value>
-        public byte[] Logo
+        public int ArticleCount
         {
-            get { return bFields.Logo; }
-            set { SetProperty(ref bFields.Logo, value); }
+            get { return _articleCount; }
+            set
+            {
+                if (_articleCount != value)
+                {
+                    _articleCount = value;
+                    OnPropertyChanged(nameof(ArticleCount));
+                }
+            }
         }
-
         #endregion
         #region Overrides
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
-            if (!_isInitializing)
-                SaveSeries();
+            SaveSeries();
             return ok;
         }
 
         #endregion
-        private async void LoadSeries(int seriesId)
-        {
-            _isInitializing = true;
-            try
-            {
-                _series = await _seriesProvider.LoadSeriesById(seriesId);
-                InitProperties();
-            }
-            catch (Exception ex)
-            {
-                Logger.Current.Write(ex);
-                ShowException(ex);
-            }
-            _isInitializing = false;
-        }
         private void InitProperties()
         {
-            SeriesId = _series.SerienId;
-            Name = _series.Name;
-            Bemerkung = _series.Bemerkung;
-            Logo = _series.Logo;
+            bFields.SerienId = _series.SerienId;
+            bFields.Name = _series.Name;
+            bFields.Bemerkung = _series.Bemerkung;
             clone = bFields;
         }
         private void SaveSeries()
@@ -118,34 +104,16 @@ namespace AvonManager.ArtikelModule.Views
                 _series.SerienId = SeriesId;
                 _series.Name = Name;
                 _series.Bemerkung = Bemerkung;
-                _series.Logo = Logo;
                 try
                 {
                     _seriesProvider.SaveSerie(_series);
-                    EventAggregator.GetEvent<SeriesChangedEvent>().Publish(new SeriesChangedEventArgs { Series = _series, ChangedType = ChangedType.Update });
+                    clone = bFields;
                 }
                 catch (Exception ex)
                 {
                     Logger.Current.Write(ex);
-                    ShowException(ex);
                 }
             }
-        }
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            var series = navigationContext.Parameters.FirstOrDefault();
-            int seriesID = (int)series.Value;
-            LoadSeries(seriesID);
         }
     }
 }

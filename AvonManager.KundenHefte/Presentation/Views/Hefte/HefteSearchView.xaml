@@ -19,9 +19,6 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate x:Key="JahreEntryTemplate">
-                <CheckBox Content="{Binding Year}" IsChecked="{Binding IsSelected}"/>
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -37,40 +34,50 @@
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
     <xctk:BusyIndicator IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="0">
-                <ItemsControl ItemsSource="{Binding AlleHefte}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
-                                        <TextBlock Grid.Row="1" Text="{Binding Jahr, Mode=OneWay}" Margin="3"/>
-                                    </Grid>
-                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                    				DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
-                    				EditCommand="{Binding EditHeftCommand}" EditCommandParameter="{Binding}"/>
+        <Border Style="{DynamicResource AvonBorderBaseStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Heftauswahl"/>
+                <ScrollViewer Grid.Row="1">
+                    <ItemsControl ItemsSource="{Binding AlleHefte}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid VerticalAlignment="Center" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" Style="{DynamicResource TextBlockHighliteStyle}" >
+    											<i:Interaction.Triggers>
+    												<i:EventTrigger EventName="MouseDown">
+    													<i:InvokeCommandAction Command="{Binding EditHeftCommand}" CommandParameter="{Binding}"/>
+    												</i:EventTrigger>
+    											</i:Interaction.Triggers>
+                                            </TextBlock>
+                                            <TextBlock Grid.Row="1" Text="{Binding Jahr, Mode=OneWay}" Margin="3"/>
+                                        </Grid>
+                                        <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+    										DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
+                    				/>
 
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-            <Button Content="Neues Heft" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddBrochureCommand}"/>
-        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Button Content="Neues Heft" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddBrochureCommand}"/>
+            </Grid>
+        </Border>
     </xctk:BusyIndicator>
 </UserControl>

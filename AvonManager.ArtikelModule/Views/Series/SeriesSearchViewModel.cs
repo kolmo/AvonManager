@@ -17,48 +17,37 @@ namespace AvonManager.ArtikelModule.Views
 {
     public class SeriesSearchViewModel : ErrorAwareBaseViewModel
     {
-        private const string ALLCHAR = "#";
         private const string LOAD = "LOAD";
-        private string _currentInitial;
-        private List<SeriesListEntryViewModel> _seriesList;
+        private List<SeriesEditViewModel> _seriesList;
         ISerienDataProvider _serienDataProvider;
-        IRegionManager _regionManager;
         public SeriesSearchViewModel(ISerienDataProvider serienDataProvider, 
-            IRegionManager regionManager,
             IEventAggregator eventAggregator,
             BusyFlagsManager bFlagsManager
             ):base(bFlagsManager, eventAggregator)
         {
             _serienDataProvider = serienDataProvider;
-            _regionManager = regionManager;
             AddNewSerieCommand = new DelegateCommand(AddNewSerieAction);
-            DeleteSerieCommand = new DelegateCommand<SeriesListEntryViewModel>(DeleteSerieAction);
-            EditSerieCommand = new DelegateCommand<SeriesListEntryViewModel>(EditSeriesAction);
-            FilterInitialsCommand = new DelegateCommand<string>(FilterInitialsAction);
-            EventAggregator.GetEvent<SeriesChangedEvent>().Subscribe(async x => await BuildSeriesList());
+            DeleteSerieCommand = new DelegateCommand<SeriesEditViewModel>(DeleteSerieAction);
         }
         #region Properties
 
-        private ObservableCollection<SeriesListEntryViewModel> _filteredSeries;
+        private ObservableCollection<SeriesEditViewModel> _filteredSeries;
         /// <summary>
         /// Gets or sets the FilteredSeries.
         /// </summary>
         /// <value>
         /// The FilteredSeries.
         /// </value>
-        public ObservableCollection<SeriesListEntryViewModel> FilteredSeries
+        public ObservableCollection<SeriesEditViewModel> FilteredSeries
         {
             get { return _filteredSeries; }
             set { SetProperty(ref _filteredSeries, value); }
         }
 
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
-        public List<string> InitialsList { get; private set; }
 
         public ICommand AddNewSerieCommand { get; }
         public ICommand DeleteSerieCommand { get; }
-        public DelegateCommand<string> FilterInitialsCommand { get; private set; }
-        public ICommand EditSerieCommand { get; }
 
         #endregion
         #region Public Methods
@@ -89,25 +78,21 @@ namespace AvonManager.ArtikelModule.Views
             try
             {
                 var liste = await _serienDataProvider.ListAllSerien();
-                _seriesList = new List<SeriesListEntryViewModel>();
+                _seriesList = new List<SeriesEditViewModel>();
                 foreach (var item in liste.OrderBy(x => x.Name))
                 {
-                    _seriesList.Add(new SeriesListEntryViewModel(item, EditSeriesAction, DeleteSerieAction));
+                    _seriesList.Add(new SeriesEditViewModel(item, _serienDataProvider));
                 }
-                InitialsList = liste.Where(x => x.Name?.Trim().Length > 0).Select(x => x.Name.Trim().ToUpper().Substring(0, 1)).Distinct().OrderBy(x => x).ToList();
-                InitialsList.Insert(0, ALLCHAR);
-                OnPropertyChanged(nameof(InitialsList));
-                string initial = _currentInitial ?? ALLCHAR;
-                FilterInitialsAction(initial);
+                FilteredSeries = new ObservableCollection<SeriesEditViewModel>(_seriesList);
                 var idArray = liste.Select(x => x.SerienId).ToArray();
                 var dic = await _serienDataProvider.ListArticleCountsBySeriesIds(idArray);
                 if (dic?.Count > 0)
                 {
                     foreach (var seriesViewModel in _seriesList)
                     {
-                        if (dic.ContainsKey(seriesViewModel.SerienId.Value))
+                        if (dic.ContainsKey(seriesViewModel.SeriesId))
                         {
-                            seriesViewModel.ArticleCount = dic[seriesViewModel.SerienId.Value];
+                            seriesViewModel.ArticleCount = dic[seriesViewModel.SeriesId];
                         }
                     }
                 }
@@ -124,9 +109,8 @@ namespace AvonManager.ArtikelModule.Views
             try
             {
                 neueSerie.SerienId = _serienDataProvider.AddSerie(neueSerie);
-                SeriesListEntryViewModel vm = new SeriesListEntryViewModel(neueSerie, EditSeriesAction, DeleteSerieAction);
+                SeriesEditViewModel vm = new SeriesEditViewModel(neueSerie, _serienDataProvider);
                 FilteredSeries.Insert(0, vm);
-                EditSeriesAction(vm);
             }
             catch (Exception ex)
             {
@@ -134,7 +118,7 @@ namespace AvonManager.ArtikelModule.Views
                 ShowException(ex);
             }
         }
-        private void DeleteSerieAction(SeriesListEntryViewModel series)
+        private void DeleteSerieAction(SeriesEditViewModel series)
         {
             DeleteConfirmation deleteConfirmation = new DeleteConfirmation() {
                 Title = "Nachfrage",
@@ -147,10 +131,10 @@ namespace AvonManager.ArtikelModule.Views
         {
             if (confirmation?.Confirmed == true)
             {
-                SeriesListEntryViewModel vm = confirmation.Entity as SeriesListEntryViewModel;
+                SeriesEditViewModel vm = confirmation.Entity as SeriesEditViewModel;
                 try
                 {
-                    _serienDataProvider.DeleteSerie(vm.SerienId.Value);
+                    _serienDataProvider.DeleteSerie(vm.SeriesId);
                     FilteredSeries.Remove(vm);
                 }
                 catch (Exception ex)
@@ -158,28 +142,6 @@ namespace AvonManager.ArtikelModule.Views
                     Logger.Current.Write(ex);
                     ShowException(ex);
                 }
-            }
-        }
-        private void EditSeriesAction(SeriesListEntryViewModel series)
-        {
-            if (series != null)
-            {
-                NavigationParameters pars = new NavigationParameters();
-                pars.Add("series", series.SerienId);
-                var moduleAWorkspace = new Uri("SeriesEditView", UriKind.Relative);
-                _regionManager.RequestNavigate("SeriesDetailsRegion", moduleAWorkspace, pars);
-            }
-        }
-        private void FilterInitialsAction(string initial)
-        {
-            _currentInitial = initial;
-            if (initial?.Equals(ALLCHAR) == true)
-            {
-                FilteredSeries = new ObservableCollection<SeriesListEntryViewModel>(_seriesList);
-            }
-            else
-            {
-                FilteredSeries = new ObservableCollection<SeriesListEntryViewModel>(_seriesList.Where(x => x.Name?.StartsWith(initial) == true));
             }
         }
         #endregion

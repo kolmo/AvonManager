@@ -1,13 +1,11 @@
-﻿using AvonManager.Common.Events;
+﻿using AvonManager.Common;
+using AvonManager.Common.Events;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AvonManager.ArtikelModule.ViewModels
@@ -31,7 +29,8 @@ namespace AvonManager.ArtikelModule.ViewModels
         private void ShowArtikelModuleAction()
         {
             var moduleAWorkspace = new Uri("ArtikelModuleWorkspace", UriKind.Relative);
-            _regionManager.RequestNavigate("MainRegion", moduleAWorkspace, NavigationCompleted);
+            _regionManager.RequestNavigate(RegionNames.MainRegion, moduleAWorkspace, NavigationCompleted);
+            _eventAggregator.GetEvent<ModuleChangedEvent>().Publish(new ModuleChangedEventArgs {ModuleTitle = "Artikel-Verwaltung" });
 
         }
         /// <summary>
@@ -46,7 +45,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             // Publish ViewRequestedEvent
             var navigationCompletedEvent = _eventAggregator.GetEvent<NavigationCompletedEvent>();
             navigationCompletedEvent.Publish("ModuleA");
-            IRegion artikelRegion = _regionManager.Regions["ArtikelSearchRegion"];
+            IRegion artikelRegion = _regionManager.Regions[RegionNames.ArticleSearchRegion];
             artikelRegion?.Activate(artikelRegion.Views.FirstOrDefault());
 
         }

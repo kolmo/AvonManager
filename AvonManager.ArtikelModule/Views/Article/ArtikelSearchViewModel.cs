@@ -1,6 +1,7 @@
 ﻿using AvonManager.ArtikelModule.Notifications;
 using AvonManager.ArtikelModule.Views;
 using AvonManager.BusinessObjects;
+using AvonManager.Common;
 using AvonManager.Common.Base;
 using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
@@ -23,6 +24,8 @@ namespace AvonManager.ArtikelModule.ViewModels
     {
         private const string LOAD = "LOAD";
         int _page = 0;
+        private SeriesListEntryViewModel _selectedSeries;
+        private CategoryListEntryViewModel _selectedCategory;
         private List<MarkierungDto> _allMarkings;
         IArtikelDataProvider _dataProvider;
         IMarkierungenDataProvider _markierungenDataProvider;
@@ -55,7 +58,6 @@ namespace AvonManager.ArtikelModule.ViewModels
             LoadMoreArticlesCommand = new DelegateCommand(LoadMoreArticlesAction);
             AddNewArticleCommand = new DelegateCommand(AddNewArticleAction);
             FilterInitialsCommand = new DelegateCommand<string>(FilterSeriesInitialsAction);
-            FilterCategoryInitialsCommand = new DelegateCommand<string>(FilterCategoryInitialsAction);
             SelectCategoryCommand = new DelegateCommand<CategoryListEntryViewModel>(SelectCategoryAction);
             SelectSeriesCommand = new DelegateCommand<SeriesListEntryViewModel>(SelectSeriesAction);
             SelectMarkingCommand = new DelegateCommand<MarkingListEntryViewModel>(SelectMarkingAction);
@@ -179,9 +181,6 @@ namespace AvonManager.ArtikelModule.ViewModels
                     var vm = new CategoryListEntryViewModel(item);
                     KategorienFilter.Add(vm);
                 }
-                CategoryInitialsList = kategorien.Where(x => x.Name?.Trim().Length > 0).Select(x => x.Name.Trim().ToUpper().Substring(0, 1)).Distinct().OrderBy(x => x).ToList();
-                CategoryInitialsList.Insert(0, "#");
-                OnPropertyChanged(nameof(CategoryInitialsList));
                 FilteredCategoryFilter = KategorienFilter;
             }
             catch (Exception ex)
@@ -303,7 +302,6 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ArtikelListe.Clear();
-            GatherFilterCriteria();
             LoadArticlesPage();
         }
         private async void LoadArticlesPage()
@@ -367,21 +365,11 @@ namespace AvonManager.ArtikelModule.ViewModels
                 FilteredSeriesFilter = SerienFilter.Where(x => x.Name.StartsWith(initial)).ToList();
             }
         }
-        private async void FilterCategoryInitialsAction(string initial)
-        {
-            if (initial == "#")
-            {
-                await BuildCategoriesList();
-            }
-            else
-            {
-                FilteredCategoryFilter = KategorienFilter.Where(x => x.Kategoriename.StartsWith(initial)).ToList();
-            }
-        }
         private void ResetFilterAction()
         {
             ArtikelListe.Clear();
             Criteria.Reset();
+            _selectedSeries = null;
         }
 
         private void LoadMoreArticlesAction()
@@ -393,6 +381,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ResetFilterAction();
+            _selectedCategory = category;
             if (category != null)
             {
                 Criteria.Categories = new int[] { category.KategorieId };
@@ -407,6 +396,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ResetFilterAction();
+            _selectedSeries = series;
             if (series != null)
             {
                 Criteria.Series = new int[] { series.SerienId.Value };
@@ -437,7 +427,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             NavigationParameters pars = new NavigationParameters();
             pars.Add("artikel", artikel);
             var moduleAWorkspace = new Uri("ArtikelDetailsWorkspace", UriKind.Relative);
-            _regionManager.RequestNavigate("ArtikelDetailsRegion", moduleAWorkspace, pars);
+            _regionManager.RequestNavigate(RegionNames.ArticleDetailsRegion, moduleAWorkspace, pars);
         }
         private void DeleteArtikelAction(ArticleViewModel artikel)
         {
@@ -479,21 +469,14 @@ namespace AvonManager.ArtikelModule.ViewModels
                     ShowException(ex);
                 }
             }
-        }
-        private void GatherFilterCriteria()
-        {
-            Criteria.Categories = KategorienFilter.Where(x => x.IsSelected).Select(x => x.KategorieId).ToArray();
-            Criteria.Series = SerienFilter.Where(x => x.IsSelected).Select(x => x.SerienId.Value).ToArray();
-            Criteria.Markups = MarkierungenFilter.Where(x => x.IsSelected).Select(x => x.MarkierungId).ToArray();
-
-        }
+        }     
         private void AddNewArticleAction()
         {
-            ArtikelDto newArticle = new ArtikelDto()
-            {
-                Beschreibung = "Neuer Artikel",
-                Name = $"Neuer Artikel, erstellt am {DateTime.Now.ToShortDateString()}",
+            ArtikelDto newArticle = new ArtikelDto() {
+                Name = string.Empty,
+                SerienId = _selectedSeries?.SerienId
             };
+           
             try
             {
                 newArticle.ArtikelId = _dataProvider.AddArticle(newArticle);

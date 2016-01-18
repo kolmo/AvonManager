@@ -2,12 +2,10 @@
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using WebcamControl;
 using System;
 using System.Linq;
 using AvonManager.Common.Base;
-using System.Collections.ObjectModel;
+using AvonManager.Common.Helpers;
 
 namespace AvonManager.Common.Controls
 {
@@ -17,18 +15,11 @@ namespace AvonManager.Common.Controls
     public partial class WebCamClientControl : UserControl, IInteractionRequestAware
     {
         private TakePictureConfirmation _confirmation;
-        private Collection<EncoderDevice> _videoDevices;
+        EncoderDevice _currentVideoDevice;
+        EncoderDevice _currentAudioDevice;
         public WebCamClientControl()
         {
             InitializeComponent();
-            _videoDevices = EncoderDevices.FindDevices(EncoderDeviceType.Video);
-
-            WebcamCtrl.FrameRate = 30;
-            var audioDevices = EncoderDevices.FindDevices(EncoderDeviceType.Audio);
-            if (audioDevices?.Count > 0)
-            {
-                WebcamCtrl.AudioDevice = audioDevices[0];
-            }
         }
 
         public INotification Notification
@@ -54,7 +45,14 @@ namespace AvonManager.Common.Controls
 
         private void TakeSnapshotButton_Click(object sender, RoutedEventArgs e)
         {
-           WebcamCtrl.TakeSnapshot();
+            try
+            {
+                WebcamCtrl.TakeSnapshot();
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+            }
         }
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
@@ -72,16 +70,40 @@ namespace AvonManager.Common.Controls
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_videoDevices?.Any() == true)
+            try
             {
-                WebcamCtrl.VideoDevice = _videoDevices.First();
-                WebcamCtrl.StartPreview();
+                if (_currentAudioDevice == null)
+                {
+                    _currentAudioDevice = EncoderDevices.FindDevices(EncoderDeviceType.Audio)?.FirstOrDefault();
+                    WebcamCtrl.AudioDevice = _currentAudioDevice;
+                    Logger.Current.Write($"Verwende AudioDevice '{WebcamCtrl.AudioDevice?.Name}'.");
+                }
+                if (_currentVideoDevice == null)
+                {
+                    _currentVideoDevice = EncoderDevices.FindDevices(EncoderDeviceType.Video)?.FirstOrDefault();
+                    WebcamCtrl.VideoDevice = _currentVideoDevice;
+                    WebcamCtrl.FrameRate = 30;
+                    Logger.Current.Write($"Verwende Videodevice '{WebcamCtrl.VideoDevice?.Name}'.");
+                }
+                if (WebcamCtrl.VideoDevice != null)
+                    WebcamCtrl.StartPreview();
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
             }
         }
 
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
-            WebcamCtrl.StopPreview();
+            try
+            {
+                WebcamCtrl.StopPreview();
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Write(ex);
+            }
         }
     }
 }

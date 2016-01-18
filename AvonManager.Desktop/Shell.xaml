@@ -15,13 +15,13 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
-                <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+                <StackPanel IsItemsHost="True" Orientation="Vertical" />
             </ItemsPanelTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -33,23 +33,41 @@
 
             <Grid Background="Black">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="41*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="BrandingStackPanel">
+                <StackPanel x:Name="BrandingStackPanel" Margin="-30,0">
                     <TextBlock x:Name="ApplicationNameTextBlock" Style="{StaticResource ApplicationNameStyle}" Foreground="White"
     					Text="AVON Manager" ToolTipService.ToolTip="Startseite" TextOptions.TextHintingMode="Fixed" MouseLeftButtonDown="ApplicationNameTextBlock_MouseLeftButtonDown"/>
                 </StackPanel>
-                <ItemsControl x:Name="TaskButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.TaskButtonRegion}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ItemsPanel="{DynamicResource ItemsPanelTemplate1}" />
-                <Button Grid.Column="2" Margin="30,0,10,0" Click="InfoButton_Click" VerticalAlignment="Center" Style="{StaticResource PurePictureButtonStyle}">
-                    <Image Style="{StaticResource InfoImage}"/>
-                </Button>
+                <TextBlock x:Name="textBlockModuleTitle" Grid.Column="1" HorizontalAlignment="Left"  Style="{StaticResource ModuleTitleStyle}" Margin="60,15,0,4"/>
 
             </Grid>
             <Rectangle Grid.Row="1" Height="10" Fill="#FFED008B"/>
         </Grid>
-
-        <ContentControl x:Name="MainRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainRegion}" Grid.Row="1"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid  Background="Black" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ItemsControl x:Name="TaskButtonRegion"
+                            
+                              prism:RegionManager.RegionName="{x:Static common:RegionNames.TaskButtonRegion}" 
+                              HorizontalAlignment="Stretch" 
+                              VerticalAlignment="Stretch" 
+                              Grid.Column="0" ItemsPanel="{StaticResource ItemsPanelTemplate1}" />
+                 <Button Grid.Row="1" Click="InfoButton_Click" VerticalAlignment="Center" Style="{StaticResource PurePictureButtonStyle}">
+                    <Image Style="{StaticResource InfoImage}"/>
+                </Button>
+           </Grid>
+            <Rectangle Grid.Column="1" Width="10" Fill="#FFED008B"/>
+            <ContentControl x:Name="MainRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainRegion}" Grid.Column="2"/>
+        </Grid>
     </Grid>
 </Window>

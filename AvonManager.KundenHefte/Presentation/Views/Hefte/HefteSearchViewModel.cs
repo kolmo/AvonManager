@@ -98,7 +98,7 @@ namespace AvonManager.KundenHefte.ViewModels
             NavigationParameters pars = new NavigationParameters();
             pars.Add("brochure", brochure);
             var moduleAWorkspace = new Uri("HeftEditView", UriKind.Relative);
-            _regionManager.RequestNavigate("HeftDetailsRegion", moduleAWorkspace, pars);
+            _regionManager.RequestNavigate(AvonManager.Common.RegionNames.BrochureDetailsRegion, moduleAWorkspace, pars);
         }
         private void DeleteBrochureAction(HeftViewModel brochure)
         {

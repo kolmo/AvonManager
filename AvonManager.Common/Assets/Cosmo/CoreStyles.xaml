@@ -3914,7 +3914,7 @@
                                    Margin="-1"
                                    Opacity="0" />
                         <Rectangle x:Name="CheckedInnerRectangle"
-                                   Fill="{StaticResource GrayBrush2}"
+                                   Fill="{TemplateBinding Foreground}"
                                    StrokeThickness="{TemplateBinding BorderThickness}"
                                    Stroke="{StaticResource GrayBrush2}"
                                    RadiusX="3"

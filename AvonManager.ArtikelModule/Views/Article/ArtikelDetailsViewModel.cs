@@ -239,7 +239,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 AlleSerien.Add(new SeriesListEntryViewModel(null));
                 if (serien != null)
                 {
-                    serien.ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                    serien.OrderBy(x=>x.Name).ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
                 }
             }
             catch (Exception ex)

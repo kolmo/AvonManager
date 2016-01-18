@@ -9,6 +9,9 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
+    <Style x:Key="AvonLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
+        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Avon_Corp_Logo_2c-LO.jpg"/>
+    </Style>
     <Style x:Key="ArtikelLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Artikel.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Artikel verwalten"/>

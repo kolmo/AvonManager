@@ -15,7 +15,7 @@ namespace AvonManager.KundenHefte.Controls
         public KundenModuleTaskButton(KundenModulTaskButtonViewModel viewModel)
             :this()
         {
-            this.DataContext = viewModel;
+            DataContext = viewModel;
         }
     }
 }

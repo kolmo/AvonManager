@@ -4,10 +4,6 @@ using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AvonManager.KundenHefte.ViewModels
@@ -32,7 +28,7 @@ namespace AvonManager.KundenHefte.ViewModels
         {
             var moduleAWorkspace = new Uri("KundenModuleWorkspace", UriKind.Relative);
             _regionManager.RequestNavigate("MainRegion", moduleAWorkspace, NavigationCompleted);
-
+            _eventAggregator.GetEvent<ModuleChangedEvent>().Publish(new ModuleChangedEventArgs { ModuleTitle = "Kundenverwaltung" });
         }
         /// <summary>
         /// Callback method invoked when navigation has completed.

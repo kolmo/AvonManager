@@ -1,0 +1,1 @@
+﻿sqlcmd -S Gerda-Pc\SQLEXPRESS -E -Q "EXEC sp_BackupDatabases @backupLocation='C:\SQLBackups\', @databaseName=’AvonDatabase’, @backupType='F'"

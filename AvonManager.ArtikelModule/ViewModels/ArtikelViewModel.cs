@@ -20,7 +20,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         /// </value>
         public ObservableCollection<ArticleMarkingViewModel> Markierungen { get; } = new ObservableCollection<ArticleMarkingViewModel>();
       
-        public string Artikelname { get { return _artikel.Name; } }
+        public string Artikelname { get { return !string.IsNullOrWhiteSpace(_artikel?.Name) ? _artikel.Name : "<Artikelname?>"; } }
 
         private string _serie;
         /// <summary>

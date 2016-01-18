@@ -22,77 +22,61 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
-        <Border Style="{DynamicResource CustomerEditBorderStyle}">
+        <Border Style="{DynamicResource AvonBorderBaseStyle}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="53*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="47*"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="62*"/>
-                        </Grid.RowDefinitions>
-                        <GroupBox Header="Titel" Margin="0,0,0,6" >
+                <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Heftdetails"/>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Header="Titel" >
                             <TextBox Text="{Binding Titel, Mode=TwoWay}"/>
                         </GroupBox>
-                        <GroupBox  Header="Jahr" Grid.Row="1" >
+                        <GroupBox  Header="Jahr" Grid.Column="1" >
                             <xceed:IntegerUpDown Value="{Binding Jahr, Mode=TwoWay}" Maximum="10000" Minimum="1900" />
                         </GroupBox>
-                        <GroupBox Header="Beschreibung" Margin="0,1.964,0,15" Grid.Row="3" >
-                            <TextBox Text="{Binding Beschreibung, Mode=TwoWay}"/>
-                        </GroupBox>
                     </Grid>
-                    <GroupBox Header="Bild" HorizontalAlignment="Stretch" Grid.Column="1" VerticalContentAlignment="Stretch">
-                        <Grid Margin="3" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Image Source="{Binding Bild, Converter={StaticResource ByteToImageConverter}}"/>
-                            <controls:FileLoader FileData="{Binding Bild, Mode=TwoWay}" ButtonContent="Bild laden" HorizontalAlignment="Left" Grid.Row="1" />
-                        </Grid>
-                    </GroupBox>
+                    <DataGrid Grid.Row="1"
+        				ItemsSource="{Binding SortedKundenListe}"
+        				AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Erhalten">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton VerticalAlignment="Center" Foreground="Lime"
+        									IsChecked="{Binding Received, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}"  Width="*"/>
+                            <DataGridTemplateColumn Header="Erhalten am">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding ReceivedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Received}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Hat Bestellt" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton VerticalAlignment="Center" Foreground="Lime"
+        									IsChecked="{Binding HasOrdered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="5"/>
-                <DataGrid Grid.Row="2"
-    				ItemsSource="{Binding SortedKundenListe}"
-    				AutoGenerateColumns="False" Margin="3">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Erhalten">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox VerticalAlignment="Center" Foreground="Green"
-    									IsChecked="{Binding Received, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}"  Width="*"/>
-                        <DataGridTemplateColumn Header="Erhalten am">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DatePicker SelectedDate="{Binding ReceivedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Received}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Hat Bestellt" Width="*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox VerticalAlignment="Center" Foreground="Green"
-    									IsChecked="{Binding HasOrdered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
             </Grid>
         </Border>
     </xceed:BusyIndicator>

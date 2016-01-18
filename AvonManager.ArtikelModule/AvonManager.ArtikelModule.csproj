@@ -122,9 +122,6 @@
     <Compile Include="Controls\ArtikelModuleTaskButton.xaml.cs">
       <DependentUpon>ArtikelModuleTaskButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SerienControl.xaml.cs">
-      <DependentUpon>SerienControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\CategoryCollectionToStringConverter.cs" />
     <Compile Include="KategorieModule.cs" />
@@ -133,8 +130,8 @@
     <Compile Include="Views\Article\ArticleCategoryViewModel.cs" />
     <Compile Include="Views\Article\ArticleMarkingViewModel.cs" />
     <Compile Include="Views\Article\ArtikelDetailsViewModel.cs" />
-    <Compile Include="ViewModels\KategorieModulTaskButtonViewModel.cs" />
-    <Compile Include="ViewModels\ArtikelModulTaskButtonViewModel.cs" />
+    <Compile Include="Controls\KategorieModulTaskButtonViewModel.cs" />
+    <Compile Include="Controls\ArtikelModulTaskButtonViewModel.cs" />
     <Compile Include="Views\Article\ArtikelSearchViewModel.cs" />
     <Compile Include="ViewModels\ArtikelViewModel.cs" />
     <Compile Include="Views\Category\CategoryListEntryViewModel.cs" />
@@ -197,10 +194,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SerienControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <DesignData Include="DesignTimeData\ArtikelDesignTimeData.xaml">
       <SubType>Designer</SubType>
     </DesignData>
@@ -260,6 +253,7 @@
     <ProjectReference Include="..\AvonManager.Common\AvonManager.Common.csproj">
       <Project>{e510febd-16f6-4442-aa20-a8a2e1278116}</Project>
       <Name>AvonManager.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\AvonManager.Interfaces\AvonManager.Interfaces.csproj">
       <Project>{a2e7e04d-ad9c-42c7-8737-c1d8be8954d2}</Project>

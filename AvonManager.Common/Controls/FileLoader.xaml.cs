@@ -25,11 +25,11 @@ namespace AvonManager.Common.Controls
         {
             if (isVisible)
             {
-                capturePicFromWebcam.Visibility = System.Windows.Visibility.Visible;
+                capturePicFromWebcam.Visibility = Visibility.Visible;
             }
             else
             {
-                capturePicFromWebcam.Visibility = System.Windows.Visibility.Collapsed;
+                capturePicFromWebcam.Visibility = Visibility.Collapsed;
             }
         }
         #endregion Public methods

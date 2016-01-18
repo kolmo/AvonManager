@@ -3,26 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AvonManager.ArtikelModule.Views"
+             xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
             xmlns:prism="http://www.codeplex.com/prism"
              mc:Ignorable="d" 
              x:Name="Artikelmanagement"
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Style="{StaticResource ArtikelBorderStyle}">
-            <ContentControl  prism:RegionManager.RegionName="ArtikelSearchRegion"/>
-        </Border>
-        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="ArtikelDetailsRegion"/>
+        <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleSearchRegion}"/>
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleDetailsRegion}"/>
     </Grid>
 </UserControl>

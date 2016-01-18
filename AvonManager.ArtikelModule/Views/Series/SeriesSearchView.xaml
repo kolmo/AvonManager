@@ -29,49 +29,37 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="serienSource"
-                              Source="{Binding Path=FilteredSeries}"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <xctk:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">
+        <Border Style="{DynamicResource AvonBorderBaseStyle}" >
         <Grid Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Style="{DynamicResource ArtikelSearchBorderStyle}" >
-                <Controls:InitialsSelector ItemsSource="{Binding InitialsList}"
-            		FilterCommand="{Binding FilterInitialsCommand}"/>
-            </Border>
-            <ScrollViewer Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding Source={StaticResource serienSource}}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid VerticalAlignment="Center" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
-                                        <TextBlock Grid.Row="1" Text="{Binding ArticleCount, Mode=OneWay, StringFormat=\{0\} Artikel}" Margin="3"/>
-                                    </Grid>
-                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                        				DeleteCommand="{Binding DeleteCommand}" DeleteCommandParameter="{Binding}"
-                        				EditCommand="{Binding EditCommand}" EditCommandParameter="{Binding}"/>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+            <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Serien"/>
+                <DataGrid Grid.Row="1" ItemsSource="{Binding FilteredSeries}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                			SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" CanUserSort="False"/>
+                    <DataGridTextColumn Header="Art.#" Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False"/>
+                    <DataGridTemplateColumn Width="32">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{DynamicResource PurePictureButtonStyle}" 
+                                                  Command="{Binding DataContext.DeleteSerieCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                        CommandParameter="{Binding}">
+                                    <Image Style="{StaticResource DeleteImage}"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <Button Content="Neue Serie" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewSerieCommand}"/>
         </Grid>
+        </Border>
     </xctk:BusyIndicator>
 </UserControl>

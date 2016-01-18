@@ -92,6 +92,7 @@ namespace AvonManager.KundenHefte.ViewModels
         {
             ResetSearchAction();
             _customercriteria.Initial = initial != "#" ? initial : null;
+            _customercriteria.ActiveCustomersOnly = true;
             StartSearch();
         }
         private async void StartSearch()
@@ -145,7 +146,7 @@ namespace AvonManager.KundenHefte.ViewModels
             NavigationParameters pars = new NavigationParameters();
             pars.Add("customers", customer);
             var moduleAWorkspace = new Uri("KundenEditView", UriKind.Relative);
-            _regionManager.RequestNavigate("KundenDetailsRegion", moduleAWorkspace, pars);
+            _regionManager.RequestNavigate(AvonManager.Common.RegionNames.CustomerDetailsRegion, moduleAWorkspace, pars);
         }
         private void DeleteCustomerAction(KundeViewModel customer)
         {

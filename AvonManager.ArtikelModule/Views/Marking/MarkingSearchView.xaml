@@ -8,7 +8,8 @@
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:prism="http://www.codeplex.com/prism"
-             mc:Ignorable="d" 
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+            mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -30,41 +31,42 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0">
-            <ItemsControl ItemsSource="{Binding Markierungen}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Style="{DynamicResource ArtikelSearchBorderStyle}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid VerticalAlignment="Center" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" Foreground="{Binding FarbeARGB, Converter={StaticResource I2BrushConverter}}"
-                    					FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
-                                    <TextBlock Grid.Row="1" Text="{Binding ArticleCount, Mode=OneWay, StringFormat=\{0\} Artikel}" Margin="3"/>
-                                </Grid>
+    <Border Style="{DynamicResource AvonBorderBaseStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Markierungen"/>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Markierungen}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                			SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Titel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" CanUserSort="False"/>
+                    <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:ColorPicker SelectedColor="{Binding Path=FarbeARGB, Mode=TwoWay, Converter={StaticResource C2IConverter}, 
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="#" Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False"/>
+                    <DataGridTemplateColumn Width="32">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{DynamicResource PurePictureButtonStyle}" 
+                                                  Command="{Binding DataContext.DeleteMarkingCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                        CommandParameter="{Binding}">
+                                    <Image Style="{StaticResource DeleteImage}"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-                                <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-                    				DeleteCommand="{Binding DeleteCommand}" DeleteCommandParameter="{Binding}"
-                    				EditCommand="{Binding EditCommand}" EditCommandParameter="{Binding}"/>
-
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <Button Content="Neue Markierung" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewMarkingCommand}"/>
-    </Grid>
+            <Button Content="Neue Markierung" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewMarkingCommand}"/>
+        </Grid>
+    </Border>
 </UserControl>

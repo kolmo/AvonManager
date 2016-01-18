@@ -1,36 +1,31 @@
 ﻿using AvonManager.BusinessObjects;
-using AvonManager.Common.Base;
-using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.Mvvm;
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace AvonManager.ArtikelModule.Views
 {
-    public class CategoryEditViewModel : ErrorAwareBaseViewModel, INavigationAware
+    public class CategoryEditViewModel : BindableBase
     {
         private struct BackingFields
         {
             public int KategorieId;
             public string Name;
             public string Bemerkung;
-            public byte[] Logo;
         }
         #region Private fields
         private BackingFields bFields;
         private BackingFields clone;
-        private bool _isInitializing = false;
         IKategorieProvider _kategorienProvider;
         private KategorieDto _category;
         #endregion
-        public CategoryEditViewModel(IKategorieProvider provider,
-                       IEventAggregator eventAggregator) : base(eventAggregator)
+        public CategoryEditViewModel(KategorieDto category, IKategorieProvider provider)
         {
             _kategorienProvider = provider;
+            _category = category;
+            InitProperties();
         }
 
         #region Properties
@@ -71,16 +66,24 @@ namespace AvonManager.ArtikelModule.Views
             set { SetProperty(ref bFields.KategorieId, value); }
         }
 
+        private int _articleCount;
         /// <summary>
-        /// Gets or sets the Logo.
+        /// Gets or sets the ArticleCount.
         /// </summary>
         /// <value>
-        /// The Logo.
+        /// The ArticleCount.
         /// </value>
-        public byte[] Logo
+        public int ArticleCount
         {
-            get { return bFields.Logo; }
-            set { SetProperty(ref bFields.Logo, value); }
+            get { return _articleCount; }
+            set
+            {
+                if (_articleCount!=value)
+                {
+                    _articleCount = value;
+                    OnPropertyChanged(nameof(ArticleCount));
+                }
+            }
         }
 
         #endregion
@@ -88,70 +91,36 @@ namespace AvonManager.ArtikelModule.Views
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
-            if (!_isInitializing)
-                SaveCategory();
+            SaveCategory();
             return ok;
         }
 
         #endregion
-        private async void LoadCategory(int categoryId)
-        {
-            _isInitializing = true;
-            try
-            {
-                _category = await _kategorienProvider.LoadCategoryById(categoryId);
-                InitProperties();
-            }
-            catch (Exception ex)
-            {
-                Logger.Current.Write(ex);
-                ShowException(ex);
-            }
-            _isInitializing = false;
-        }
+
         private void InitProperties()
         {
-            CategoryId = _category.KategorieId;
-            Name = _category.Name;
-            Bemerkung = _category.Bemerkung;
-            Logo = _category.Logo;
+            bFields.KategorieId = _category.KategorieId;
+            bFields.Name = _category.Name;
+            bFields.Bemerkung = _category.Bemerkung;
             clone = bFields;
         }
         private void SaveCategory()
         {
-            if (_category!= null)
+            if (_category != null)
             {
                 _category.KategorieId = CategoryId;
                 _category.Name = Name;
                 _category.Bemerkung = Bemerkung;
-                _category.Logo = Logo;
                 try
                 {
                     _kategorienProvider.SaveKategorie(_category);
-                    EventAggregator.GetEvent<CategoryChangedEvent>().Publish(new CategoryChangedEventArgs { Category = _category, ChangedType = ChangedType.Update });
+                    clone = bFields;
                 }
                 catch (Exception ex)
                 {
                     Logger.Current.Write(ex);
-                    ShowException(ex);
                 }
             }
-        }
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-          
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            var category = navigationContext.Parameters.FirstOrDefault();
-            int categoryID = (int)category.Value;
-            LoadCategory(categoryID);
         }
     }
 }

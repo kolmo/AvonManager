@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AvonManager.Common
+﻿namespace AvonManager.Common
 {
     public static class RegionNames
     {
@@ -13,7 +7,13 @@ namespace AvonManager.Common
         public static string CategoryButtonRegion = "CategoryButtonRegion";
         public static string ArticleButtonRegion = "ArticleButtonRegion";
         public static string CustomerButtonRegion = "CustomerButtonRegion";
+        public static string CustomerDetailsRegion = "CustomerDetailsRegion";
+        public static string CustomerSearchRegion = "CustomerSearchRegion";
         public static string OrderButtonRegion = "OrderButtonRegion";
         public static string OrderDetailsRegion = "OrderDetailsRegion";
+        public static string ArticleDetailsRegion = "ArticleDetailsRegion";
+        public static string ArticleSearchRegion = "ArticleSearchRegion";
+        public static string BrochureSearchRegion = "BrochureSearchRegion";
+        public static string BrochureDetailsRegion = "BrochureDetailsRegion";
     }
 }

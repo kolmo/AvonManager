@@ -7,7 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              mc:Ignorable="d ignore" d:DesignHeight="400" d:DesignWidth="800"
-             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"  
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
              xmlns:viewModel="clr-namespace:Microsoft.Practices.Prism.Mvvm;assembly=Microsoft.Practices.Prism.Mvvm.Desktop"
              xmlns:controls="clr-namespace:AvonManager.ArtikelModule.Controls"
@@ -28,67 +29,18 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl TabStripPlacement="Top">
-        <TabItem>
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="3" Style="{StaticResource KategorieLogoStyle}" Height="25"/>
-                    <TextBlock Text="Kategorien"  VerticalAlignment="Center"/>
-                </StackPanel>
-            </TabItem.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Border Style="{DynamicResource ArtikelBorderStyle}" >
-                    <ContentControl  prism:RegionManager.RegionName="CategorySearchRegion"/>
-                </Border>
-                <Border Grid.Column="1">
-                    <ContentControl prism:RegionManager.RegionName="CategoryDetailsRegion"/>
-                </Border>
-            </Grid>
-
-        </TabItem>
-        <TabItem>
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="3" Style="{StaticResource SerienLogoStyle}" Height="25"/>
-                    <TextBlock Text="Serien" VerticalAlignment="Center"/>
-                </StackPanel>
-            </TabItem.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Border Style="{DynamicResource ArtikelBorderStyle}">
-                    <ContentControl  prism:RegionManager.RegionName="SeriesSearchRegion"/>
-                </Border>
-                <Border Grid.Column="1">
-                    <ContentControl prism:RegionManager.RegionName="SeriesDetailsRegion"/>
-                </Border>
-            </Grid>
-        </TabItem>
-        <TabItem>
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image Margin="3" Style="{StaticResource MarkingLogoStyle}" Height="25"/>
-                    <TextBlock Text="Markierungen" VerticalAlignment="Center"/>
-                </StackPanel>
-            </TabItem.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Border Style="{DynamicResource ArtikelBorderStyle}" >
-                    <ContentControl  prism:RegionManager.RegionName="MarkingSearchRegion"/>
-                </Border>
-                <Border Grid.Column="1">
-                    <ContentControl prism:RegionManager.RegionName="MarkingDetailsRegion"/>
-                </Border>
-            </Grid>
-        </TabItem>
-    </TabControl>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl  prism:RegionManager.RegionName="CategorySearchRegion"/>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" />
+        <ContentControl Grid.Column="2" prism:RegionManager.RegionName="SeriesSearchRegion"/>
+        <GridSplitter Width="5" Grid.Column="3" HorizontalAlignment="Center"/>
+        <ContentControl Grid.Column="4" prism:RegionManager.RegionName="MarkingSearchRegion"/>
+    </Grid>
 </UserControl>

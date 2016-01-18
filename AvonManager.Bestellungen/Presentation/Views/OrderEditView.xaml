@@ -10,7 +10,7 @@
              xmlns:prism="http://www.codeplex.com/prism"
               xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="296.774" d:DesignWidth="494.194">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadSupplementData" TargetObject="{Binding}"/>
@@ -37,32 +37,38 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Bestellungsdetails"/>
+                    <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Path=CustomerName}" Style="{DynamicResource DefaultHeaderStyle}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Datum, StringFormat=d}" Style="{DynamicResource DefaultHeaderStyle}"/>
-                        <GroupBox Grid.Row="1"  Header="Bemerkung">
+                        <Grid Margin="3" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding CustomerName}" Style="{DynamicResource DefaultHeaderStyle}"  Margin="0"  />
+                            <TextBlock Text="{Binding Datum, StringFormat=d}" Style="{DynamicResource DefaultHeaderStyle}" Grid.Column="1" />
+                        </Grid>
+                        <TextBlock  Text="{Binding Bestellwert, StringFormat=Bestellwert \{0:C2\}}" Style="{DynamicResource KachelHeaderStyle}" Grid.Row="1"/>
+                        <GroupBox  Header="Bestellstatus" Grid.Row="2" >
+                            <ComboBox ItemsSource="{Binding StatusList}"
+                    			SelectedValue="{Binding StatusId, Mode=TwoWay}" DisplayMemberPath="Status" SelectedValuePath="StatusId"/>
+                        </GroupBox>
+                        <GroupBox  Header="Bemerkung" Grid.Row="3" >
                             <TextBox Text="{Binding Bemerkung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </GroupBox>
-                        <GroupBox Grid.Column="1" Grid.Row="1"  Header="Bestellstatus">
-                            <ComboBox ItemsSource="{Binding StatusList}"
-        					SelectedValue="{Binding StatusId, Mode=TwoWay}" DisplayMemberPath="Status" SelectedValuePath="StatusId"/>
-                        </GroupBox>
-                        <TextBlock Grid.Row="2"  Text="{Binding Bestellwert, StringFormat=Bestellwert {0:C2}}" Style="{DynamicResource KachelHeaderStyle}"/>
                     </Grid>
-                    <GroupBox Grid.Row="1" >
+                    <GroupBox Grid.Row="2" >
                         <GroupBox.Header>
-                            <TextBlock Text="Positionen" FontWeight="Bold"/>
+                            <TextBlock Text="BESTELLSCHEIN"/>
                         </GroupBox.Header>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -85,8 +91,8 @@
                                     <DataGridTextColumn Header="Mg" Binding="{Binding Menge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Header="Beschreibung" Binding="{Binding Artikelbeschreibung, Mode=TwoWay}" Width="2*"/>
                                     <DataGridTextColumn Header="FGD" Binding="{Binding FDG, Mode=TwoWay}" Width="*"/>
-                                    <DataGridTextColumn Header="Preis" Binding="{Binding Einzelpreis, Mode=TwoWay, StringFormat=C2, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridTextColumn Header="Gesamt" Binding="{Binding Path=Detailwert, StringFormat=C2, Mode=OneWay}"/>
+                                    <DataGridTextColumn Header="Preis" Binding="{Binding Einzelpreis, Mode=TwoWay, StringFormat=C2}"/>
+                                    <DataGridTextColumn Header="Gesamt" Binding="{Binding Detailwert, Mode=OneWay, StringFormat=C2}"/>
                                     <DataGridTemplateColumn Width="32">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

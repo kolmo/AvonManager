@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:AvonManager.Bestellungen.Views"
              xmlns:prism="http://www.codeplex.com/prism"
     xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
-    x:Class="AvonManager.Bestellungen.Views.BestellungManagementView"
-            
+    x:Class="AvonManager.Bestellungen.Views.BestellungManagementView"           
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,20 +14,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate x:Key="ExpanderHeaderTemplate">
-                <Grid>
-                    <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Suche" d:LayoutOverrides="Width, Height" RenderTransformOrigin="0.5,0.5">
-                        <TextBlock.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform Y="30"/>
-                            </TransformGroup>
-                        </TextBlock.RenderTransform>
-                    </TextBlock>
-                </Grid>
-            </DataTemplate>
             <Style x:Key="ColumnStyle" TargetType="ColumnDefinition">
                 <Setter Property="Width" Value="Auto"/>
                 <Style.Triggers>
@@ -46,11 +31,11 @@
             <ColumnDefinition Tag="{Binding ElementName=articlesExpander}" Style="{StaticResource ColumnStyle}"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Expander x:Name="articlesExpander" VerticalAlignment="Stretch" ExpandDirection="Right" IsExpanded="True" HeaderTemplate="{DynamicResource ExpanderHeaderTemplate}">
-            <Border Style="{DynamicResource ArtikelBorderStyle}">
+        <Border Style="{DynamicResource AvonBorderBaseStyle}">
+            <Expander x:Name="articlesExpander" VerticalAlignment="Stretch" ExpandDirection="Right" IsExpanded="True">
                 <ContentControl  prism:RegionManager.RegionName="OrderSearchRegion"/>
-            </Border>
-        </Expander>
+            </Expander>
+        </Border>
         <Border Grid.Column="1">
             <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderDetailsRegion}"/>
         </Border>

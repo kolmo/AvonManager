@@ -38,6 +38,7 @@ namespace  AvonManager.Desktop
 						regionTarget.Items.Remove(viewTab);
 					}
 					break;
+
 				}
 			};
 		}

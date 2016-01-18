@@ -27,7 +27,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             var moduleAWorkspace = new Uri("ArticleClassificationModuleWorkspace", UriKind.Relative);
             _regionManager.RequestNavigate("MainRegion", moduleAWorkspace, NavigationCompleted);
-
+            _eventAggregator.GetEvent<ModuleChangedEvent>().Publish(new ModuleChangedEventArgs { ModuleTitle = "Kategorien/Serien/Markierungen" });
         }
         /// <summary>
         /// Callback method invoked when navigation has completed.

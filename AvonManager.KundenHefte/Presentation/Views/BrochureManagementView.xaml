@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AvonManager.KundenHefte.Views.KundenHefteManagementView"
+﻿<UserControl x:Class="AvonManager.KundenHefte.Presentation.Views.BrochureManagementView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerSearchRegion}"/>
-        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerDetailsRegion}"/>
+        <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.BrochureSearchRegion}" />
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{x:Static common:RegionNames.BrochureDetailsRegion}"/>
     </Grid>
 </UserControl>

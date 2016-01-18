@@ -28,7 +28,7 @@ namespace AvonManager.Bestellungen.Controls
         {
             var moduleAWorkspace = new Uri("OrderModuleWorkspace", UriKind.Relative);
             _regionManager.RequestNavigate("MainRegion", moduleAWorkspace, NavigationCompleted);
-
+            _eventAggregator.GetEvent<ModuleChangedEvent>().Publish(new ModuleChangedEventArgs { ModuleTitle = "Bestellungsverwaltung" });
         }
         /// <summary>
         /// Callback method invoked when navigation has completed.

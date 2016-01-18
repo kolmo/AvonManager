@@ -18,6 +18,7 @@ namespace AvonManager
             IRegionManager regionManager = bootstrapper.Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion(Common.RegionNames.MainRegion, typeof(MainView));
             bootstrapper.Container.RegisterType<object, MainView>("HomeView");
+            bootstrapper.Container.RegisterType<object, Common.Controls.NoSelectionPlaceHolderView>("NoSelectionPlaceHolderView");
         }
        
     }

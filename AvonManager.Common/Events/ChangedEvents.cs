@@ -8,4 +8,5 @@ namespace AvonManager.Common.Events
     public class MarkingChangedEvent : PubSubEvent<MarkingChangedEventArgs> { }
     public class BrochureChangedEvent : PubSubEvent<BrochureChangedEventArgs> { }
     public class CustomerChangedEvent : PubSubEvent<CustomerChangedEventArgs> { }
+    public class ModuleChangedEvent : PubSubEvent<ModuleChangedEventArgs> { }
 }

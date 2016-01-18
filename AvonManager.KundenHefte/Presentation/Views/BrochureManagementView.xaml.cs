@@ -1,36 +1,35 @@
 ﻿using AvonManager.Common;
 using Microsoft.Practices.Prism.Regions;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace AvonManager.KundenHefte.Views
+namespace AvonManager.KundenHefte.Presentation.Views
 {
     /// <summary>
-    /// Interaction logic for KundenHefteManagementView.xaml
+    /// Interaction logic for BrochureManagementView.xaml
     /// </summary>
-    public partial class KundenHefteManagementView : UserControl
+    public partial class BrochureManagementView : UserControl
     {
         IRegionManager _regionManager;
         bool _placeHolderShown;
-        public KundenHefteManagementView()
+        public BrochureManagementView()
         {
             InitializeComponent();
-            Loaded += KundenHefteManagementView_Loaded;
+            Loaded += BrochureManagementView_Loaded;
         }
-        public KundenHefteManagementView(IRegionManager rm):this()
+        public BrochureManagementView(IRegionManager rm):this()
         {
             _regionManager = rm;
         }
-
-        private void KundenHefteManagementView_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void BrochureManagementView_Loaded(object sender, RoutedEventArgs e)
         {
             if (!_placeHolderShown)
             {
                 var workSpaceUri = new Uri("NoSelectionPlaceHolderView", UriKind.Relative);
-                _regionManager.RequestNavigate(RegionNames.CustomerDetailsRegion, workSpaceUri);
+                _regionManager.RequestNavigate(RegionNames.BrochureDetailsRegion, workSpaceUri);
                 _placeHolderShown = true;
             }
         }
-
     }
 }
