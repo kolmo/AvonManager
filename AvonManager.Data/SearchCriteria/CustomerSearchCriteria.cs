@@ -71,14 +71,14 @@ namespace AvonManager.Data
             set { SetProperty(ref _searchString, value); }
         }
 
-        private bool? _activeCustomersOnly;
+        private bool _activeCustomersOnly;
         /// <summary>
         /// Gets or sets the ActiveCustomersOnly.
         /// </summary>
         /// <value>
         /// The ActiveCustomersOnly.
         /// </value>
-        public bool? ActiveCustomersOnly
+        public bool ActiveCustomersOnly
         {
             get { return _activeCustomersOnly; }
             set { SetProperty(ref _activeCustomersOnly, value); }
@@ -104,7 +104,7 @@ namespace AvonManager.Data
             SearchString = null;
             HasOrders = null;
             InActiveCustomersOnly = null;
-            ActiveCustomersOnly = null;
+            ActiveCustomersOnly = false;
         }
 
     }

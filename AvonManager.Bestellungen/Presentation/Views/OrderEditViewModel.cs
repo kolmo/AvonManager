@@ -37,18 +37,18 @@ namespace AvonManager.Bestellungen.Presentation.Views
         public OrderEditViewModel(IOrderDataProvider orderDataProvider,
             IKundenDataProvider customerDataProvider,
             IEventAggregator eventAggregator
-            , BusyFlagsManager busyFlagsManager):base(busyFlagsManager, eventAggregator)
+            , BusyFlagsManager busyFlagsManager) : base(busyFlagsManager, eventAggregator)
         {
             _orderDataProvider = orderDataProvider;
             _customerDataProvider = customerDataProvider;
-            AddDetail = new DelegateCommand<object>(AddDetailAction, x => { return true; });
-            RemoveDetail = new DelegateCommand<object>(RemoveDetailAction, x => { return true; });
+            AddDetail = new DelegateCommand(AddDetailAction, () => { return !IsOrderReadOnly; });
+            RemoveDetail = new DelegateCommand<object>(RemoveDetailAction, x => { return !IsOrderReadOnly; });
         }
 
         #region Properties
         #region Commands
-        public ICommand AddDetail { get; }
-        public ICommand RemoveDetail { get; }
+        public DelegateCommand AddDetail { get; }
+        public DelegateCommand<object> RemoveDetail { get; }
         #endregion
         public ObservableCollection<OrderDetailsViewModel> OrderDetails { get; } = new ObservableCollection<OrderDetailsViewModel>();
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
@@ -114,7 +114,11 @@ namespace AvonManager.Bestellungen.Presentation.Views
         public int? StatusId
         {
             get { return bFields.StatusId; }
-            set { SetProperty(ref bFields.StatusId, value); }
+            set
+            {
+                SetProperty(ref bFields.StatusId, value);
+                IsOrderReadOnly = bFields.StatusId == Constants.OrderStates.ClosedState;
+            }
         }
 
         public decimal Bestellwert
@@ -135,6 +139,25 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 return wert;
             }
         }
+
+        private bool _isOrderReadOnly;
+        /// <summary>
+        /// Gets or sets the IsOrderReadOnly.
+        /// </summary>
+        /// <value>
+        /// The IsOrderReadOnly.
+        /// </value>
+        public bool IsOrderReadOnly
+        {
+            get { return _isOrderReadOnly; }
+            set
+            {
+                SetProperty(ref _isOrderReadOnly, value);
+                AddDetail.RaiseCanExecuteChanged();
+                RemoveDetail.RaiseCanExecuteChanged();
+            }
+        }
+
         #endregion
 
         #region Overrides
@@ -157,7 +180,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
             try
             {
                 StatusList = await _orderDataProvider.ListAllOrderStatusValues();
-
             }
             catch (Exception ex)
             {
@@ -174,7 +196,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -212,7 +233,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
                     OrderDetails.Add(vm);
                 }
                 OnPropertyChanged(nameof(Bestellwert));
-
             }
             catch (Exception ex)
             {
@@ -224,7 +244,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
-
         private void Vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("Menge") || e.PropertyName.Equals("Einzelpreis"))
@@ -232,7 +251,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 OnPropertyChanged(nameof(Bestellwert));
             }
         }
-
         private void InitProperties()
         {
             if (_currentOrder != null)
@@ -243,6 +261,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 Bemerkung = _currentOrder.Bemerkung;
                 Loeschvormerkung = _currentOrder.Loeschvormerkung;
                 StatusId = _currentOrder.StatusId;
+                IsOrderReadOnly = StatusId == Constants.OrderStates.ClosedState;
                 clone = bFields;
                 OrderDetails.Clear();
                 _isInitializing = false;
@@ -264,7 +283,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 ShowException(ex);
             }
         }
-        private void AddDetailAction(object obj)
+        private void AddDetailAction()
         {
             if (_currentOrder != null)
             {
@@ -289,10 +308,11 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
         private void RemoveDetailAction(object obj)
         {
-            DeleteConfirmation deleteConfirmation = new DeleteConfirmation() {
+            DeleteConfirmation deleteConfirmation = new DeleteConfirmation()
+            {
                 Title = "Nachfrage",
                 Content = "Soll das Detail gelöscht werden?",
-                Entity =obj
+                Entity = obj
             };
             DeleteEntityRequest.Raise(deleteConfirmation, DeleteDetailFromDb);
         }

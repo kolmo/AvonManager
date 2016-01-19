@@ -18,6 +18,7 @@ namespace AvonManager.KundenHefte.ViewModels
     {
         #region Private fields
         private const string LOAD = "LOAD";
+        private string _currentInitial;
         IKundenDataProvider _dataProvider;
         private readonly IRegionManager _regionManager;
         ICustomerSearchCriteria _customercriteria;
@@ -37,8 +38,9 @@ namespace AvonManager.KundenHefte.ViewModels
             SelectInitialCommand = new DelegateCommand<string>(LoadCustomersByInital);
             EditKundeCommand = new DelegateCommand<KundeViewModel>(EditKundeAction);
             AddCustomerCommand = new DelegateCommand(AddCustomerAction);
-            DeleteCustomerCommand = new DelegateCommand<KundeViewModel>(DeleteCustomerAction, x=> x?.OrderCount == 0);
+            DeleteCustomerCommand = new DelegateCommand<KundeViewModel>(DeleteCustomerAction, x => x?.OrderCount == 0);
             EventAggregator.GetEvent<CustomerChangedEvent>().Subscribe(x => StartSearch());
+            _customercriteria.ActiveCustomersOnly = true;
         }
         #region Properties
         public ObservableCollection<string> InitialSelectors { get; set; } = new ObservableCollection<string>();
@@ -52,21 +54,32 @@ namespace AvonManager.KundenHefte.ViewModels
 
         public ObservableCollection<KundeViewModel> AlleKunden { get; set; } = new ObservableCollection<KundeViewModel>();
 
-        private ICommand _selectInitialCommand;
         /// <summary>
         /// Gets or sets the IsSelected.
         /// /// </summary>
         /// <value>
         /// The IsSelected.
         /// </value>
-        public ICommand SelectInitialCommand
+        public ICommand SelectInitialCommand { get; }
+
+        private bool _withInactiveCustomers;
+        /// <summary>
+        /// Gets or sets the WithInactiveCustomers.
+        /// </summary>
+        /// <value>
+        /// The WithInactiveCustomers.
+        /// </value>
+        public bool WithInactiveCustomers
         {
-            get { return _selectInitialCommand; }
+            get { return _withInactiveCustomers; }
             set
             {
-                SetProperty(ref _selectInitialCommand, value);
+                SetProperty(ref _withInactiveCustomers, value);
+                _customercriteria.ActiveCustomersOnly = !_withInactiveCustomers;
+                LoadCustomersByInital(_currentInitial);
             }
         }
+
         #endregion
         #region Public Methods
         public async void LoadData()
@@ -91,8 +104,8 @@ namespace AvonManager.KundenHefte.ViewModels
         private void LoadCustomersByInital(string initial)
         {
             ResetSearchAction();
+            _currentInitial = initial;
             _customercriteria.Initial = initial != "#" ? initial : null;
-            _customercriteria.ActiveCustomersOnly = true;
             StartSearch();
         }
         private async void StartSearch()
@@ -135,7 +148,7 @@ namespace AvonManager.KundenHefte.ViewModels
         }
         private void AddCustomerAction()
         {
-            var newCustomer = new KundeDto { Nachname = "Mustermann", Vorname="Erika"};
+            var newCustomer = new KundeDto { Nachname = "Mustermann", Vorname = "Erika" };
             newCustomer.KundenId = _dataProvider.AddKunde(newCustomer);
             KundeViewModel vm = new KundeViewModel(newCustomer);
             AlleKunden.Insert(0, vm);

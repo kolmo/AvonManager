@@ -55,13 +55,19 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1">
-                <ContentControl x:Name="CustomerButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerButtonRegion}" />
-                <TextBlock Text="KUNDEN &amp; HEFTE" Style="{StaticResource ButtonLabelStyle}"/>
+                <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerButtonRegion}" />
+                <TextBlock Text="KUNDEN" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="3">
-                <ContentControl x:Name="OrderButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderButtonRegion}" />
+                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.BrochureButtonRegion}" />
+                <TextBlock Text="HEFTE" Style="{StaticResource ButtonLabelStyle}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="5">
+                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderButtonRegion}" />
                 <TextBlock Text="BESTELLUNGEN" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
         </Grid>

@@ -63,7 +63,7 @@
                     			SelectedValue="{Binding StatusId, Mode=TwoWay}" DisplayMemberPath="Status" SelectedValuePath="StatusId"/>
                         </GroupBox>
                         <GroupBox  Header="Bemerkung" Grid.Row="3" >
-                            <TextBox Text="{Binding Bemerkung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Bemerkung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsOrderReadOnly}"/>
                         </GroupBox>
                     </Grid>
                     <GroupBox Grid.Row="2" >
@@ -76,13 +76,14 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <DataGrid ItemsSource="{Binding OrderDetails}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
-                			 Grid.Row="0" SelectionMode="Single">
+                			 Grid.Row="0" SelectionMode="Single"  IsReadOnly="{Binding Path=IsOrderReadOnly}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Camp." Binding="{Binding Campagne, Mode=TwoWay}"/>
                                     <DataGridTemplateColumn Header="Jahr">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <xctk:IntegerUpDown Value="{Binding Jahr, Mode=TwoWay}" Maximum="10000" Minimum="1900" />
+                                                <xctk:IntegerUpDown Value="{Binding Jahr, Mode=TwoWay}" Maximum="10000" Minimum="1900"
+                                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -107,7 +108,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Margin="3" Content="Neue Position" Foreground="{DynamicResource NewEntityBrush}"
-                				Command="{Binding DataContext.AddDetail, RelativeSource={RelativeSource AncestorType={x:Type GroupBox}}}" Grid.Row="1"/>
+                				Command="{Binding AddDetail}" Grid.Row="1"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

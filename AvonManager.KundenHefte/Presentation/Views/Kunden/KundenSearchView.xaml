@@ -31,10 +31,13 @@
                 </Style.Triggers>
             </Style>
             <Style x:Key="CustomerListEntryBorderStyle" TargetType="Border" BasedOn="{StaticResource CustomerSearchBorderStyle}">
+                <Setter Property="BorderThickness" Value="0"/>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=Inaktiv}" Value="True">
                         <Setter Property="BorderBrush" Value="Red"/>
                         <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="Background" Value="LightGray"/>
+                        <Setter Property="ToolTipService.ToolTip" Value="Inaktiv!"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -60,19 +63,19 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Kundenauswahl"/>
                 <Border Style="{StaticResource AvonBorderBaseStyle}" Grid.Row="1">
                     <Controls:InitialsSelector ItemsSource="{Binding InitialSelectors}"
-    					FilterCommand="{Binding SelectInitialCommand}"
-    					ImageStyle="{StaticResource KundenLogoStyle}"/>
+    					FilterCommand="{Binding SelectInitialCommand}"/>
                 </Border>
                 <ScrollViewer Grid.Row="2" >
                     <ItemsControl ItemsSource="{Binding AlleKunden, Mode=OneWay}" 
     					TextSearch.TextPath="DisplayName" Background="{x:Null}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
+                                <Border Style="{StaticResource CustomerListEntryBorderStyle}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -92,11 +95,8 @@
     											</i:Interaction.Triggers>
                                             </TextBlock>
                                             <TextBlock HorizontalAlignment="Left" Text="{Binding OrderCount, StringFormat=\{0\} Bestellungen}" VerticalAlignment="Center" Grid.Row="1"/>
-                                            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                                <Image Height="32" Style="{StaticResource inactive}"/>
-                                                <Image Height="32" Style="{StaticResource getsBrochure}"/>
-
-                                            </StackPanel>
+                                            <Image Height="16" Style="{StaticResource getsBrochure}" Grid.Row="2" HorizontalAlignment="Left"
+                                                   ToolTipService.ToolTip="Bekommt Heft"/>
                                         </Grid>
                                         <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
     										DeleteCommand="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
@@ -107,7 +107,10 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Button Content="Neue Kundin" Grid.Row="3" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddCustomerCommand}"/>
+                <Border Grid.Row="3" Style="{DynamicResource AvonBorderBaseStyle}" >
+                    <CheckBox Content="Mit inaktiven Kunden" IsChecked="{Binding Path=WithInactiveCustomers}"/>
+                </Border>
+                <Button Content="Neue Kundin" Grid.Row="4" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddCustomerCommand}"/>
             </Grid>
         </Border>
     </xctk:BusyIndicator>

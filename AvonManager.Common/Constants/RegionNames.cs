@@ -15,5 +15,6 @@
         public static string ArticleSearchRegion = "ArticleSearchRegion";
         public static string BrochureSearchRegion = "BrochureSearchRegion";
         public static string BrochureDetailsRegion = "BrochureDetailsRegion";
+        public static string BrochureButtonRegion = "BrochureButtonRegion";
     }
 }

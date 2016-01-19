@@ -115,6 +115,7 @@
     <Compile Include="BestellungenModule.cs" />
     <Compile Include="Common\Commands\DeleteEntityCommand.cs" />
     <Compile Include="Common\CustomerListEntry.cs" />
+    <Compile Include="Constants\OrderStates.cs" />
     <Compile Include="Presentation\Controls\OrderModulTaskButtonViewModel.cs" />
     <Compile Include="Presentation\Controls\OrderModuleTaskButton.xaml.cs">
       <DependentUpon>OrderModuleTaskButton.xaml</DependentUpon>

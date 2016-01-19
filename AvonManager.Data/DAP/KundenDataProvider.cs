@@ -93,7 +93,7 @@ namespace AvonManager.Data
                                 where k.Nachname != null && k.Nachname.ToUpper().StartsWith(searchCriteria.Initial.ToUpper())
                                 select k;
                     }
-                    if (searchCriteria.ActiveCustomersOnly == true)
+                    if (searchCriteria.ActiveCustomersOnly)
                     {
                         query = from k in query
                                 where k.Inaktiv == null || k.Inaktiv == false

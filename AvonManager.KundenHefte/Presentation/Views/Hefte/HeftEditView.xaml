@@ -58,15 +58,15 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}"  Width="*"/>
-                            <DataGridTemplateColumn Header="Erhalten am">
+                            <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}"  Width="*" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="Erhalten am" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding ReceivedAt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Received}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Hat Bestellt" Width="*">
+                            <DataGridTemplateColumn Header="Hat Bestellt">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ToggleButton VerticalAlignment="Center" Foreground="Lime"
