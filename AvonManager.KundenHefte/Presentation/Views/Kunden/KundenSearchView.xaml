@@ -23,10 +23,10 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-            <Style x:Key="getsBrochure" TargetType="Image">
+            <Style x:Key="getsBrochure" TargetType="Controls:SvgImage">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=GetsBrochure}" Value="True">
-                        <Setter Property="Source" Value="{StaticResource BrochureImage}"/>
+                        <Setter Property="Child" Value="{StaticResource BrochureDrawing}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -95,7 +95,7 @@
     											</i:Interaction.Triggers>
                                             </TextBlock>
                                             <TextBlock HorizontalAlignment="Left" Text="{Binding OrderCount, StringFormat=\{0\} Bestellungen}" VerticalAlignment="Center" Grid.Row="1"/>
-                                            <Image Height="16" Style="{StaticResource getsBrochure}" Grid.Row="2" HorizontalAlignment="Left"
+                                            <Controls:SvgImage Height="16" Style="{StaticResource getsBrochure}" Grid.Row="2" HorizontalAlignment="Left"
                                                    ToolTipService.ToolTip="Bekommt Heft"/>
                                         </Grid>
                                         <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 

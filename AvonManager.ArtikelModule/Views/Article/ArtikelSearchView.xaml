@@ -83,15 +83,6 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-            <Style TargetType="{x:Type Hyperlink}">
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="DarkSlateBlue" />
-                    </Trigger>
-                </Style.Triggers>
-                <Setter Property="Foreground" Value="SteelBlue" />
-                <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <xctk:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten">

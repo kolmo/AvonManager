@@ -39,11 +39,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1">
-                <ContentControl x:Name="ArticleButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleButtonRegion}" />
+                <ContentControl x:Name="ArticleButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleButtonRegion}" HorizontalAlignment="Center" />
                 <TextBlock Text="ARTIKEL" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="3">
-                <ContentControl x:Name="CategoryButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.CategoryButtonRegion}" />             
+                <ContentControl x:Name="CategoryButtonRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.CategoryButtonRegion}" HorizontalAlignment="Center" />             
                 <TextBlock Text="SERIEN, KATEGORIEN &amp; MARKIERUNGEN" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
         </Grid>
@@ -59,15 +59,15 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1">
-                <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerButtonRegion}" />
+                <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.CustomerButtonRegion}" HorizontalAlignment="Center" />
                 <TextBlock Text="KUNDEN" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="3">
-                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.BrochureButtonRegion}" />
+                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.BrochureButtonRegion}" HorizontalAlignment="Center" />
                 <TextBlock Text="HEFTE" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
             <StackPanel Grid.Row="5">
-                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderButtonRegion}" />
+                <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.OrderButtonRegion}" HorizontalAlignment="Center" />
                 <TextBlock Text="BESTELLUNGEN" Style="{StaticResource ButtonLabelStyle}"/>
             </StackPanel>
         </Grid>

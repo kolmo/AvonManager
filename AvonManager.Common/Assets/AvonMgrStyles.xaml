@@ -3,8 +3,10 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
     xmlns:helper="clr-namespace:AvonManager.Common.Helpers"
+    xmlns:controls="clr-namespace:AvonManager.Common.Controls"
 >
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/AvonManager.Theme;component/Themes/Generic.xaml"/>
         <ResourceDictionary Source="ImagesDic.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Color x:Key="EntityBackgroundColor">#ffeeeeee</Color>
@@ -42,6 +44,7 @@
             </Trigger>
         </Style.Triggers>
         <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="16"/>
     </Style>
     <Style x:Key="FilterButtonStyle" TargetType="ButtonBase">
         <Setter Property="ContentTemplate">
@@ -83,6 +86,43 @@
                         </VisualStateManager.VisualStateGroups>
                         <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0" Stroke="{StaticResource AvonRosaBrush}" Fill="{TemplateBinding Background}" StrokeThickness="1"/>
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Ellipse x:Name="DisabledVisualElement" Fill="White" IsHitTestVisible="false" Opacity="0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:SvgButton">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:SvgButton">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3" To="0.4" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Frame"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DisabledVisualElement"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused"/>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0" Stroke="{StaticResource AvonRosaBrush}" Fill="{TemplateBinding Background}" StrokeThickness="1"/>
+                        <Viewbox>
+                            <ContentPresenter ContentTemplate="{TemplateBinding Child}"/>
+                        </Viewbox>
                         <Ellipse x:Name="DisabledVisualElement" Fill="White" IsHitTestVisible="false" Opacity="0"/>
                     </Grid>
                 </ControlTemplate>
@@ -160,6 +200,9 @@
     </Style>
     <Style x:Key="HeftItemBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource HeftItemBrush}"/>
+    </Style>
+    <Style x:Key="HeftEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+        <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
     <Style x:Key="CustomerBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource CustomerBrush}"/>

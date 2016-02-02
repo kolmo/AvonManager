@@ -6,17 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Brushes.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/CoreStyles.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Fonts.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/SDKStyles.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/Cosmo/Styles.xaml"/>
+                <ResourceDictionary Source="{ThemeDictionary AssemblyName=AvonManager.Theme}"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            <helpers:BooleanToVisibilityConverter x:Key="BooleanToCollapsedConverter" Inverted="True"/>
-            <helpers:BooleanToTextConverter x:Key="BooleanToTextConverter" />
+           </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 

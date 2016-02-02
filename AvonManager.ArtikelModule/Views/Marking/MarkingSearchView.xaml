@@ -51,7 +51,11 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="#" Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False"/>
+                    <DataGridTextColumn Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="#"  ToolTipService.ToolTip="Artikelanzahl"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
                     <DataGridTemplateColumn Width="32">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

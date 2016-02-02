@@ -53,7 +53,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="0"  Header="Name" >
-                        <TextBox Text="{Binding Artikelname, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="30"/>
+                        <TextBox Text="{Binding Artikelname, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="24"/>
                     </GroupBox>
                     <GroupBox Grid.Row="1" Header="Serie" >
                         <Grid >

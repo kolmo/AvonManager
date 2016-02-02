@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AvonManager.ArtikelModule.Controls"
+             xmlns:common="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Button Command="{Binding Path=ShowKategorieModule}"  Margin="5,3"  Style="{DynamicResource PurePictureButtonStyle}">
-        <Image x:Name="image" Height="Auto" Style="{DynamicResource KategorieLogoStyle}"/>
-    </Button>
+    <common:SvgButton Command="{Binding Path=ShowKategorieModule}"  Margin="5,3"  Child="{DynamicResource CategoryDrawing}"
+                      ToolTipService.ToolTip="Kategorien verwalten">
+    </common:SvgButton>
 </UserControl>

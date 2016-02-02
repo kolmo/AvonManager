@@ -56,23 +56,21 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Style="{DynamicResource AvonBorderBaseStyle}">
-                            <ScrollViewer>
-                                <ItemsControl x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{DynamicResource TextBlockHighliteStyle}" Margin="0,0,0,3">
-												<i:Interaction.Triggers>
-													<i:EventTrigger EventName="MouseDown">
-														<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
-													</i:EventTrigger>
-												</i:Interaction.Triggers>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
-                        </Border>
+                        <ScrollViewer>
+                            <ItemsControl x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{DynamicResource TextBlockHighliteStyle}" Margin="0,0,0,3">
+                    						<i:Interaction.Triggers>
+                    							<i:EventTrigger EventName="MouseDown">
+                    								<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
+                    							</i:EventTrigger>
+                    						</i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
                     </Grid>
                 </xctk:BusyIndicator>
             </Grid>

@@ -209,6 +209,10 @@
       <Project>{a2e7e04d-ad9c-42c7-8737-c1d8be8954d2}</Project>
       <Name>AvonManager.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AvonManager.Theme\AvonManager.Theme.csproj">
+      <Project>{4762d906-149c-493d-9266-d91a3e3ba702}</Project>
+      <Name>AvonManager.Theme</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

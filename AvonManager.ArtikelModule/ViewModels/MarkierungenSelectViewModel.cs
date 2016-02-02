@@ -1,15 +1,9 @@
-﻿using AvonManager.ArtikelModule.Common;
-using AvonManager.ArtikelModule.Notifications;
-using AvonManager.Common.Base;
-using AvonManager.Interfaces;
+﻿using AvonManager.ArtikelModule.Notifications;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace AvonManager.ArtikelModule.ViewModels

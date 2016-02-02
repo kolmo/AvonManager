@@ -111,18 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArtikelModule.cs" />
-    <Compile Include="Common\AlleMarkierungenFilterEntry.cs" />
-    <Compile Include="Common\AlleSerienFilterEntry.cs" />
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\KategorieFilterEntry.cs" />
-    <Compile Include="Common\MarkierungFilterEntry.cs" />
     <Compile Include="Controls\KategorieModuleTaskButton.xaml.cs">
       <DependentUpon>KategorieModuleTaskButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ArtikelModuleTaskButton.xaml.cs">
       <DependentUpon>ArtikelModuleTaskButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\CategoryCollectionToStringConverter.cs" />
     <Compile Include="KategorieModule.cs" />
     <Compile Include="Notifications\AssignmentSelectionNotification.cs" />
@@ -134,6 +128,7 @@
     <Compile Include="Controls\ArtikelModulTaskButtonViewModel.cs" />
     <Compile Include="Views\Article\ArtikelSearchViewModel.cs" />
     <Compile Include="ViewModels\ArtikelViewModel.cs" />
+    <Compile Include="Views\Category\CategoryEditViewModel.cs" />
     <Compile Include="Views\Category\CategoryListEntryViewModel.cs" />
     <Compile Include="ViewModels\MarkierungenSelectViewModel.cs" />
     <Compile Include="Views\Marking\MarkingListEntryViewModel.cs" />
@@ -151,10 +146,6 @@
     <Compile Include="Views\ArticleClassificationPage.xaml.cs">
       <DependentUpon>ArticleClassificationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Category\CategoryEditView.xaml.cs">
-      <DependentUpon>CategoryEditView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Category\CategoryEditViewModel.cs" />
     <Compile Include="Views\Category\CategorySearchView.xaml.cs">
       <DependentUpon>CategorySearchView.xaml</DependentUpon>
     </Compile>
@@ -162,17 +153,11 @@
     <Compile Include="Views\MarkierungenSelectView.xaml.cs">
       <DependentUpon>MarkierungenSelectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Marking\MarkingEditView.xaml.cs">
-      <DependentUpon>MarkingEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Marking\MarkingEditViewModel.cs" />
     <Compile Include="Views\Marking\MarkingSearchView.xaml.cs">
       <DependentUpon>MarkingSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Marking\MarkingSearchViewModel.cs" />
-    <Compile Include="Views\Series\SeriesEditView.xaml.cs">
-      <DependentUpon>SeriesEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Series\SeriesEditViewModel.cs" />
     <Compile Include="Views\Series\SeriesSearchView.xaml.cs">
       <DependentUpon>SeriesSearchView.xaml</DependentUpon>
@@ -182,9 +167,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Controls\KategorieModuleTaskButton.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -216,10 +199,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Category\CategoryEditView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Category\CategorySearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,15 +207,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Marking\MarkingEditView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Marking\MarkingSearchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Series\SeriesEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

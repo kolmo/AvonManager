@@ -15,7 +15,8 @@ namespace AvonManager.KundenHefte
         }
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion, typeof(Controls.BrochureModuleTaskButton));
+            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
+               typeof(Controls.BrochureModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.BrochureButtonRegion, typeof(Controls.BrochureModuleTaskButton));
             _container.RegisterType<object, Presentation.Views.BrochureManagementView>("BrochureModuleWorkspace");
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.BrochureSearchRegion, typeof(Views.HefteSearchView));

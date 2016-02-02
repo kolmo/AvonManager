@@ -6,7 +6,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
-        Title="AVON Manager" Height="700" Width="1100"
+    xmlns:commonControls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common"
+        Title="AVON Manager" Height="700" Width="1100" MinHeight="600" MinWidth="800"
     Language="de-DE" Icon="Assets/Images/lipstick.ico">
     <Window.Resources>
         <ResourceDictionary>
@@ -36,7 +37,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="BrandingStackPanel" Margin="-30,0">
+                <StackPanel x:Name="BrandingStackPanel" Margin="10,0">
                     <TextBlock x:Name="ApplicationNameTextBlock" Style="{StaticResource ApplicationNameStyle}" Foreground="White"
     					Text="AVON Manager" ToolTipService.ToolTip="Startseite" TextOptions.TextHintingMode="Fixed" MouseLeftButtonDown="ApplicationNameTextBlock_MouseLeftButtonDown"/>
                 </StackPanel>
@@ -47,7 +48,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -56,15 +57,15 @@
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ItemsControl x:Name="TaskButtonRegion"
+                <ItemsControl x:Name="TaskButtonRegion" 
                             
                               prism:RegionManager.RegionName="{x:Static common:RegionNames.TaskButtonRegion}" 
                               HorizontalAlignment="Stretch" 
                               VerticalAlignment="Stretch" 
-                              Grid.Column="0" ItemsPanel="{StaticResource ItemsPanelTemplate1}" />
-                 <Button Grid.Row="1" Click="InfoButton_Click" VerticalAlignment="Center" Style="{StaticResource PurePictureButtonStyle}">
-                    <Image Style="{StaticResource InfoImage}"/>
-                </Button>
+                              Grid.Column="0" ItemsPanel="{StaticResource ItemsPanelTemplate1}" Margin="3,0" />
+                 <commonControls:SvgButton Grid.Row="1" Click="InfoButton_Click" VerticalAlignment="Center" Child="{StaticResource InfoDrawing}" Margin="10"
+                                           ToolTipService.ToolTip="Informationen">
+                </commonControls:SvgButton>
            </Grid>
             <Rectangle Grid.Column="1" Width="10" Fill="#FFED008B"/>
             <ContentControl x:Name="MainRegion" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainRegion}" Grid.Column="2"/>

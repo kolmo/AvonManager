@@ -8,7 +8,6 @@
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:common="clr-namespace:AvonManager.Common.Base;assembly=AvonManager.Common"
              xmlns:commonHelpers="clr-namespace:AvonManager.Common.Helpers;assembly=AvonManager.Common"
-             xmlns:entries="clr-namespace:AvonManager.ArtikelModule.Common"
              xmlns:viewModels="clr-namespace:AvonManager.ArtikelModule.ViewModels"
              mc:Ignorable="d" Height="392" Width="318">
     <UserControl.Resources>

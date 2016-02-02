@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\ClickOnce\</PublishUrl>
+    <PublishUrl>C:\Users\kolmo\SkyDrive\Sicherungen\AvonManager\Install\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -90,6 +90,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -190,7 +192,6 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TabControlAdapter.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -205,16 +206,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\AssemblyCreationDate.cs" />
-    <Compile Include="Helpers\BooleanToTextConverter.cs" />
-    <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\CollectionToCountConverter.cs" />
     <Compile Include="Helpers\ColorToIntegerConverter.cs" />
     <Compile Include="Helpers\Constants.cs" />
-    <Compile Include="Helpers\DataGridBehaviors.cs" />
-    <Compile Include="Helpers\InitialSelektor.cs" />
-    <Compile Include="Helpers\IsCheckedToTextConverter.cs" />
-    <Compile Include="Helpers\JahrSelektor.cs" />
     <Compile Include="Helpers\MessageStringMarkupExtension.cs" />
     <Compile Include="Helpers\Messages\BestellungEditMessage.cs" />
     <Compile Include="Helpers\Messages\KundinAddedRemovedMessage.cs" />
@@ -320,6 +315,10 @@
     <ProjectReference Include="..\AvonManager.KundenHefte\AvonManager.KundenHefte.csproj">
       <Project>{8f97007e-9c03-4386-ae51-b40751fa044e}</Project>
       <Name>AvonManager.KundenHefte</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvonManager.Theme\AvonManager.Theme.csproj">
+      <Project>{4762d906-149c-493d-9266-d91a3e3ba702}</Project>
+      <Name>AvonManager.Theme</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -47,7 +47,11 @@
                 			SelectionMode="Single">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" CanUserSort="False"/>
-                        <DataGridTextColumn Header="Art.#" Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding ArticleCount, Mode=OneWay}" Width="40" CanUserSort="False" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="#"  ToolTipService.ToolTip="Artikelanzahl"/>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Width="32">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

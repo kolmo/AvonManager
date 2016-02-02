@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AvonManager.Common.Controls"
              mc:Ignorable="d" d:DesignWidth="124.572" d:DesignHeight="169.498" 
              >
     <UserControl.Resources>
@@ -21,8 +22,7 @@
         <Button x:Name="buttonEdit" Visibility="Collapsed" Grid.Row="0" Style="{DynamicResource PurePictureButtonStyle}">
             <Image Style="{StaticResource EditImage}"/>
         </Button>
-        <Button x:Name="buttonDelete" Grid.Row="1" Style="{DynamicResource PurePictureButtonStyle}">
-            <Image Style="{StaticResource DeleteImage}"/>
-        </Button>
+        <local:SvgButton x:Name="buttonDelete" Grid.Row="1" Child="{DynamicResource TidyMan}" Width="20">
+        </local:SvgButton>
     </Grid>
 </UserControl>

@@ -131,6 +131,10 @@
     <Compile Include="Controls\PicturePreviewControl.xaml.cs">
       <DependentUpon>PicturePreviewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SvgButton.cs" />
+    <Compile Include="Controls\SvgImage.xaml.cs">
+      <DependentUpon>SvgImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WebCamClientControl.xaml.cs">
       <DependentUpon>WebCamClientControl.xaml</DependentUpon>
     </Compile>
@@ -162,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\Cosmo\SDKStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\ConfirmDeleteControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -190,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SvgImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\WebCamClientControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -197,30 +201,6 @@
     <Page Include="Controls\SearchStarterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Assets\Cosmo\Brushes.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Assets\Cosmo\CoreStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Assets\Cosmo\Fonts.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Assets\Cosmo\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -377,6 +357,10 @@
     <ProjectReference Include="..\AvonManager.BusinessObjects\AvonManager.BusinessObjects.csproj">
       <Project>{0a681fbe-e84b-403d-8f55-23281a882a8a}</Project>
       <Name>AvonManager.BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AvonManager.Theme\AvonManager.Theme.csproj">
+      <Project>{4762d906-149c-493d-9266-d91a3e3ba702}</Project>
+      <Name>AvonManager.Theme</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

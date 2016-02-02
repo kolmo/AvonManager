@@ -12,7 +12,7 @@
               xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
             mc:Ignorable="d" 
              d:DataContext="{d:DesignData Source=/DesignTimeData/HeftDesignTimeData.xaml}"
-             d:DesignHeight="300" Margin="5">
+             d:DesignHeight="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -69,7 +69,6 @@
                                         <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
     										DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
                     				/>
-
                                     </Grid>
                                 </Border>
                             </DataTemplate>

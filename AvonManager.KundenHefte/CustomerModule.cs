@@ -15,7 +15,8 @@ namespace AvonManager.KundenHefte
         }
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion, typeof(Controls.KundenModuleTaskButton));
+            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
+                typeof(Controls.KundenModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerButtonRegion, typeof(Controls.KundenModuleTaskButton));
             _container.RegisterType<object, Views.KundenHefteManagementView>("KundenModuleWorkspace");
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerSearchRegion, typeof(Views.KundenSearchView));

@@ -22,7 +22,8 @@ namespace AvonManager.Bestellungen
         {
             _container.RegisterType<object, Views.BestellungManagementView>("OrderModuleWorkspace");
             _container.RegisterType<object, Views.OrderEditView>("OrderEditView");
-            _regionManager.RegisterViewWithRegion("TaskButtonRegion", typeof(Controls.OrderModuleTaskButton));
+            _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
+                typeof(Controls.OrderModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.OrderButtonRegion, typeof(Controls.OrderModuleTaskButton));
             _regionManager.RegisterViewWithRegion("OrderSearchRegion", typeof(Views.OrderSearchView));
         }
