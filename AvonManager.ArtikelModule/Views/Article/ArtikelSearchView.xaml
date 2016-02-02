@@ -122,8 +122,10 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBox Text="{Binding Criteria.FullText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                                        <Button Margin="3" Content="S" Grid.Column="1" Command="{Binding SearchArticlesCommand}" VerticalAlignment="Center"/>
-                                        <Button Margin="3" Content="C" Grid.Column="2" Command="{Binding Path=ResetFiltersCommand}" VerticalAlignment="Center"/>
+                                        <Button Margin="3" Content="S" Grid.Column="1" Command="{Binding SearchArticlesCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Suche"/>
+                                        <Button Margin="3" Content="R" Grid.Column="2" Command="{Binding Path=ResetFiltersCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Rücksetzen"/>
                                     </Grid>
                                 </GroupBox>
                             </Border>
