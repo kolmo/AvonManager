@@ -42,39 +42,37 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Style="{StaticResource ModuleSubTitleStyle}" Text="Heftauswahl"/>
-                <ScrollViewer Grid.Row="1">
-                    <ItemsControl ItemsSource="{Binding AlleHefte}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid VerticalAlignment="Center" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" Style="{DynamicResource TextBlockHighliteStyle}" >
-    											<i:Interaction.Triggers>
-    												<i:EventTrigger EventName="MouseDown">
-    													<i:InvokeCommandAction Command="{Binding EditHeftCommand}" CommandParameter="{Binding}"/>
-    												</i:EventTrigger>
-    											</i:Interaction.Triggers>
-                                            </TextBlock>
-                                            <TextBlock Grid.Row="1" Text="{Binding Jahr, Mode=OneWay}" Margin="3"/>
-                                        </Grid>
-                                        <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-    										DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
-                    				/>
+                <ListBox Grid.Row="1" ItemsSource="{Binding AlleHefte}" Background="{x:Null}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource EntityBackgroundBorderStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid VerticalAlignment="Center" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding Titel, Mode=OneWay}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis" Style="{DynamicResource TextBlockHighliteStyle}" >
+                							<i:Interaction.Triggers>
+                								<i:EventTrigger EventName="MouseDown">
+                									<i:InvokeCommandAction Command="{Binding EditHeftCommand}" CommandParameter="{Binding}"/>
+                								</i:EventTrigger>
+                							</i:Interaction.Triggers>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="1" Text="{Binding Jahr, Mode=OneWay}" Margin="3"/>
                                     </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                						DeleteCommand="{Binding DeleteBrochureCommand}" DeleteCommandParameter="{Binding}"
+                    				/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Button Content="Neues Heft" Grid.Row="2" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddBrochureCommand}"/>
             </Grid>
         </Border>

@@ -86,38 +86,36 @@
                         <TextBlock Text="{Binding CurrentCustomer}" Style="{DynamicResource DefaultHeaderStyle}" />
                     </StackPanel>
                 </Border>
-                <ScrollViewer Grid.Row="1">
-                    <ItemsControl ItemsSource="{Binding AllOrders}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{DynamicResource EntityBackgroundBorderStyle}" >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock HorizontalAlignment="Left" Text="{Binding OrderDate, StringFormat=d}" VerticalAlignment="Center" Grid.Row="0" Style="{DynamicResource TextBlockHighliteStyle}" FontSize="16">
-												<i:Interaction.Triggers>
-													<i:EventTrigger EventName="MouseDown">
-														<i:InvokeCommandAction Command="{Binding DataContext.EditOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
-													</i:EventTrigger>
-												</i:Interaction.Triggers>
-                                            </TextBlock>
-                                        </Grid>
-                                        <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
-											DeleteCommand="{Binding DataContext.DeleteOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
-                                                                   />
+                <ListBox Grid.Row="1" ItemsSource="{Binding AllOrders}" Background="{x:Null}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource EntityBackgroundBorderStyle}" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderDate, StringFormat=d}" VerticalAlignment="Center" Grid.Row="0" Style="{DynamicResource TextBlockHighliteStyle}" FontSize="16">
+                							<i:Interaction.Triggers>
+                								<i:EventTrigger EventName="MouseDown">
+                									<i:InvokeCommandAction Command="{Binding DataContext.EditOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
+                								</i:EventTrigger>
+                							</i:Interaction.Triggers>
+                                        </TextBlock>
                                     </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                						DeleteCommand="{Binding DataContext.DeleteOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
+                                                                   />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Button Content="Neue Bestellung" Width="Auto" Grid.Row="2" Command="{Binding CreateOrderCommand}" CommandParameter="{Binding CurrentCustomer}" Foreground="{DynamicResource NewEntityBrush}" Margin="3"/>
             </Grid>
         </Grid>

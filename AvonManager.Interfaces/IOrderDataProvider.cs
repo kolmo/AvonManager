@@ -9,7 +9,7 @@ namespace AvonManager.Interfaces
 {
     public interface IOrderDataProvider
     {
-        Task<List<BestellungDto>> SearchOrders(IOrderSearchCriteria searchCriteria, int pageSize, int page);
+        Task<List<BestellungDto>> SearchOrders(IOrderSearchCriteria searchCriteria, int pageSize = 10000, int page = 1);
         Task<BestellungDto> LoadOrder(int orderId);
         Task<List<BestelldetailDto>> ListOrderDetailsByOrder(int orderId);
         Task<List<BestellstatusDto>> ListAllOrderStatusValues();

@@ -46,7 +46,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Artikelname}" Style="{StaticResource TextBlockHighliteStyle}" FontSize="16" TextTrimming="CharacterEllipsis">
+                        <TextBlock Text="{Binding Artikelname}" Style="{StaticResource TextBlockHighliteStyle}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
                                         <i:InvokeCommandAction Command="{Binding DataContext.SelectArtikel, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
@@ -76,7 +76,7 @@
                                 </Grid>
                                 <ItemsControl ItemsSource="{Binding Markierungen}" Style="{StaticResource MarkierungsSpotListStyle}" Grid.Row="2" Margin="0,5,0,0"/>
                             </Grid>
-                            <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                            <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" 
                 				DeleteCommand="{Binding DataContext.DeleteArtikel, RelativeSource={RelativeSource AncestorType=ItemsControl, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
                                                            />
                         </Grid>
@@ -113,10 +113,10 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBox Text="{Binding Criteria.FullText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                                        <Button Margin="3" Content="S" Grid.Column="1" Command="{Binding SearchArticlesCommand}" VerticalAlignment="Center"
-                                                ToolTipService.ToolTip="Suche"/>
-                                        <Button Margin="3" Content="R" Grid.Column="2" Command="{Binding Path=ResetFiltersCommand}" VerticalAlignment="Center"
-                                                ToolTipService.ToolTip="Rücksetzen"/>
+                                        <Controls:SvgButton Margin="3" Grid.Column="1" Command="{Binding SearchArticlesCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Suche" Child="{StaticResource SearchDrawing}" Height="20"/>
+                                        <Controls:SvgButton Margin="3" Grid.Column="2" Command="{Binding Path=ResetFiltersCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Rücksetzen" Child="{DynamicResource ResetCross}" Height="20" />
                                     </Grid>
                                 </GroupBox>
                             </Border>
@@ -236,10 +236,9 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ScrollViewer Margin="0,0,0,3" >
-                                <ItemsControl ItemsSource="{Binding ArtikelListe}" Background="{x:Null}" BorderThickness="0"
-    								ItemTemplate="{StaticResource ArtikelItemTemplate}"   />
-                            </ScrollViewer>
+                            <ListBox ItemsSource="{Binding ArtikelListe}" Background="{x:Null}" BorderThickness="0"
+    								ItemTemplate="{StaticResource ArtikelItemTemplate}"  ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                            </ListBox>
                             <Button Content="Neuer Artikel" Grid.Row="1" Foreground="{StaticResource NewEntityBrush}" Margin="0,3" Command="{Binding AddNewArticleCommand}"/>
                         </Grid>
 

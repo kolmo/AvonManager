@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using AvonManager.Common.Base;
 using AvonManager.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace AvonManager.Common.Controls
 {
@@ -64,11 +65,17 @@ namespace AvonManager.Common.Controls
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
             _confirmation.Confirmed = true;
-            _confirmation.ImageData = WebcamCtrl.ImageBytes;
+            if (WebcamCtrl.ImageBytes != null)
+                _confirmation.ImageData = WebcamCtrl.ImageBytes;
             FinishInteraction();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitializeCamera();
+        }
+
+        private void InitializeCamera()
         {
             try
             {
@@ -92,8 +99,8 @@ namespace AvonManager.Common.Controls
             {
                 Logger.Current.Write(ex);
             }
-        }
 
+        }
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             try

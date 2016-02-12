@@ -9,65 +9,14 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
-    <Style x:Key="AvonLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Avon_Corp_Logo_2c-LO.jpg"/>
-    </Style>
-    <Style x:Key="ArtikelLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Artikel.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Artikel verwalten"/>
-    </Style>
-    <Style x:Key="HefteLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/HefteLogo128.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Hefte verwalten"/>
-    </Style>
-    <Style x:Key="KundenLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Rolodex128.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Kunden verwalten"/>
-    </Style>
-    <Style x:Key="KategorieLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Kategorie.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Kategorien verwalten"/>
-    </Style>
-    <Style x:Key="SerienLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/SerienLogo.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Serien verwalten"/>
-    </Style>
-    <Style x:Key="MarkingLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Marker128.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Markierungen verwalten"/>
-    </Style>
-    <Style x:Key="BestellungLogoStyle" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/BestellungLogo.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Bestellungen verwalten"/>
-    </Style>
-    <Style x:Key="LoadMoreImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/More-26.png"/>
-    </Style>
-    <Style x:Key="AddImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Plus96.png"/>
-    </Style>
-    <Style x:Key="SearchImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Lupe96.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Suche starten"/>
-    </Style>
+
+
     <Style x:Key="ZoomInImageStyle" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ZoomIn_48x48.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Zoom"/>
     </Style>
-    <Style x:Key="SelectSearchImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/lipstick24.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Auswahl"/>
-        <Setter Property="Height" Value="24"/>
-    </Style>
-    <Style x:Key="SelectArticlesImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/lipstick24.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Auswahl"/>
-        <Setter Property="Stretch" Value="None"/>
-    </Style>
-    <Style x:Key="ClearFilterImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Schwamm96.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Suche zurücksetzen"/>
-    </Style>
+
+
     <Style x:Key="OpenFolderImageStyle" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/folder_Open_32xLG.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Datei öffnen"/>
@@ -77,51 +26,28 @@
     </Style>
     <Style x:Key="EditImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ClipBoard64.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Bearbeiten"/>
         <Setter Property="Stretch" Value="None"/>
     </Style>
+
     <Style x:Key="DeleteImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Wegwerfen64.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Löschen"/>
         <Setter Property="Stretch" Value="None"/>
     </Style>
-    <Style x:Key="DeleteConfirmationImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Wegwerfen128.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Löschen"/>
-        <Setter Property="Height" Value="128"/>
-    </Style>
     <Style x:Key="CancelImage" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/AbbruchIcon.png"/>
     </Style>
-    <Style x:Key="FilterImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Filter.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Filter setzen"/>
-    </Style>
-    <Style x:Key="FilterLoeschImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/FilterLoesch.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Filter löschen"/>
-    </Style>
+
     <Style x:Key="FindImageStyle" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Find_VS.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Suchen"/>
     </Style>
-    <Style x:Key="InaktivImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Inaktiv.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Inaktiv"/>
-    </Style>
+
     <Style x:Key="CameraImageStyle" TargetType="Image">
         <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/Camera_32xLG.png"/>
         <Setter Property="ToolTipService.ToolTip" Value="Webcam"/>
     </Style>
-    <Style x:Key="SendToBestellungImage" TargetType="Image">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/ResultstoText_9948.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Zur Bestellung hinzufügen"/>
-    </Style>
-    <Style x:Key="InfoImage" TargetType="Image" BasedOn="{StaticResource LogoImageBaseStyle}">
-        <Setter Property="Source" Value="/AvonManager.Common;component/Assets/Images/info.png"/>
-        <Setter Property="ToolTipService.ToolTip" Value="Information"/>
-        <Setter Property="Stretch" Value="None"/>
-    </Style>
+
     <DataTemplate  x:Key="MC900389846_1_">
         <Canvas  Width="181.76" Height="189.44" Clip="F1 M 0,0L 181.76,0L 181.76,189.44L 0,189.44L 0,0">
             <Path x:Name="Path" Width="166.49" Height="154.336" Canvas.Left="5.08294" Canvas.Top="6.88574" Stretch="Fill" Fill="#F0FFFFFF" Data="M 50.7335,76.0874L 8.34369,101.522L 11.6044,106.417L 5.08294,115.055L 5.08294,123.31L 5.17884,124.173L 5.65837,125.997L 6.23379,127.821L 7.09693,128.685L 7.48055,128.781L 8.15188,129.068L 9.39864,129.452L 10.8372,130.124L 12.7553,130.796L 14.9611,131.66L 17.3587,132.716L 20.044,133.771L 23.0171,134.923L 26.1819,136.267L 29.4427,137.611L 32.8952,138.954L 36.4437,140.394L 40.0881,141.93L 43.7324,143.465L 47.4727,144.905L 51.213,146.441L 54.8574,147.977L 58.4058,149.512L 61.9543,150.952L 65.4069,152.296L 68.6676,153.639L 71.7366,154.983L 74.6137,156.135L 77.2031,157.191L 79.6007,158.246L 81.7106,159.11L 83.5328,159.782L 84.9714,160.454L 86.0263,160.838L 86.6977,161.126L 86.8895,161.222L 95.5209,156.231L 97.5349,127.053L 100.028,120.43L 105.399,96.1473L 119.305,71.5764L 133.787,61.2105L 144.816,60.0587L 152.296,60.0587L 157.571,62.4583L 167.929,55.4517L 165.819,48.925L 171.573,43.5502L 164.188,40.2868L 163.997,40.2868L 163.421,40.3828L 162.654,40.4788L 161.791,40.4788L 161.024,40.4788L 160.352,40.3828L 159.969,40.1909L 160.065,39.8069L 160.544,39.2311L 161.311,38.2713L 162.174,37.2155L 163.038,36.0637L 163.997,35.0079L 164.764,34.1441L 165.243,33.4722L 165.435,33.2803L 108.276,15.14L 105.399,11.0129L 88.6158,6.88574L 86.5059,13.1245L 76.2441,10.629L 71.7366,20.035L 57.7345,16.7717L 50.7335,76.0874 Z "/>
@@ -154,6 +80,7 @@
     </DataTemplate>
     <DataTemplate x:Key="CremeTiegel" >
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Article" Width="96" Height="96" Clip="F1 M 0,0L 96,0L 96,96L 0,96L 0,0">
+            <Ellipse Width="96" Height="96" Canvas.Left="-1.08991e-006" Canvas.Top="2.28882e-005" Stretch="Fill" Fill="#1AFFFFFF"/>
             <Path Width="46.2336" Height="30.8427" Canvas.Left="23.4007" Canvas.Top="15.7884" Stretch="Fill" Fill="#EEED008B" Data="M 25.2859,46.5767C 25.2417,46.5031 23.4307,41.7767 23.4012,41.6442C 23.3865,41.5853 23.6663,41.4381 24.211,41.2467C 25.3153,40.8491 25.6982,40.6872 27.8626,39.6565C 34.9742,36.2847 47.357,29.232 57.6343,22.7093C 61.757,20.1032 65.5558,17.5117 66.9987,16.3191C 67.3815,16.0099 67.6907,15.7743 67.6907,15.789C 67.7055,15.789 68.1472,16.9228 68.6772,18.2921L 69.6343,20.7952L 69.2073,21.178C 66.0269,24.1081 47.1803,35.6369 34.8417,42.2185C 31.0871,44.2209 27.3767,46.0025 26.081,46.4295C 25.4037,46.6651 25.3448,46.6651 25.2859,46.5767 Z "/>
             <Path Width="41.984" Height="24.498" Canvas.Left="24.2072" Canvas.Top="15.7" Stretch="Fill" Fill="#EEED008B" Data="M 24.2552,40.1424C 24.638,39.7743 28.6135,37.0798 31.1902,35.4307C 42.2037,28.3927 58.7533,18.9694 64.9963,16.1866C 65.6294,15.8921 66.1594,15.686 66.1889,15.7007C 66.3361,15.8627 59.5042,20.4124 54.0269,23.8136C 43.2049,30.513 30.3215,37.6835 25.3301,39.7596C 24.2552,40.216 24.108,40.2602 24.2552,40.1424 Z "/>
             <Path Width="43.7011" Height="5.21162" Canvas.Left="31.0129" Canvas.Top="50.2294" Stretch="Fill" Fill="#EEED008B" Data="M 46.8711,55.3669C 40.2601,55.1313 34.2822,54.3951 31.4405,53.4528C 30.9399,53.2908 30.9399,53.2908 31.1313,53.1878C 31.4699,52.9964 33.4135,52.3632 34.3705,52.1129C 39.5092,50.773 46.5472,50.1252 54.3803,50.243C 58.4588,50.3019 61.3006,50.4786 64.3779,50.8467C 68.103,51.3031 71.8134,52.1277 73.9631,52.9669L 74.714,53.2761L 74.4785,53.3645C 74.0367,53.5559 72.1521,54.0123 71.0331,54.2184C 67.8527,54.8074 63.6122,55.1902 58.5914,55.3816C 56.103,55.47 49.4773,55.4552 46.8711,55.3669 Z "/>
@@ -161,38 +88,39 @@
         </Canvas>
     </DataTemplate>
     <DataTemplate  x:Key="TidyMan" >
-        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Document" Width="276.909" Height="356.158" Clip="F1 M 0,0L 276.909,0L 276.909,356.158L 0,356.158L 0,0">
-            <Path  Width="148.895" Height="15.6806" Canvas.Left="-9.05991e-006" Canvas.Top="171.579" Stretch="Fill" StrokeThickness="15.1205" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 7.56024,179.139C 141.335,179.139 141.335,179.699 141.335,179.699"/>
-            <Path  Width="134.174" Height="173.538" Canvas.Left="7.88063" Canvas.Top="180.18" Stretch="Fill" StrokeThickness="9.60032" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 137.254,185.3L 121.092,348.917L 42.844,348.917L 12.6808,184.98"/>
-            <Path x:Name="Line" Width="127.213" Height="8.56028" Canvas.Left="12.7211" Canvas.Top="206.222" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 17.0013,210.503L 135.654,210.503"/>
-            <Path x:Name="Line_1" Width="117.132" Height="8.56028" Canvas.Left="18.5617" Canvas.Top="235.505" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 131.413,239.786L 22.8419,239.786"/>
-            <Path x:Name="Line_2" Width="109.611" Height="8.56028" Canvas.Left="23.3623" Canvas.Top="262.148" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 27.6424,266.428L 128.693,266.428"/>
-            <Path  Width="101.69" Height="9.6004" Canvas.Left="28.6428" Canvas.Top="288.711" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 32.923,292.991C 126.053,292.991 126.053,294.031 126.053,294.031"/>
-            <Path x:Name="Line_4" Width="94.2494" Height="8.56028" Canvas.Left="33.4433" Canvas.Top="317.434" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 123.413,321.714L 37.7235,321.714"/>
-            <Path x:Name="Line_5" Width="29.2825" Height="176.098" Canvas.Left="37.7638" Canvas.Top="175.419" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 42.0439,179.699L 62.7661,347.237"/>
-            <Path x:Name="Line_6" Width="13.9209" Height="175.138" Canvas.Left="71.2074" Canvas.Top="175.899" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 80.8481,346.757L 75.4875,180.179"/>
-            <Path x:Name="Line_7" Width="14.9609" Height="176.178" Canvas.Left="97.2902" Canvas.Top="176.459" Stretch="Fill" StrokeThickness="8.56028" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 107.971,180.739L 101.57,348.357"/>
-            <Path  Width="108.971" Height="56.117" Canvas.Left="27.1626" Canvas.Top="107.987" Stretch="Fill" StrokeThickness="6.40021" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 30.3627,148.176C 59.6458,133.534 59.4058,110.332 61.726,111.212C 89.489,122.253 115.892,125.613 132.934,121.853C 83.4884,159.617 108.611,161.297 101.81,158.817C 80.7681,151.216 50.2848,174.019 30.3627,148.176 Z "/>
-            <Path  Width="48.6447" Height="22.4036" Canvas.Left="79.3282" Canvas.Top="104.01" Stretch="Fill" StrokeThickness="6.40021" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 82.5283,117.933C 109.491,117.933 110.211,109.372 115.252,107.211C 115.572,107.051 118.052,118.653 124.773,123.213"/>
-            <Path  Width="216.503" Height="96.0099" Canvas.Left="60.4061" Canvas.Top="67.0074" Stretch="Fill" StrokeThickness="5.36018" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#EE000000" Data="F1 M 63.0862,69.6874L 233.904,70.1675C 248.306,86.7293 272.389,143.135 274.229,156.097L 189.18,160.337C 186.779,132.414 173.498,106.331 171.658,102.411L 63.0862,69.6874 Z "/>
-            <Path  Width="119.372" Height="192.66" Canvas.Left="156.736" Canvas.Top="163.498" Stretch="Fill" StrokeThickness="5.36018" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#EE000000" Data="F1 M 188.54,166.178L 159.416,352.998L 226.224,230.105L 255.667,353.478L 273.429,168.818L 188.54,166.178 Z "/>
-            <Path  Width="66.1671" Height="66.0871" Canvas.Left="166.697" Canvas.Top="9.53674e-006" Stretch="Fill" Fill="#EE000000" Data="F1 M 232.864,33.0435C 232.864,51.2855 218.063,66.0871 199.741,66.0871C 181.499,66.0871 166.697,51.2855 166.697,33.0435C 166.697,14.8016 181.499,9.53674e-006 199.741,9.53674e-006C 218.063,9.53674e-006 232.864,14.8016 232.864,33.0435 Z "/>
+        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="IntTidyMan" Width="320" Height="320" Clip="F1 M 0,0L 320,0L 320,320L 0,320L 0,0">
+            <Ellipse Width="320" Height="320" Canvas.Left="0" Canvas.Top="0" Stretch="Fill" Fill="#1AFFFFFF"/>
+            <Path Width="105.021" Height="9.10725" Canvas.Left="59.648" Canvas.Top="158.125" Stretch="Fill" StrokeThickness="8.704" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 64,162.477C 160.317,162.477 160.317,162.88 160.317,162.88"/>
+            <Path Width="96.0921" Height="124.434" Canvas.Left="64.4868" Canvas.Top="163.482" Stretch="Fill" StrokeThickness="6.4" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 157.379,166.913L 145.743,284.716L 89.4041,284.716L 67.6868,166.682"/>
+            <Path Width="91.8293" Height="6.4" Canvas.Left="67.5975" Canvas.Top="181.859" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 70.7975,185.059L 156.227,185.059"/>
+            <Path Width="84.571" Height="6.4" Canvas.Left="71.8027" Canvas.Top="202.942" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 153.174,206.142L 75.0027,206.142"/>
+            <Path Width="79.1561" Height="6.4" Canvas.Left="75.259" Canvas.Top="222.125" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 78.459,225.325L 151.215,225.325"/>
+            <Path Width="73.4531" Height="7.14886" Canvas.Left="79.061" Canvas.Top="241.25" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 82.261,244.45C 149.314,244.45 149.314,245.199 149.314,245.199"/>
+            <Path Width="68.0958" Height="6.4" Canvas.Left="82.5174" Canvas.Top="261.93" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 147.413,265.13L 85.7174,265.13"/>
+            <Path Width="21.3199" Height="127.026" Canvas.Left="85.6281" Canvas.Top="159.68" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 88.8281,162.88L 103.748,283.507"/>
+            <Path Width="10.2596" Height="126.335" Canvas.Left="109.707" Canvas.Top="160.026" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 116.767,283.161L 112.907,163.226"/>
+            <Path Width="11.0085" Height="127.084" Canvas.Left="128.487" Canvas.Top="160.429" Stretch="Fill" StrokeThickness="6.4" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 136.295,163.629L 131.687,284.313"/>
+            <Path Width="80.2508" Height="42.1961" Canvas.Left="77.2175" Canvas.Top="110.352" Stretch="Fill" StrokeThickness="6.40021" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 80.4176,140.184C 101.501,129.642 101.329,112.936 102.999,113.57C 122.988,121.519 141.998,123.939 154.268,121.231C 118.668,148.421 136.756,149.631 131.86,147.845C 116.709,142.373 94.7615,158.79 80.4176,140.184 Z "/>
+            <Path Width="36.816" Height="17.9226" Canvas.Left="114.776" Canvas.Top="107.488" Stretch="Fill" StrokeThickness="6.40021" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 117.977,118.409C 137.39,118.409 137.908,112.245 141.537,110.689C 141.768,110.574 143.554,118.927 148.392,122.211"/>
+            <Path Width="157.382" Height="70.6275" Canvas.Left="101.298" Canvas.Top="80.9923" Stretch="Fill" StrokeThickness="5.36018" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#EE000000" Data="F1 M 103.978,83.6724L 226.967,84.018C 237.336,95.9424 254.675,136.554 256,145.887L 194.765,148.94C 193.037,128.835 183.474,110.056 182.149,107.233L 103.978,83.6724 Z "/>
+            <Path Width="87.4484" Height="140.215" Canvas.Left="170.656" Canvas.Top="150.465" Stretch="Fill" StrokeThickness="5.36018" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#EE000000" Data="F1 M 194.304,153.145L 173.336,287.654L 221.437,199.172L 242.635,288L 255.424,155.046L 194.304,153.145 Z "/>
+            <Path Width="47.64" Height="47.5824" Canvas.Left="178.578" Canvas.Top="33.4978" Stretch="Fill" Fill="#EE000000" Data="F1 M 226.218,57.2889C 226.218,70.423 215.561,81.0801 202.369,81.0801C 189.235,81.0801 178.578,70.423 178.578,57.2889C 178.578,44.1548 189.235,33.4978 202.369,33.4978C 215.561,33.4978 226.218,44.1548 226.218,57.2889 Z "/>
         </Canvas>
     </DataTemplate>
     <DataTemplate x:Key="BrochureDrawing">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="HeftPath" Width="96" Height="96" Clip="F1 M 0,0L 96,0L 96,96L 0,96L 0,0">
-            <Path Width="45.4561" Height="70.656" Canvas.Left="6.272" Canvas.Top="13.312" Stretch="Fill" StrokeThickness="13.056" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#00000000" Fill="#FFE50481" Data="F1 M 45.2001,25.6C 40.1601,22.72 35.1201,19.84 29.7201,19.84C 24.3201,19.84 18.56,22.7201 12.8,25.6002L 12.8001,77.44C 18.5601,74.56 24.3201,71.68 29.7201,71.68C 35.1201,71.68 40.1601,74.56 45.2001,77.44"/>
-            <Path Width="45.456" Height="70.656" Canvas.Left="42.9921" Canvas.Top="13.312" Stretch="Fill" StrokeThickness="13.056" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#00000000" Fill="#FFE50481" Data="F1 M 49.5201,77.44C 54.5601,74.56 59.6001,71.68 65.0001,71.68C 70.4001,71.68 76.1601,74.56 81.9201,77.44L 81.9198,25.6002C 76.1599,22.7201 70.4,19.84 65.0001,19.84C 59.6001,19.84 54.5601,22.72 49.5201,25.6"/>
+            <Ellipse Width="96" Height="96" Canvas.Left="1.22918e-007" Canvas.Top="0" Stretch="Fill" Fill="#1AFFFFFF"/>
+            <Path Width="45.4557" Height="70.6553" Canvas.Left="6.27167" Canvas.Top="13.313" Stretch="Fill" StrokeThickness="13.056" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#00000000" Fill="#FFE50481" Data="F1 M 45.1993,25.6009C 40.1594,22.7209 35.1195,19.841 29.7195,19.841C 24.3196,19.841 18.5596,22.721 12.7997,25.6011L 12.7998,77.4402C 18.5597,74.5603 24.3196,71.6803 29.7195,71.6803C 35.1195,71.6803 40.1594,74.5603 45.1993,77.4402"/>
+            <Path Width="45.4556" Height="70.6553" Canvas.Left="42.9913" Canvas.Top="13.313" Stretch="Fill" StrokeThickness="13.056" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#00000000" Fill="#FFE50481" Data="F1 M 49.5193,77.4402C 54.5592,74.5603 59.5992,71.6803 64.9991,71.6803C 70.399,71.6803 76.159,74.5603 81.9189,77.4402L 81.9185,25.6011C 76.1587,22.721 70.3989,19.841 64.999,19.841C 59.5992,19.841 54.5592,22.7209 49.5193,25.6009"/>
         </Canvas>
-
     </DataTemplate>
     <DataTemplate x:Key="OrderDrawing">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Order" Width="96" Height="96" Clip="F1 M 0,0L 96,0L 96,96L 0,96L 0,0">
+            <Ellipse Width="96" Height="96" Canvas.Left="-3.93029e-006" Canvas.Top="7.62939e-006" Stretch="Fill" Fill="#1AFFFFFF"/>
             <Path Width="5.42381" Height="20.4915" Canvas.Left="40.2714" Canvas.Top="8" Stretch="Fill" Fill="#FFE50481" Data="F1 M 40.2714,8L 45.6952,10.4108L 45.6952,26.0807L 40.2714,28.4915L 40.2714,8 Z "/>
             <Path Width="51.8275" Height="75.9389" Canvas.Left="24" Canvas.Top="8" Stretch="Fill" Fill="#FFE50481" Data="F1 M 39.0661,8L 39.0661,28.4915L 38.4635,28.4915L 37.8608,28.4915L 37.2582,28.4915L 36.0529,28.4915L 34.8476,28.4915L 33.6423,29.0942L 32.437,29.6968L 31.8344,31.5049L 31.2317,33.313L 31.2317,35.7237L 31.8344,36.3264L 33.0397,38.7372L 35.4503,42.3533L 37.2582,46.5722L 39.6688,50.791L 42.682,55.6125L 45.0926,59.8313L 46.9005,64.0502L 48.1058,67.0636L 49.3111,69.4744L 49.3111,70.0771L 49.9137,70.6798L 51.119,71.2825L 52.927,71.8851L 54.1323,72.4878L 55.9402,73.0905L 57.1455,72.4878L 58.3508,71.2825L 59.5561,69.4744L 60.7613,66.4609L 75.8275,77.912L 75.2248,79.1174L 74.0195,79.7201L 72.8142,80.9255L 70.4037,82.1309L 67.9931,83.3363L 64.3772,83.9389L 60.1587,83.3363L 55.3375,82.7336L 50.5164,80.3228L 48.7085,79.7201L 46.9005,77.912L 43.2846,74.8986L 40.2714,71.2825L 36.0529,65.8582L 32.437,60.434L 29.4238,53.8044L 26.4106,45.9695L 24.6026,37.5318L 24,28.4915L 24,27.8888L 24,26.6834L 24.6026,24.2726L 25.2053,21.2592L 26.4106,18.2457L 28.2185,15.835C 28.8212,14.8305 29.4238,13.826 30.1269,12.922C 30.83,12.0179 31.6335,11.2143 32.437,10.4108L 35.4503,8.60269L 39.0661,8 Z "/>
             <Path Width="16.8741" Height="14.4646" Canvas.Left="60.7613" Canvas.Top="61.6394" Stretch="Fill" Fill="#FFE50481" Data="F1 M 60.7613,65.2556L 77.0328,76.104L 77.6354,70.6798L 65.5825,61.6394L 60.7613,65.2556 Z "/>
         </Canvas>
-
     </DataTemplate>
     <DataTemplate x:Key="InfoDrawing">
         <Canvas 
@@ -204,14 +132,35 @@
     </DataTemplate>
     <DataTemplate x:Key="CustomerDrawing">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Customer" Width="96" Height="96" Clip="F1 M 0,0L 96,0L 96,96L 0,96L 0,0">
-            <Path Width="35.9097" Height="88.7721" Canvas.Left="32" Canvas.Top="7.22793" Stretch="Fill" Fill="#FFE50481" Data="F1 M 63.9198,56.0126L 67.9098,56.0126L 59.1318,27.2216L 52.7479,24.0226L 52.7479,20.0239L 53.5458,20.0239L 54.3438,19.2242L 55.1418,19.2242L 55.9398,18.4244L 55.9398,17.6247L 56.7378,16.8249L 56.7378,16.0252L 56.7378,15.2254L 57.5358,14.4257L 57.5358,13.6259L 56.7378,12.8262L 56.7378,11.2267L 56.7378,10.4269L 55.9398,9.62717L 55.1418,8.82743L 54.3438,8.02768L 53.5458,7.22793L 52.7479,7.22793L 51.9499,7.22793L 51.1519,7.22793L 49.5559,7.22793L 48.7579,7.22793L 47.9599,7.22793L 47.1619,8.02768L 46.3639,8.82743L 45.5659,9.62717L 44.7679,10.4269L 44.7679,11.2267L 44.7679,12.8262L 44.7679,13.6259L 44.7679,14.4257L 44.7679,15.2254L 44.7679,16.0252L 44.7679,16.8249L 45.5659,17.6247L 45.5659,18.4244L 46.3639,18.4244L 47.1619,19.2242L 47.1619,20.0239L 47.9599,20.0239L 47.9599,24.0226L 41.5759,27.2216L 32,56.0126L 35.99,56.0126L 44.7679,37.6184L 45.5659,43.2166L 36.788,71.2078L 45.5659,71.2078L 48.7579,96L 51.9499,96L 55.1418,71.2078L 63.9198,71.2078L 55.1418,43.2166L 57.5358,36.8186L 63.9198,56.0126 Z "/>
+            <Ellipse Width="96" Height="96" Canvas.Left="-0.319999" Canvas.Top="0" Stretch="Fill" Fill="#1AFFFFFF"/>
+            <Path Width="35.9098" Height="88.7721" Canvas.Left="30.08" Canvas.Top="3.38793" Stretch="Fill" Fill="#FFE50481" Data="F1 M 61.9998,52.1726L 65.9898,52.1726L 57.2118,23.3816L 50.8279,20.1826L 50.8279,16.1839L 51.6259,16.1839L 52.4238,15.3842L 53.2218,15.3842L 54.0198,14.5844L 54.0198,13.7847L 54.8178,12.9849L 54.8178,12.1852L 54.8178,11.3854L 55.6158,10.5857L 55.6158,9.78592L 54.8178,8.98618L 54.8178,7.38668L 54.8178,6.58692L 54.0198,5.78718L 53.2218,4.98743L 52.4238,4.18768L 51.6259,3.38793L 50.8279,3.38793L 50.0299,3.38793L 49.2319,3.38793L 47.6359,3.38793L 46.8379,3.38793L 46.0399,3.38793L 45.2419,4.18768L 44.4439,4.98743L 43.6459,5.78718L 42.8479,6.58692L 42.8479,7.38668L 42.8479,8.98618L 42.8479,9.78592L 42.8479,10.5857L 42.8479,11.3854L 42.8479,12.1852L 42.8479,12.9849L 43.6459,13.7847L 43.6459,14.5844L 44.4439,14.5844L 45.2419,15.3842L 45.2419,16.1839L 46.0399,16.1839L 46.0399,20.1826L 39.6559,23.3816L 30.08,52.1726L 34.07,52.1726L 42.8479,33.7784L 43.6459,39.3766L 34.868,67.3678L 43.6459,67.3678L 46.8379,92.16L 50.0299,92.16L 53.2218,67.3678L 61.9998,67.3678L 53.2218,39.3766L 55.6158,32.9786L 61.9998,52.1726 Z "/>
         </Canvas>
     </DataTemplate>
     <DataTemplate x:Key="CategoryDrawing">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="KarteiDrawing" Width="96" Height="96" Clip="F1 M 0,0L 96,0L 96,96L 0,96L 0,0">
+            <Ellipse Width="96" Height="96" Canvas.Left="-6.61214e-007" Canvas.Top="0" Stretch="Fill" Fill="#1AFFFFFF"/>
             <Path Width="68.48" Height="45.6534" Canvas.Left="14.72" Canvas.Top="23.9466" Stretch="Fill" Fill="#FFE50481" Data="F1 M 14.72,23.9466L 30.6987,23.9467L 30.6987,35.36L 83.2,35.36L 83.2,69.6L 14.72,69.6L 14.72,23.9466 Z "/>
             <Rectangle Width="13.696" Height="9.13067" Canvas.Left="32.9813" Canvas.Top="23.9466" Stretch="Fill" Fill="#FFE50481"/>
             <Rectangle Width="13.696" Height="9.13068" Canvas.Left="48.96" Canvas.Top="23.9466" Stretch="Fill" Fill="#FFE50481"/>
         </Canvas>
     </DataTemplate>
+    <DataTemplate x:Key="SearchDrawing">
+        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Suche" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+            <Ellipse Width="48" Height="48" Canvas.Left="7.98152e-006" Canvas.Top="3.8147e-006" Stretch="Fill" Fill="#1BFFFFFF"/>
+            <Path Width="36.416" Height="36.2277" Canvas.Left="5.95201" Canvas.Top="6.14034" Stretch="Fill" StrokeThickness="1.536" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 41.6,38.9366L 38.9366,41.6L 23.0601,25.7235C 21.3705,26.9208 19.3065,27.6245 17.0781,27.6245C 11.3575,27.6245 6.72001,22.987 6.72001,17.2664C 6.72001,11.5458 11.3575,6.90834 17.0781,6.90834C 22.7987,6.90834 27.4362,11.5458 27.4362,17.2664C 27.4362,19.3977 26.7924,21.3787 25.6888,23.0255L 41.6,38.9366 Z "/>
+        </Canvas>
+    </DataTemplate>
+    <DataTemplate x:Key="ResetCross">
+        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="ResetCross" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+            <Ellipse Width="48" Height="48" Canvas.Left="4.16682e-006" Canvas.Top="0" Stretch="Fill" Fill="#1BFFFFFF"/>
+            <Path Width="30.336" Height="30.336" Canvas.Left="8.832" Canvas.Top="8.832" Stretch="Fill" StrokeThickness="1.536" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,9.6L 38.4,38.4"/>
+            <Path Width="30.336" Height="30.336" Canvas.Left="8.832" Canvas.Top="8.832" Stretch="Fill" StrokeThickness="1.536" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,38.4L 38.4,9.6"/>
+        </Canvas>
+    </DataTemplate>
+
+    <Canvas x:Key="BioHazard" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="88.1235" Height="83.112" Clip="F1 M 0,0L 88.1235,0L 88.1235,83.112L 0,83.112L 0,0">
+        <Path Width="59.1548" Height="66.5814" Canvas.Left="28.9731" Canvas.Top="-2.54344e-006" Stretch="Fill" Fill="#FFAF559D" Data="F1 M 49.1112,48.3394C 50.2888,45.166 48.2929,41.7132 44.9599,41.1544L 44.9599,38.3602C 54.5,37.9011 62.184,30.3967 62.8826,20.8766C 63.5612,11.3564 57.0347,2.81414 47.6543,0.997915L 47.6543,-2.54344e-006C 62.7229,2.01581 73.1412,16.1065 70.6464,31.1152C 84.8768,36.4641 91.8822,52.5107 86.0943,66.5814L 85.2361,66.0825C 88.3296,57.0612 84.2182,47.1219 75.636,42.9706C 67.0339,38.7993 56.6955,41.7132 51.5262,49.7365L 49.1112,48.3394 Z M 55.2385,32.4125C 48.6921,27.2034 39.4314,27.2034 32.885,32.4125C 31.2883,31.0155 29.9511,29.3389 28.9731,27.4828C 37.7948,20.4574 50.3287,20.4574 59.1503,27.4828C 58.1524,29.3389 56.8352,30.9955 55.2385,32.4125 Z "/>
+        <Path Width="76.88" Height="40.4247" Canvas.Left="5.62174" Canvas.Top="42.8588" Stretch="Fill" Fill="#FFAF559D" Data="F1 M 39.9104,49.8962C 42.0659,52.4908 46.0576,52.4908 48.2131,49.8962L 50.6281,51.2933C 46.2572,59.7756 48.9116,70.1939 56.8152,75.5428C 64.7188,80.8917 75.3766,79.5145 81.6435,72.3095L 82.5017,72.8085C 73.2211,84.8434 55.7973,86.7994 44.0617,77.1594C 32.3062,86.7994 14.9024,84.8434 5.62174,72.8085L 6.47995,72.3095C 12.7469,79.5145 23.4047,80.8917 31.3083,75.5428C 39.2118,70.1939 41.8663,59.7756 37.4954,51.2933L 39.9104,49.8962 Z M 50.648,63.1685C 58.4318,60.1149 63.0622,52.0716 61.8248,43.8088C 63.8206,43.1103 65.9362,42.7909 68.0518,42.8708C 69.7084,54.0475 63.4614,64.885 52.9433,69.0164C 51.8455,67.2201 51.0672,65.2442 50.648,63.1685 Z "/>
+        <Path Width="43.1681" Height="69.0164" Canvas.Left="-0.00446204" Canvas.Top="-2.54344e-006" Stretch="Fill" Fill="#FFAF559D" Data="F1 M 43.1636,41.1544C 39.8305,41.7132 37.8347,45.166 39.0122,48.3394L 36.5973,49.7365C 31.428,41.7132 21.0895,38.7993 12.4875,42.9706C 3.90531,47.1219 -0.206133,57.0612 2.88743,66.0825L 2.02922,66.5814C -3.75874,52.5107 3.24668,36.4641 17.4771,31.1152C 14.9823,16.1065 25.4006,2.01581 40.4692,-2.54344e-006L 40.4692,0.997915C 31.0887,2.81414 24.5623,11.3564 25.2409,20.8766C 25.9395,30.3967 33.6235,37.9011 43.1636,38.3602L 43.1636,41.1544 Z M 26.2987,43.8088C 25.0613,52.0716 29.6916,60.1149 37.4754,63.1685C 37.0763,65.2442 36.2979,67.2401 35.1802,69.0164C 24.6621,64.885 18.4151,54.0475 20.0717,42.8708C 22.1873,42.8109 24.3029,43.1302 26.2987,43.8088 Z "/>
+    </Canvas>
 </ResourceDictionary>

@@ -19,10 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button x:Name="buttonEdit" Visibility="Collapsed" Grid.Row="0" Style="{DynamicResource PurePictureButtonStyle}">
-            <Image Style="{StaticResource EditImage}"/>
-        </Button>
-        <local:SvgButton x:Name="buttonDelete" Grid.Row="1" Child="{DynamicResource TidyMan}" Width="20">
+        <local:SvgButton x:Name="buttonDelete" Grid.Row="1" Child="{StaticResource TidyMan}" Width="30" VerticalAlignment="Center">
         </local:SvgButton>
     </Grid>
 </UserControl>

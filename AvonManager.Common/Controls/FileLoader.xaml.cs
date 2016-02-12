@@ -62,8 +62,6 @@ namespace AvonManager.Common.Controls
         }
 
         #region Dependency Props
-
-
         public bool EnableWebcam
         {
             get { return (bool)GetValue(EnableWebcamProperty); }
@@ -97,24 +95,17 @@ namespace AvonManager.Common.Controls
             set { SetValue(DataProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Data.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(byte[]), typeof(FileLoader), new PropertyMetadata(null, DataChanged));
-        private static void DataChanged(DependencyObject dp, DependencyPropertyChangedEventArgs args)
-        {
-            FileLoader loader = dp as FileLoader;
-            if (loader != null)
+            DependencyProperty.Register("Data", typeof(byte[]), typeof(FileLoader), new PropertyMetadata(null, (d, args)=>
             {
-                loader.FileData = args.NewValue as byte[];
-            }
-        }
+                (d as FileLoader).FileData = args.NewValue as byte[];
+            }));
 
         public byte[] FileData
         {
             get { return (byte[])GetValue(FileDataProperty); }
             set { SetValue(FileDataProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for FileData.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FileDataProperty =
             DependencyProperty.Register("FileData", typeof(byte[]), typeof(FileLoader), new PropertyMetadata(null));
         public object ButtonContent
@@ -123,53 +114,32 @@ namespace AvonManager.Common.Controls
             set { SetValue(ButtonContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ButtonContentProperty =
-            DependencyProperty.Register("ButtonContent", typeof(object), typeof(FileLoader), new PropertyMetadata(null, ContentChangedCallback));
-
-        private static void ContentChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs args)
-        {
-            FileLoader fl = d as FileLoader;
-            if (fl != null)
+            DependencyProperty.Register("ButtonContent", typeof(object), typeof(FileLoader), new PropertyMetadata(null, (d, args) =>
             {
-                fl.openFileDialog.Content = args.NewValue;
+                (d as FileLoader).openFileDialog.Content = args.NewValue;
             }
-        }
+            ));
 
         #endregion
         private void capturePicFromWebcam_Click(object sender, RoutedEventArgs e)
         {
             if (EnableWebcam)
             {
-                TakePictureConfirmation confirmation = new TakePictureConfirmation() {Title="Bild aufnehmen" };
+                TakePictureConfirmation confirmation = new TakePictureConfirmation() { Title = "Bild aufnehmen" };
                 TakeSnapshotRequest.Raise(confirmation, TakeSnapshotAction);
             }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //if (CaptureDeviceConfiguration.AllowedDeviceAccess && EnableWebcam)
-            //{
-            //    Binding b = new Binding("PngImageBytes");
-            //    b.Source = MediaDeviceManager.Current;
-            //    b.Mode = BindingMode.OneWay;
-            //    SetBinding(DataProperty, b);
-            //    MediaDeviceManager.Current.StartWebcam();
-            //}
             SetWebcamButtonVisibility(this.EnableWebcam);
         }
         private void TakeSnapshotAction(TakePictureConfirmation confirmation)
         {
-            if (confirmation.Confirmed)
+            if (confirmation.Confirmed && confirmation.ImageData != null)
             {
                 FileData = confirmation.ImageData;
-            }
-        }
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (EnableWebcam)
-            {
-
             }
         }
 

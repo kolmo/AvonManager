@@ -7,6 +7,7 @@ using AvonManager.KundenHefte.Presentation.Views;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -33,7 +34,21 @@ namespace AvonManager.KundenHefte.ViewModels
         }
 
         #region Properties
-        public ObservableCollection<HeftKundeViewModel> SortedKundenListe { get; private set; } = new ObservableCollection<HeftKundeViewModel>();
+        public ObservableCollection<HeftKundeViewModel> KundenListe { get; private set; } = new ObservableCollection<HeftKundeViewModel>();
+
+        private IEnumerable<HeftKundeViewModel> _sortedCustomerList;
+        /// <summary>
+        /// Gets or sets the SortedCustomerList.
+        /// </summary>
+        /// <value>
+        /// The SortedCustomerList.
+        /// </value>
+        public IEnumerable<HeftKundeViewModel> SortedCustomerList
+        {
+            get { return _sortedCustomerList; }
+            set { SetProperty(ref _sortedCustomerList, value); }
+        }
+
         public int HeftId { get { return _currentHeft.HeftId; } }
         private string _titel;
         public string Titel
@@ -93,7 +108,7 @@ namespace AvonManager.KundenHefte.ViewModels
                 _customercriteria.GetsBrochure = true;
                 var kundenListe = await _kundenDataProvider.SearchKunden(_customercriteria);
                 var assignments = await _dataProvider.ListHeftKunden(heftId);
-                SortedKundenListe.Clear();
+                KundenListe.Clear();
                 foreach (KundeDto kunde in kundenListe)
                 {
                     bool isAssigned = false;
@@ -106,8 +121,10 @@ namespace AvonManager.KundenHefte.ViewModels
                     {
                         hkd = new HeftKundeDto { KundenId = kunde.KundenId, HeftId = _currentHeft.HeftId };
                     }
-                    SortedKundenListe.Add(new HeftKundeViewModel(kunde, _currentHeft, hkd, _dataProvider, isAssigned));
+                    var hkvm = new HeftKundeViewModel(kunde, _currentHeft, hkd, _dataProvider, isAssigned);
+                    KundenListe.Add(hkvm);
                 }
+                RefreshSorting();
             }
             catch (Exception ex)
             {
@@ -117,6 +134,11 @@ namespace AvonManager.KundenHefte.ViewModels
             isInitialized = true;
             BusyFlagsMgr.DecBusyFlag(LOAD);
 
+        }
+
+        private void RefreshSorting()
+        {
+            SortedCustomerList = KundenListe.OrderBy(x => x.Received).ToList();
         }
 
         private void InitProperties()

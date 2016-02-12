@@ -12,6 +12,7 @@ using AvonManager.Common.Base;
 using AvonManager.Common.Helpers;
 using AvonManager.Bestellungen.Common;
 using Microsoft.Practices.Prism.PubSubEvents;
+using AvonManager.Common.Events;
 
 namespace AvonManager.Bestellungen.Presentation.Views
 {
@@ -23,7 +24,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
         private readonly ICustomerSearchCriteria _customerSearchCriteria;
         private readonly IOrderSearchCriteria _orderSearchCriteria;
         IRegionManager _regionManager;
-        int _pageSize = 500;
         int _page = 0;
         public OrderSearchViewModel(IOrderDataProvider orderDataProvider,
             IKundenDataProvider customerDataProvider,
@@ -165,7 +165,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             _page++;
             try
             {
-                var result = await _orderDataProvider.SearchOrders(_orderSearchCriteria, _pageSize, _page);
+                var result = await _orderDataProvider.SearchOrders(_orderSearchCriteria, page: _page);
                 AddOrdersToList(result);
             }
             catch (Exception ex)
@@ -239,7 +239,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
                     {
                         EditOrderAction(null);
                     }
-
                 }
                 catch (Exception ex)
                 {

@@ -70,43 +70,41 @@
                     <Controls:InitialsSelector ItemsSource="{Binding InitialSelectors}"
     					FilterCommand="{Binding SelectInitialCommand}"/>
                 </Border>
-                <ScrollViewer Grid.Row="2" >
-                    <ItemsControl ItemsSource="{Binding AlleKunden, Mode=OneWay}" 
-    					TextSearch.TextPath="DisplayName" Background="{x:Null}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource CustomerListEntryBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="{Binding DisplayName}" Style="{StaticResource TextBlockHighliteStyle}" FontSize="16" FontWeight="Bold">
-    											<i:Interaction.Triggers>
-    												<i:EventTrigger EventName="MouseDown">
-    													<i:InvokeCommandAction Command="{Binding DataContext.EditKundeCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
-    												</i:EventTrigger>
-    											</i:Interaction.Triggers>
-                                            </TextBlock>
-                                            <TextBlock HorizontalAlignment="Left" Text="{Binding OrderCount, StringFormat=\{0\} Bestellungen}" VerticalAlignment="Center" Grid.Row="1"/>
-                                            <Controls:SvgImage Height="16" Style="{StaticResource getsBrochure}" Grid.Row="2" HorizontalAlignment="Left"
-                                                   ToolTipService.ToolTip="Bekommt Heft"/>
-                                        </Grid>
-                                        <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
-    										DeleteCommand="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
-    										EditCommand="{Binding DataContext.EditKundeCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" EditCommandParameter="{Binding}"/>
+                <ListBox Grid.Row="2" ItemsSource="{Binding AlleKunden, Mode=OneWay}" 
+                	TextSearch.TextPath="DisplayName" Background="{x:Null}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CustomerListEntryBorderStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding DisplayName}" Style="{StaticResource TextBlockHighliteStyle}" FontSize="16" FontWeight="Bold">
+                							<i:Interaction.Triggers>
+                								<i:EventTrigger EventName="MouseDown">
+                									<i:InvokeCommandAction Command="{Binding DataContext.EditKundeCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
+                								</i:EventTrigger>
+                							</i:Interaction.Triggers>
+                                        </TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderCount, StringFormat=\{0\} Bestellungen}" VerticalAlignment="Center" Grid.Row="1"/>
+                                        <Controls:SvgImage Height="16" Style="{StaticResource getsBrochure}" Grid.Row="2" HorizontalAlignment="Left"
+                							ToolTipService.ToolTip="Bekommt Heft"/>
                                     </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+                						DeleteCommand="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
+    										/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Border Grid.Row="3" Style="{DynamicResource AvonBorderBaseStyle}" >
                     <CheckBox Content="Mit inaktiven Kunden" IsChecked="{Binding Path=WithInactiveCustomers}"/>
                 </Border>

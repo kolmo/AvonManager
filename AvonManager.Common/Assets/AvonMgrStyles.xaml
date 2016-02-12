@@ -4,6 +4,7 @@
   xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" 
     xmlns:helper="clr-namespace:AvonManager.Common.Helpers"
     xmlns:controls="clr-namespace:AvonManager.Common.Controls"
+xmlns:Custom="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib"
 >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/AvonManager.Theme;component/Themes/Generic.xaml"/>
@@ -38,15 +39,15 @@
     <helper:BusyFlagConverter x:Key="BFlagConverter"/>
 
     <Style x:Key="TextBlockHighliteStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="16"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource LabelHighliteBrush}" />
             </Trigger>
         </Style.Triggers>
-        <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontSize" Value="16"/>
     </Style>
-    <Style x:Key="FilterButtonStyle" TargetType="ButtonBase">
+    <Style x:Key="FilterButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -56,13 +57,13 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PurePictureButtonStyle" TargetType="Button">
+    <Style x:Key="PurePictureButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Padding" Value="6,3"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -93,18 +94,18 @@
         </Setter>
     </Style>
 
-    <Style TargetType="controls:SvgButton">
+    <Style TargetType="{x:Type controls:SvgButton}">
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:SvgButton">
+                <ControlTemplate TargetType="{x:Type controls:SvgButton}">
                     <Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.3" To="0.4" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Frame"/>
+                                        <DoubleAnimation Duration="0:0:0.3" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Frame"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed"/>
@@ -119,7 +120,7 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0" Stroke="{StaticResource AvonRosaBrush}" Fill="{TemplateBinding Background}" StrokeThickness="1"/>
+                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0.2" Fill="White" StrokeThickness="0"/>
                         <Viewbox>
                             <ContentPresenter ContentTemplate="{TemplateBinding Child}"/>
                         </Viewbox>
@@ -130,110 +131,110 @@
         </Setter>
     </Style>
 
-    <Style x:Key="KatPicStyle" TargetType="Image">
+    <Style x:Key="KatPicStyle" TargetType="{x:Type Image}">
         <Setter Property="Margin" Value="3"/>
         <Setter Property="MaxHeight" Value="150"/>
         <Setter Property="Stretch" Value="Uniform"/>
     </Style>
     <!--Hintergrundkreise für Logos-->
-    <Style x:Key="LogoBackgroundCircleBase" TargetType="Ellipse">
+    <Style x:Key="LogoBackgroundCircleBase" TargetType="{x:Type Ellipse}">
         <Setter Property="Height" Value="120"/>
         <Setter Property="Width" Value="120"/>
         <Setter Property="Stroke" Value="{x:Null}"/>
     </Style>
-    <Style x:Key="ArtikelLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+    <Style x:Key="ArtikelLogoBg" TargetType="{x:Type Ellipse}" BasedOn="{StaticResource LogoBackgroundCircleBase}">
         <Setter Property="Fill" Value="BurlyWood"/>
     </Style>
-    <Style x:Key="BestellungLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+    <Style x:Key="BestellungLogoBg" TargetType="{x:Type Ellipse}" BasedOn="{StaticResource LogoBackgroundCircleBase}">
         <Setter Property="Fill" Value="Goldenrod"/>
     </Style>
-    <Style x:Key="HefteLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+    <Style x:Key="HefteLogoBg" TargetType="{x:Type Ellipse}" BasedOn="{StaticResource LogoBackgroundCircleBase}">
         <Setter Property="Fill" Value="{StaticResource HeftItemBrush}"/>
     </Style>
-    <Style x:Key="KundenLogoBg" TargetType="Ellipse" BasedOn="{StaticResource LogoBackgroundCircleBase}">
+    <Style x:Key="KundenLogoBg" TargetType="{x:Type Ellipse}" BasedOn="{StaticResource LogoBackgroundCircleBase}">
         <Setter Property="Fill" Value="{StaticResource KundenItemBrush}"/>
     </Style>
 
     <!--Border-Styles-->
-    <Style x:Key="AvonBorderBaseStyle" TargetType="Border">
+    <Style x:Key="AvonBorderBaseStyle" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="BorderBrush" Value="Black"/>
     </Style>
-    <Style x:Key="ListItemBackgroundBorderStyle" TargetType="Border">
+    <Style x:Key="ListItemBackgroundBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="5"/>
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Background" Value="LightGray"/>
     </Style>
-    <Style x:Key="SerienBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="SerienBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="AliceBlue"/>
     </Style>
-    <Style x:Key="KategorienBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="KategorienBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource CategoryBrush}"/>
     </Style>
-    <Style x:Key="KategorienSearchBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="KategorienSearchBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="BorderBrush" Value="Black"/>
     </Style>
-    <Style x:Key="KategorienEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="KategorienEditBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
 
-    <Style x:Key="ArtikelBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="ArtikelBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="DarkGray"/>
     </Style>
-    <Style x:Key="ArtikelSearchBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="ArtikelSearchBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
 
-    <Style x:Key="ArtikelEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="ArtikelEditBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
-    <Style x:Key="VariantenBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="VariantenBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-    <Style x:Key="HeftListBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="HeftListBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-    <Style x:Key="HeftItemBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="HeftItemBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource HeftItemBrush}"/>
     </Style>
-    <Style x:Key="HeftEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="HeftEditBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
-    <Style x:Key="CustomerBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="CustomerBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource CustomerBrush}"/>
     </Style>
-    <Style x:Key="CustomerSearchBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="CustomerSearchBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
 
-    <Style x:Key="CustomerEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="CustomerEditBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
-    <Style x:Key="OrderBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="OrderBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource OrderBrush}"/>
     </Style>
-    <Style x:Key="OrderSearchBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="OrderSearchBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource OrderBrightBrush}"/>
     </Style>
-    <Style x:Key="OrderEditBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="OrderEditBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
     </Style>
-    <Style x:Key="EntityBackgroundBorderStyle" TargetType="Border" BasedOn="{StaticResource AvonBorderBaseStyle}">
+    <Style x:Key="EntityBackgroundBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource AvonBorderBaseStyle}">
         <Setter Property="Background" Value="{StaticResource EntityBackgroundBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
-    <Style x:Key="ButtonLabelStyle" TargetType="TextBlock">
+    <Style x:Key="ButtonLabelStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="3"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
-    <Style x:Key="KachelHeaderStyle" TargetType="TextBlock">
+    <Style x:Key="KachelHeaderStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="ExtraBold"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -241,45 +242,45 @@
         <Setter Property="Margin" Value="2"/>
         <Setter Property="Foreground" Value="Black"/>
     </Style>
-    <Style x:Key="KachelTextStyle" TargetType="TextBlock">
+    <Style x:Key="KachelTextStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Margin" Value="2"/>
         <Setter Property="Foreground" Value="Black"/>
     </Style>
-    <Style x:Key="KachelGridStyle" TargetType="Grid">
+    <Style x:Key="KachelGridStyle" TargetType="{x:Type Grid}">
         <Setter Property="Margin" Value="3"/>
     </Style>
 
-    <Style x:Key="DefaultLabelStyle" TargetType="TextBlock">
+    <Style x:Key="DefaultLabelStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="3"/>
     </Style>
-    <Style x:Key="DefaultHeaderStyle" TargetType="TextBlock">
+    <Style x:Key="DefaultHeaderStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="3"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-    <Style x:Key="HeftImageStyle" TargetType="Image">
+    <Style x:Key="HeftImageStyle" TargetType="{x:Type Image}">
         <Setter Property="Height" Value="300"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
-    <Style x:Key="ModuleTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
+    <Style x:Key="ModuleTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextStyle}">
         <Setter Property="FontSize" Value="40"/>
         <Setter Property="Foreground" Value="{StaticResource AvonRosaBrush}"/>
     </Style>
-    <Style x:Key="ModuleSubTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource ModuleTitleStyle}">
+    <Style x:Key="ModuleSubTitleStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ModuleTitleStyle}">
         <Setter Property="FontSize" Value="24"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
     <!--List Styles-->
-    <Style x:Key="MarkierungsSpotListStyle" TargetType="ItemsControl">
+    <Style x:Key="MarkierungsSpotListStyle" TargetType="{x:Type ItemsControl}">
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding Path=ColorCode, Converter={StaticResource I2BrushConverter}}"
-                        ToolTipService.ToolTip="{Binding Path=MarkingTitle}"/>
+                    <Ellipse Margin="0,2" Height="15" Width="15" Fill="{Binding ColorCode, Converter={StaticResource I2BrushConverter}}"
+						ToolTipService.ToolTip="{Binding MarkingTitle}"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -291,7 +292,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="InitialsListStyle" TargetType="ItemsControl">
+    <Style x:Key="InitialsListStyle" TargetType="{x:Type ItemsControl}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -303,6 +304,157 @@
     <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
-    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource DefaultGroupBoxStyle}">
+    <Style x:Key="NonSelectableListBoxStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource DefaultGroupBoxStyle}"/>
+    <Style x:Key="BioHazardBusyStyle" TargetType="{x:Type Custom:BusyIndicator}">
+        <Setter Property="BusyContent" Value="Please wait..."/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="OverlayStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Fill" Value="White"/>
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ProgressBarStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ProgressBar}">
+                    <Setter Property="IsIndeterminate" Value="True"/>
+                    <Setter Property="Height" Value="15"/>
+                    <Setter Property="Margin" Value="8,0,8,8"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="DisplayAfter" Value="0:0:0.1"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Custom:BusyIndicator}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="VisibilityStates">
+                                <VisualState x:Name="Hidden">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="busycontent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Visible">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="busycontent">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="overlay">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="image">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:4" Value="360.055"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="BusyStatusStates">
+                                <VisualState x:Name="Idle">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="content">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <System:Boolean>True</System:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Busy">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="0" Duration="0:0:0.001" Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="content">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <System:Boolean>False</System:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="content" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Focusable="False" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Rectangle x:Name="overlay" Style="{TemplateBinding OverlayStyle}"/>
+                        <ContentPresenter x:Name="busycontent">
+                            <ContentPresenter.Content>
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border BorderThickness="0" Background="Transparent" CornerRadius="2">
+                                        <!--<Border.BorderBrush>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FFA3AEB9" Offset="0"/>
+                                                <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                                                <GradientStop Color="#FF718597" Offset="0.375"/>
+                                                <GradientStop Color="#FF617584" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>-->
+                                        <Border CornerRadius="1.5" Margin="1">
+                                            <!--<Border.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FFF6F8F9" Offset="0.02"/>
+                                                    <GradientStop Color="#FFB8B8B8" Offset="0.996"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>-->
+                                            <Grid MinWidth="150">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <ContentPresenter ContentTemplate="{TemplateBinding BusyContentTemplate}" Content="{TemplateBinding BusyContent}" Margin="8"/>
+                                                <Canvas x:Name="image" Grid.Row="1"  Width="88.1235" Height="83.112" Clip="F1 M 0,0L 88.1235,0L 88.1235,83.112L 0,83.112L 0,0" RenderTransformOrigin="0.502,0.558">
+                                                    <Canvas.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform/>
+                                                            <SkewTransform/>
+                                                            <RotateTransform />
+                                                            <TranslateTransform/>
+                                                        </TransformGroup>
+                                                    </Canvas.RenderTransform>
+                                                    <Path Width="59.1548" Height="66.5814" Canvas.Left="28.9731" Canvas.Top="-2.54344e-006" Stretch="Fill" Fill="{TemplateBinding Background}" Data="F1 M 49.1112,48.3394C 50.2888,45.166 48.2929,41.7132 44.9599,41.1544L 44.9599,38.3602C 54.5,37.9011 62.184,30.3967 62.8826,20.8766C 63.5612,11.3564 57.0347,2.81414 47.6543,0.997915L 47.6543,-2.54344e-006C 62.7229,2.01581 73.1412,16.1065 70.6464,31.1152C 84.8768,36.4641 91.8822,52.5107 86.0943,66.5814L 85.2361,66.0825C 88.3296,57.0612 84.2182,47.1219 75.636,42.9706C 67.0339,38.7993 56.6955,41.7132 51.5262,49.7365L 49.1112,48.3394 Z M 55.2385,32.4125C 48.6921,27.2034 39.4314,27.2034 32.885,32.4125C 31.2883,31.0155 29.9511,29.3389 28.9731,27.4828C 37.7948,20.4574 50.3287,20.4574 59.1503,27.4828C 58.1524,29.3389 56.8352,30.9955 55.2385,32.4125 Z "/>
+                                                    <Path Width="76.88" Height="40.4247" Canvas.Left="5.62174" Canvas.Top="42.8588" Stretch="Fill" Fill="{TemplateBinding Background}" Data="F1 M 39.9104,49.8962C 42.0659,52.4908 46.0576,52.4908 48.2131,49.8962L 50.6281,51.2933C 46.2572,59.7756 48.9116,70.1939 56.8152,75.5428C 64.7188,80.8917 75.3766,79.5145 81.6435,72.3095L 82.5017,72.8085C 73.2211,84.8434 55.7973,86.7994 44.0617,77.1594C 32.3062,86.7994 14.9024,84.8434 5.62174,72.8085L 6.47995,72.3095C 12.7469,79.5145 23.4047,80.8917 31.3083,75.5428C 39.2118,70.1939 41.8663,59.7756 37.4954,51.2933L 39.9104,49.8962 Z M 50.648,63.1685C 58.4318,60.1149 63.0622,52.0716 61.8248,43.8088C 63.8206,43.1103 65.9362,42.7909 68.0518,42.8708C 69.7084,54.0475 63.4614,64.885 52.9433,69.0164C 51.8455,67.2201 51.0672,65.2442 50.648,63.1685 Z "/>
+                                                    <Path Width="43.1681" Height="69.0164" Canvas.Left="-0.00446204" Canvas.Top="-2.54344e-006" Stretch="Fill" Fill="{TemplateBinding Background}" Data="F1 M 43.1636,41.1544C 39.8305,41.7132 37.8347,45.166 39.0122,48.3394L 36.5973,49.7365C 31.428,41.7132 21.0895,38.7993 12.4875,42.9706C 3.90531,47.1219 -0.206133,57.0612 2.88743,66.0825L 2.02922,66.5814C -3.75874,52.5107 3.24668,36.4641 17.4771,31.1152C 14.9823,16.1065 25.4006,2.01581 40.4692,-2.54344e-006L 40.4692,0.997915C 31.0887,2.81414 24.5623,11.3564 25.2409,20.8766C 25.9395,30.3967 33.6235,37.9011 43.1636,38.3602L 43.1636,41.1544 Z M 26.2987,43.8088C 25.0613,52.0716 29.6916,60.1149 37.4754,63.1685C 37.0763,65.2442 36.2979,67.2401 35.1802,69.0164C 24.6621,64.885 18.4151,54.0475 20.0717,42.8708C 22.1873,42.8109 24.3029,43.1302 26.2987,43.8088 Z "/>
+                                                </Canvas>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                </Grid>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

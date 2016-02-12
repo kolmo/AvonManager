@@ -10,10 +10,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <ContentControl  prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleSearchRegion}"/>
-        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleDetailsRegion}"/>
+        <GridSplitter Grid.Column="1" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        <ContentControl Grid.Column="2" prism:RegionManager.RegionName="{x:Static common:RegionNames.ArticleDetailsRegion}"/>
     </Grid>
 </UserControl>

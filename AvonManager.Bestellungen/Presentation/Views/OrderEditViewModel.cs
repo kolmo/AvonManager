@@ -340,7 +340,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 OrderDetailsViewModel last = OrderDetails.Last();
                 detail.Jahr = last.Jahr;
                 detail.Campagne = last.Campagne;
-                detail.Seite = last.Seite;
             }
             else
             {

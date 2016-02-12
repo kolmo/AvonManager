@@ -100,6 +100,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>D:\NonInstallSoftware\Extended WPF Toolkit Binaries\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Messages1.Designer.cs">
@@ -150,6 +153,7 @@
     <Compile Include="Events\MarkingChangedEventArgs.cs" />
     <Compile Include="Events\ModuleChangedEventArgs.cs" />
     <Compile Include="Events\NavigationCompletedEvent.cs" />
+    <Compile Include="Events\OrderChangedEventArgs.cs" />
     <Compile Include="Events\SeriesChangedEventArgs.cs" />
     <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\BusyFlagsManager.cs" />
@@ -208,49 +212,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Resource Include="Assets\Images\AbbruchIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Artikel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\BestellungLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\coins.PNG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Delete.PNG" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Find_VS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\HefteLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Inaktiv.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\info.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Kategorie.png" />
+    <Resource Include="Assets\Images\ZoomIn_48x48.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\MC900433239.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\ResultstoText_9948.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\SaveIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\SerienLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\target.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Messages.resx">
@@ -263,91 +234,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Edit-26.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Categorize-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Address Book-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Nail Polish-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Shopping Cart Loaded-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Info-32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Info-50.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Clear Filters-26.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\Search-26.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Broom-26.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\More-26.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Rolodex.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Lupe32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Lupe48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Lupe64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Lupe128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Muelleimer128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Muelleimer64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Besen64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Besen128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Schwamm128.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\ClipBoard64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Plus128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Lupe96.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Schwamm96.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Plus96.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Marker128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Rolodex128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\HefteLogo128.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\WebCamClient\WebCamClient.Library\WebCamClient.Library.csproj">
@@ -367,28 +257,13 @@
     <Resource Include="Assets\Images\lipstick24.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\TrashBin24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\TrashBin64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Wegwerfen128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Wegwerfen64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\ZoomIn_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\Camera_32xLG.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\folder_Open_32xLG.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Avon_Corp_Logo_2c-LO.jpg" />
+    <Resource Include="Assets\Images\Wegwerfen64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

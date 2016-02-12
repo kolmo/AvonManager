@@ -23,34 +23,9 @@ namespace AvonManager.Common.Controls
         public EditDeleteCmdControl()
         {
             InitializeComponent();
-            buttonEdit.SetBinding(Button.CommandProperty, new Binding("EditCommand") { Source = this });
-            buttonEdit.SetBinding(Button.CommandParameterProperty, new Binding("EditCommandParameter") { Source = this });
             buttonDelete.SetBinding(Button.CommandProperty, new Binding("DeleteCommand") { Source = this });
             buttonDelete.SetBinding(Button.CommandParameterProperty, new Binding("DeleteCommandParameter") { Source = this });
         }
-
-
-
-        public ICommand EditCommand
-        {
-            get { return (ICommand)GetValue(EditCommandProperty); }
-            set { SetValue(EditCommandProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for EditCommand.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty EditCommandProperty =
-            DependencyProperty.Register("EditCommand", typeof(ICommand), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
-
-
-        public object EditCommandParameter
-        {
-            get { return (object)GetValue(EditCommandParameterProperty); }
-            set { SetValue(EditCommandParameterProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for EditCommandParameter.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty EditCommandParameterProperty =
-            DependencyProperty.Register("EditCommandParameter", typeof(object), typeof(EditDeleteCmdControl), new PropertyMetadata(null));
 
         public ICommand DeleteCommand
         {

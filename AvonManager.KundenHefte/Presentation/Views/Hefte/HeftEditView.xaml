@@ -21,7 +21,8 @@
             <Helpers:ByteArrayToImageConverter x:Key="ByteToImageConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
+    <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten"
+                         Background="{StaticResource AvonRosaBrush}" DisplayAfter="0">
         <Border Style="{DynamicResource OrderEditBorderStyle}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -47,8 +48,8 @@
                         </GroupBox>
                     </Grid>
                     <DataGrid Grid.Row="1"
-        				ItemsSource="{Binding SortedKundenListe}"
-        				AutoGenerateColumns="False">
+        				ItemsSource="{Binding SortedCustomerList}"
+        				AutoGenerateColumns="False" CanUserSortColumns="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Erhalten">
                                 <DataGridTemplateColumn.CellTemplate>

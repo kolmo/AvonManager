@@ -414,7 +414,6 @@ namespace AvonManager.ArtikelModule.ViewModels
             if (marking != null)
             {
                 Criteria.Markups = new int[] { marking.MarkierungId };
-
             }
             else
             {
@@ -469,14 +468,15 @@ namespace AvonManager.ArtikelModule.ViewModels
                     ShowException(ex);
                 }
             }
-        }     
+        }
         private void AddNewArticleAction()
         {
-            ArtikelDto newArticle = new ArtikelDto() {
+            ArtikelDto newArticle = new ArtikelDto()
+            {
                 Name = string.Empty,
                 SerienId = _selectedSeries?.SerienId
             };
-           
+
             try
             {
                 newArticle.ArtikelId = _dataProvider.AddArticle(newArticle);

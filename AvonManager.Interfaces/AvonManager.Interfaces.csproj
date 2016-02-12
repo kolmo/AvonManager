@@ -73,10 +73,7 @@
     <Compile Include="Criteria\IBrochureSearchCriteria.cs" />
     <Compile Include="Criteria\ICustomerSearchCriteria.cs" />
     <Compile Include="Criteria\IOrderSearchCriteria.cs" />
-    <Compile Include="IAufgabenService.cs" />
     <Compile Include="IArtikelDataProvider.cs" />
-    <Compile Include="IExtendedFilterEntry.cs" />
-    <Compile Include="IFilterEntry.cs" />
     <Compile Include="IHefteDataProvider.cs" />
     <Compile Include="IKategorieProvider.cs" />
     <Compile Include="IKundenDataProvider.cs" />

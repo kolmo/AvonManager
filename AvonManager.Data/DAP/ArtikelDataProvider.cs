@@ -201,6 +201,7 @@ namespace AvonManager.Data
                             query = from a in query
                                     where (a.Artikelname != null && a.Artikelname.Contains(searchCriteria.FullText))
                                         || (a.Artikelbeschreibung != null && a.Artikelbeschreibung.Contains(searchCriteria.FullText))
+                                        || (a.ArtikelNr != null && a.ArtikelNr.Contains(searchCriteria.FullText))
                                     select a;
                         }
                     }
