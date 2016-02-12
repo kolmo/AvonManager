@@ -23,6 +23,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         private readonly IKundenDataProvider _customerDataProvider;
         private readonly ICustomerSearchCriteria _customerSearchCriteria;
         private readonly IOrderSearchCriteria _orderSearchCriteria;
+        private string _currentInitial;
         IRegionManager _regionManager;
         int _page = 0;
         public OrderSearchViewModel(IOrderDataProvider orderDataProvider,
@@ -45,6 +46,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             CreateOrderCommand = new DelegateCommand<CustomerListEntry>(CreateNewOrderForCustomerAction);
             EditOrderCommand = new DelegateCommand<OrderViewModel>(EditOrderAction);
             DeleteOrderCommand = new DelegateCommand<OrderViewModel>(DeleteOrderAction);
+            _customerSearchCriteria.ActiveCustomersOnly = true;
         }
         #region Properties
 
@@ -102,7 +104,23 @@ namespace AvonManager.Bestellungen.Presentation.Views
             get { return _currentCustomer; }
             set { SetProperty(ref _currentCustomer, value); }
         }
-
+        private bool _withInactiveCustomers;
+        /// <summary>
+        /// Gets or sets the WithInactiveCustomers.
+        /// </summary>
+        /// <value>
+        /// The WithInactiveCustomers.
+        /// </value>
+        public bool WithInactiveCustomers
+        {
+            get { return _withInactiveCustomers; }
+            set
+            {
+                SetProperty(ref _withInactiveCustomers, value);
+                _customerSearchCriteria.ActiveCustomersOnly = !_withInactiveCustomers;
+                LoadCustomersByInital(_currentInitial);
+            }
+        }
         #endregion
         #region Public methods
         public async void LoadSupplementData()
@@ -131,8 +149,8 @@ namespace AvonManager.Bestellungen.Presentation.Views
         private async void LoadCustomersByInital(string initial)
         {
             BusyFlagsMgr.IncBusyFlag(LOAD);
+            _currentInitial = initial;
             _customerSearchCriteria.Initial = initial != "#" ? initial : null;
-            _customerSearchCriteria.ActiveCustomersOnly = true;
             try
             {
                 var customers = await _customerDataProvider.SearchKunden(_customerSearchCriteria);

@@ -14,6 +14,7 @@ namespace AvonManager.Bestellungen.Common
         }
         public int ID { get { return _customer.KundenId; } }
         public string DisplayName { get { return $"{_customer.Nachname}, {_customer.Vorname}"; } }
+        public bool? Inaktiv { get { return _customer.Inaktiv; } }
         public KundeDto Customer { get { return _customer; } }
         public override string ToString()
         {

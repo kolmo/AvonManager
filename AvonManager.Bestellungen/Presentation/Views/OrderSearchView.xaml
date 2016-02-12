@@ -29,6 +29,17 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="IsInactiveStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockHighliteStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Inaktiv}" Value="True">
+                        <Setter Property="FontStyle" Value="Italic"/>
+                        <Setter Property="Foreground" Value="Gray"/>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource LabelHighliteBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -55,22 +66,24 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer>
-                            <ItemsControl x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock  Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{DynamicResource TextBlockHighliteStyle}" Margin="0,0,0,3">
-                    						<i:Interaction.Triggers>
-                    							<i:EventTrigger EventName="MouseDown">
-                    								<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
-                    							</i:EventTrigger>
-                    						</i:Interaction.Triggers>
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
+                        <ListBox x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle }">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{StaticResource IsInactiveStyle}" Margin="0,0,0,3">
+                    					<i:Interaction.Triggers>
+                    						<i:EventTrigger EventName="MouseDown">
+                    							<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
+                    						</i:EventTrigger>
+                    					</i:Interaction.Triggers>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Border Grid.Row="1" Style="{DynamicResource AvonBorderBaseStyle}" >
+                            <CheckBox Content="Mit inaktiven Kunden" IsChecked="{Binding WithInactiveCustomers}"/>
+                        </Border>
                     </Grid>
                 </xctk:BusyIndicator>
             </Grid>

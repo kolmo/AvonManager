@@ -16,13 +16,6 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="inactive" TargetType="Image">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=Inaktiv}" Value="True">
-                        <Setter Property="Source" Value="{StaticResource InactiveImage}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
             <Style x:Key="getsBrochure" TargetType="Controls:SvgImage">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=GetsBrochure}" Value="True">

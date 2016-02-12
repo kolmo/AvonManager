@@ -1,0 +1,2 @@
+﻿12.02.2016
+In der Bestellungsverwaltung können nun auch inaktive Kunden angezeigt werden. Hierzu gibt es analog zur Kundenverwaltung am Ende der Kundenliste eine Checkbox, mit der das entsprechende Kriterium zugeschaltet wird.
