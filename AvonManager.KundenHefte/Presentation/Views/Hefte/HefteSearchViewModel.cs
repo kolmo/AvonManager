@@ -37,7 +37,7 @@ namespace AvonManager.KundenHefte.ViewModels
             _brochureSearchCriteria = brochureSearchCriteria;
             StarSearchCommand = new DelegateCommand(StartSearch);
             AddBrochureCommand = new DelegateCommand(AddBrochureAction);
-            EventAggregator.GetEvent<BrochureChangedEvent>().Subscribe(x => LoadData());
+            EventAggregator.GetEvent<BrochureChangedEvent>().Subscribe(RefreshHeft);
         }
         #region Properties
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
@@ -64,10 +64,36 @@ namespace AvonManager.KundenHefte.ViewModels
             }
         }
         #endregion
+
+        #region Public methods
+
         public void LoadData()
         {
             StartSearch();
         }
+        #endregion
+
+        #region Private Methods
+        private async void RefreshHeft(BrochureChangedEventArgs args)
+        {
+            var brochure = AlleHefte.FirstOrDefault(x => x.HeftId == args.Brochure.HeftId);
+            if (brochure != null)
+            {
+                try
+                {
+                    var dto = await _dataProvider.LoadHeft(brochure.HeftId);
+                    HeftViewModel vm = new HeftViewModel(dto, EditBrochureAction, DeleteBrochureAction);
+                    int idx = AlleHefte.IndexOf(brochure);
+                    AlleHefte[idx] = vm;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Write(ex);
+                    ShowException(ex);
+                }
+            }
+        }
+        #endregion
         private async void StartSearch()
         {
             BusyFlagsMgr.ResetAllBusyFlags();

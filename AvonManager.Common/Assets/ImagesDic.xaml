@@ -147,14 +147,14 @@
     <DataTemplate x:Key="SearchDrawing">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Suche" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
             <Ellipse Width="48" Height="48" Canvas.Left="7.98152e-006" Canvas.Top="3.8147e-006" Stretch="Fill" Fill="#1BFFFFFF"/>
-            <Path Width="36.416" Height="36.2277" Canvas.Left="5.95201" Canvas.Top="6.14034" Stretch="Fill" StrokeThickness="1.536" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 41.6,38.9366L 38.9366,41.6L 23.0601,25.7235C 21.3705,26.9208 19.3065,27.6245 17.0781,27.6245C 11.3575,27.6245 6.72001,22.987 6.72001,17.2664C 6.72001,11.5458 11.3575,6.90834 17.0781,6.90834C 22.7987,6.90834 27.4362,11.5458 27.4362,17.2664C 27.4362,19.3977 26.7924,21.3787 25.6888,23.0255L 41.6,38.9366 Z "/>
+            <Path Width="36.8" Height="36.6117" Canvas.Left="5.76001" Canvas.Top="5.94834" Stretch="Fill" StrokeThickness="1.92" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 41.6,38.9366L 38.9366,41.6L 23.0601,25.7235C 21.3705,26.9208 19.3065,27.6245 17.0781,27.6245C 11.3575,27.6245 6.72001,22.987 6.72001,17.2664C 6.72001,11.5458 11.3575,6.90834 17.0781,6.90834C 22.7987,6.90834 27.4362,11.5458 27.4362,17.2664C 27.4362,19.3977 26.7924,21.3787 25.6888,23.0255L 41.6,38.9366 Z "/>
         </Canvas>
     </DataTemplate>
     <DataTemplate x:Key="ResetCross">
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="ResetCross" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
-            <Ellipse Width="48" Height="48" Canvas.Left="4.16682e-006" Canvas.Top="0" Stretch="Fill" Fill="#1BFFFFFF"/>
-            <Path Width="30.336" Height="30.336" Canvas.Left="8.832" Canvas.Top="8.832" Stretch="Fill" StrokeThickness="1.536" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,9.6L 38.4,38.4"/>
-            <Path Width="30.336" Height="30.336" Canvas.Left="8.832" Canvas.Top="8.832" Stretch="Fill" StrokeThickness="1.536" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,38.4L 38.4,9.6"/>
+            <Ellipse Width="48" Height="48" Canvas.Left="4.16682e-006" Canvas.Top="0" Stretch="Fill" Fill="#80FFFFFF"/>
+            <Path Width="32.896" Height="32.896" Canvas.Left="7.552" Canvas.Top="7.552" Stretch="Fill" StrokeThickness="4.096" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,9.6L 38.4,38.4"/>
+            <Path Width="32.896" Height="32.896" Canvas.Left="7.552" Canvas.Top="7.552" Stretch="Fill" StrokeThickness="4.096" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 9.6,38.4L 38.4,9.6"/>
         </Canvas>
     </DataTemplate>
 
@@ -163,4 +163,17 @@
         <Path Width="76.88" Height="40.4247" Canvas.Left="5.62174" Canvas.Top="42.8588" Stretch="Fill" Fill="#FFAF559D" Data="F1 M 39.9104,49.8962C 42.0659,52.4908 46.0576,52.4908 48.2131,49.8962L 50.6281,51.2933C 46.2572,59.7756 48.9116,70.1939 56.8152,75.5428C 64.7188,80.8917 75.3766,79.5145 81.6435,72.3095L 82.5017,72.8085C 73.2211,84.8434 55.7973,86.7994 44.0617,77.1594C 32.3062,86.7994 14.9024,84.8434 5.62174,72.8085L 6.47995,72.3095C 12.7469,79.5145 23.4047,80.8917 31.3083,75.5428C 39.2118,70.1939 41.8663,59.7756 37.4954,51.2933L 39.9104,49.8962 Z M 50.648,63.1685C 58.4318,60.1149 63.0622,52.0716 61.8248,43.8088C 63.8206,43.1103 65.9362,42.7909 68.0518,42.8708C 69.7084,54.0475 63.4614,64.885 52.9433,69.0164C 51.8455,67.2201 51.0672,65.2442 50.648,63.1685 Z "/>
         <Path Width="43.1681" Height="69.0164" Canvas.Left="-0.00446204" Canvas.Top="-2.54344e-006" Stretch="Fill" Fill="#FFAF559D" Data="F1 M 43.1636,41.1544C 39.8305,41.7132 37.8347,45.166 39.0122,48.3394L 36.5973,49.7365C 31.428,41.7132 21.0895,38.7993 12.4875,42.9706C 3.90531,47.1219 -0.206133,57.0612 2.88743,66.0825L 2.02922,66.5814C -3.75874,52.5107 3.24668,36.4641 17.4771,31.1152C 14.9823,16.1065 25.4006,2.01581 40.4692,-2.54344e-006L 40.4692,0.997915C 31.0887,2.81414 24.5623,11.3564 25.2409,20.8766C 25.9395,30.3967 33.6235,37.9011 43.1636,38.3602L 43.1636,41.1544 Z M 26.2987,43.8088C 25.0613,52.0716 29.6916,60.1149 37.4754,63.1685C 37.0763,65.2442 36.2979,67.2401 35.1802,69.0164C 24.6621,64.885 18.4151,54.0475 20.0717,42.8708C 22.1873,42.8109 24.3029,43.1302 26.2987,43.8088 Z "/>
     </Canvas>
+    <DataTemplate x:Key="WasteBasket">
+        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="WasteBasket" Width="160" Height="160" Clip="F1 M 0,0L 160,0L 160,160L 0,160L 0,0">
+            <Ellipse Width="160" Height="160" Canvas.Left="2.09173e-006" Canvas.Top="0" Stretch="Fill" Fill="#FF000000"/>
+            <Path Width="81.0022" Height="4.7657" Canvas.Left="38.9978" Canvas.Top="48.093" Stretch="Fill" StrokeThickness="4.48" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 41.2378,50.333C 117.76,50.333 117.76,50.6187 117.76,50.6187"/>
+            <Path Width="75.739" Height="88.1071" Canvas.Left="41.9269" Canvas.Top="50.1329" Stretch="Fill" StrokeThickness="4.48" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 115.426,52.5361L 106.181,136L 61.421,136L 44.1669,52.3729"/>
+            <Path Width="72.3522" Height="4.48" Canvas.Left="44.4478" Canvas.Top="67.2" Stretch="Fill" StrokeThickness="4.48" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 46.6878,69.44L 114.56,69.44"/>
+            <Path Width="65.4835" Height="4.48" Canvas.Left="48.64" Canvas.Top="86.4" Stretch="Fill" StrokeThickness="4.48" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 50.88,88.64L 111.884,88.64"/>
+            <Path Width="57.28" Height="4.48" Canvas.Left="53.12" Canvas.Top="106.56" Stretch="Fill" StrokeThickness="4.48" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 108.16,108.8L 55.36,108.8"/>
+            <Path Width="12.6061" Height="90.3784" Canvas.Left="63.6237" Canvas.Top="47.1427" Stretch="Fill" StrokeThickness="4.48" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 65.8637,49.3827L 73.9899,135.281"/>
+            <Path Width="8.14135" Height="89.9846" Canvas.Left="86.4" Canvas.Top="47.04" Stretch="Fill" StrokeThickness="4.48" StrokeMiterLimit="2.75" Stroke="#FFED008B" Data="F1 M 92.3014,49.28L 88.64,134.785"/>
+            <Path Width="63.1531" Height="29.8413" Canvas.Left="52.0414" Canvas.Top="12.4903" Stretch="Fill" StrokeThickness="4.48" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Stroke="#FFED008B" Data="F1 M 54.2814,33.5986C 71.0321,26.1297 70.8948,14.2937 72.222,14.7427C 88.1031,20.375 103.206,22.0891 112.954,20.1709C 84.6706,39.4349 99.0414,40.292 95.1512,39.0268C 83.1145,35.1495 65.6773,46.7814 54.2814,33.5986 Z "/>
+        </Canvas>
+    </DataTemplate>
 </ResourceDictionary>

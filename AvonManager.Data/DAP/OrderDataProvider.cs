@@ -153,10 +153,13 @@ namespace AvonManager.Data
                                     where o.KundenId.HasValue && searchCriteria.CustomerIds.Contains(o.KundenId.Value)
                                     select o;
                         }
-                        if (searchCriteria.DeletionReserved.HasValue)
+                        if (searchCriteria.ActiveCustomersOnly)
                         {
+                            var subQuery = from k in database.Kundens
+                                           where k.Inaktiv == null || k.Inaktiv == false
+                                           select k.KundenId;
                             query = from o in query
-                                    where o.Loeschvormerkung == searchCriteria.DeletionReserved.Value
+                                    where subQuery.Contains(o.KundenId.Value)
                                     select o;
                         }
                         if (!string.IsNullOrWhiteSpace( searchCriteria.Campaign))

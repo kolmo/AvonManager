@@ -97,11 +97,9 @@
                                     <DataGridTemplateColumn Width="32">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Style="{DynamicResource PurePictureButtonStyle}" 
+                                                <Controls:SvgButton Child="{StaticResource ResetCross}" ToolTipService.ToolTip="Detail löschen" Height="20" Width="20"
                                                   Command="{Binding DataContext.RemoveDetail, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-                                                        CommandParameter="{Binding}">
-                                                    <Image Style="{StaticResource DeleteImage}"/>
-                                                </Button>
+                                                        CommandParameter="{Binding}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>

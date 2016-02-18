@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:local="clr-namespace:AvonManager.Bestellungen.Views"
+             xmlns:localControls="clr-namespace:AvonManager.Bestellungen.Controls"
              xmlns:Controls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common" 
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  
@@ -19,6 +20,13 @@
             <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
                 <prism:PopupWindowAction.WindowContent>
                     <Controls:ConfirmDeleteControl/>
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding NewOrderRequest, Mode=OneWay}">
+            <prism:PopupWindowAction CenterOverAssociatedObject="True" IsModal="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <localControls:ConfirmNewOrderControl/>
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
@@ -56,28 +64,51 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border Style="{DynamicResource AvonBorderBaseStyle}">
-                    <Controls:InitialsSelector ItemsSource="{Binding CustomerInitialsList}"
-						FilterCommand="{Binding SelectInitialCommand}"/>
+                    <GroupBox Header="Textsuche">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding Criteria.FullText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            <Controls:SvgButton Margin="3" Grid.Column="1" Command="{Binding StartSearchCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Suche" Child="{StaticResource SearchDrawing}" Height="20"/>
+                            <Controls:SvgButton Margin="3" Grid.Column="2" Command="{Binding Path=ResetSearchCommand}" VerticalAlignment="Center"
+                                                ToolTipService.ToolTip="Rücksetzen" Child="{DynamicResource ResetCross}" Height="20" />
+                        </Grid>
+                    </GroupBox>
                 </Border>
-                <xctk:BusyIndicator Grid.Row="1" IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
+                <xctk:BusyIndicator Grid.Row="2" IsBusy="{Binding BusyFlagsMgr.BusyFlags, ConverterParameter=LOAD, Converter={StaticResource BFlagConverter}}" BusyContent="Lade Daten">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <ListBox x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle }">
+                        <ListBox x:Name="customerList" ItemsSource="{Binding CustomersWithOrders}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle }" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{StaticResource IsInactiveStyle}" Margin="0,0,0,3">
-                    					<i:Interaction.Triggers>
-                    						<i:EventTrigger EventName="MouseDown">
-                    							<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
-                    						</i:EventTrigger>
-                    					</i:Interaction.Triggers>
-                                    </TextBlock>
+                                    <Grid Margin="0,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding DisplayName}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Style="{StaticResource IsInactiveStyle}" Margin="0">
+                                			<i:Interaction.Triggers>
+                                				<i:EventTrigger EventName="MouseDown">
+                                					<i:InvokeCommandAction Command="{Binding DataContext.SelectCommand, ElementName=customerList}" CommandParameter="{Binding}"/>
+                                				</i:EventTrigger>
+                                			</i:Interaction.Triggers>
+                                        </TextBlock>
+                                        <Controls:SvgButton Grid.Column="1" Child="{StaticResource OrderDrawing}" Height="20" ToolTipService.ToolTip="Neue Bestellung"
+                                                  Command="{Binding DataContext.CreateOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                                        CommandParameter="{Binding}">
+                                        </Controls:SvgButton>
+                                    </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -89,17 +120,9 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Border Style="{DynamicResource AvonBorderBaseStyle}">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Bestellungen von"/>
-                        <TextBlock Text="{Binding CurrentCustomer}" Style="{DynamicResource DefaultHeaderStyle}" />
-                    </StackPanel>
-                </Border>
-                <ListBox Grid.Row="1" ItemsSource="{Binding AllOrders}" Background="{x:Null}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}">
+                <ListBox Grid.Row="0" ItemsSource="{Binding AllOrders}" Background="{x:Null}" ItemContainerStyle="{StaticResource NonSelectableListBoxStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border Style="{DynamicResource EntityBackgroundBorderStyle}" >
@@ -111,17 +134,20 @@
                                     <Grid >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderDate, StringFormat=d}" VerticalAlignment="Center" Grid.Row="0" Style="{DynamicResource TextBlockHighliteStyle}" FontSize="16">
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding CustomerName}" VerticalAlignment="Center" Grid.Row="0" Style="{DynamicResource TextBlockHighliteStyle}" FontSize="16">
                 							<i:Interaction.Triggers>
                 								<i:EventTrigger EventName="MouseDown">
                 									<i:InvokeCommandAction Command="{Binding DataContext.EditOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}"/>
                 								</i:EventTrigger>
                 							</i:Interaction.Triggers>
                                         </TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Text="{Binding OrderDate, StringFormat=d}" VerticalAlignment="Center" Grid.Row="1" >
+                                        </TextBlock>
                                     </Grid>
-                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="5" 
+                                    <Controls:EditDeleteCmdControl Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                 						DeleteCommand="{Binding DataContext.DeleteOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" DeleteCommandParameter="{Binding}"
                                                                    />
                                 </Grid>
@@ -129,7 +155,6 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Content="Neue Bestellung" Width="Auto" Grid.Row="2" Command="{Binding CreateOrderCommand}" CommandParameter="{Binding CurrentCustomer}" Foreground="{DynamicResource NewEntityBrush}" Margin="3"/>
             </Grid>
         </Grid>
     </Grid>

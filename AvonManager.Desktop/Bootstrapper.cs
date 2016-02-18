@@ -25,16 +25,6 @@ namespace AvonManager.Desktop
         {
             return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/AvonManager.Desktop;component/ModulesCatalog.xaml", UriKind.Relative));
         }
-        //protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
-        //{
-        //    var mappings = base.ConfigureRegionAdapterMappings();
-        //    return mappings;
-        //}
-        //protected override void ConfigureContainer()
-        //{
-        //    base.ConfigureContainer();
-        //    //ViewModelLocationProvider.SetDefaultViewModelFactory(viewModelType => this.Container.Resolve(viewModelType));
-        //}
     }
 
 }

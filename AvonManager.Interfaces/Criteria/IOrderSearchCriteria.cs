@@ -8,11 +8,11 @@ namespace AvonManager.Interfaces
 {
     public interface IOrderSearchCriteria : ICriteriaBase
     {
-        bool? DeletionReserved { get; set; }
         int[] CustomerIds { get; set; }
         string FullText { get; set; }
         string ArticleNumber { get; set; }
         string Campaign { get; set; }
         int[] OrderYears { get; set; }
+        bool ActiveCustomersOnly { get; set; }
     }
 }

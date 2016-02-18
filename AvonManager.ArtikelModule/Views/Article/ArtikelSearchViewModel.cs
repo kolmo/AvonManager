@@ -22,6 +22,7 @@ namespace AvonManager.ArtikelModule.ViewModels
 
     public class ArtikelSearchViewModel : ErrorAwareBaseViewModel
     {
+        #region Private Fields
         private const string LOAD = "LOAD";
         int _page = 0;
         private SeriesListEntryViewModel _selectedSeries;
@@ -33,14 +34,18 @@ namespace AvonManager.ArtikelModule.ViewModels
         ISerienDataProvider _seriendataProvider;
         IRegionManager _regionManager;
         IArticleSearchCriteria _articleSearchCriteria;
+
+        #endregion
+
+        #region Constructor
         public ArtikelSearchViewModel(IArtikelDataProvider dataProvider,
-            IMarkierungenDataProvider markierungenDataProvider,
-            IKategorieProvider kategorienDataProvider,
-            ISerienDataProvider seriendataProvider,
-            IRegionManager regionManager
-            , IEventAggregator eventAggregator
-            , IArticleSearchCriteria articleSearchCriteria
-            , BusyFlagsManager bFlagsManager) : base(bFlagsManager, eventAggregator)
+    IMarkierungenDataProvider markierungenDataProvider,
+    IKategorieProvider kategorienDataProvider,
+    ISerienDataProvider seriendataProvider,
+    IRegionManager regionManager
+    , IEventAggregator eventAggregator
+    , IArticleSearchCriteria articleSearchCriteria
+    , BusyFlagsManager bFlagsManager) : base(bFlagsManager, eventAggregator)
         {
             _articleSearchCriteria = articleSearchCriteria;
             _regionManager = regionManager;
@@ -66,6 +71,8 @@ namespace AvonManager.ArtikelModule.ViewModels
             EventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(async x => await BuildCategoriesList());
             EventAggregator.GetEvent<MarkingChangedEvent>().Subscribe(async x => await BuildMarkingsList());
         }
+
+        #endregion
 
         #region Props
 
@@ -107,7 +114,84 @@ namespace AvonManager.ArtikelModule.ViewModels
         public List<string> SeriesInitialsList { get; private set; }
         public List<string> CategoryInitialsList { get; private set; }
 
+        /// <summary>
+        /// Todo Context fixen
+        /// </summary>
+        public List<SeriesListEntryViewModel> SerienFilter { get; private set; }
+
+        private List<SeriesListEntryViewModel> _filteredSeriesFilter;
+        /// <summary>
+        /// Gets or sets the FilteredSeriesFilter.
+        /// </summary>
+        /// <value>
+        /// The FilteredSeriesFilter.
+        /// </value>
+        public List<SeriesListEntryViewModel> FilteredSeriesFilter
+        {
+            get { return _filteredSeriesFilter; }
+            set { SetProperty(ref _filteredSeriesFilter, value); }
+        }
+
+        private List<CategoryListEntryViewModel> _filteredCategoryFilter;
+        /// <summary>
+        /// Gets or sets the FilteredCategoryFilter.
+        /// </summary>
+        /// <value>
+        /// The FilteredCategoryFilter.
+        /// </value>
+        public List<CategoryListEntryViewModel> FilteredCategoryFilter
+        {
+            get { return _filteredCategoryFilter; }
+            set { SetProperty(ref _filteredCategoryFilter, value); }
+        }
+        /// <summary>
+        /// Gets or sets the KategorienFilter.
+        /// </summary>
+        /// <value>
+        /// Todo The KategorienFilter.
+        /// </value>
+        public List<CategoryListEntryViewModel> KategorienFilter { get; private set; }
+        public ObservableCollection<MarkingListEntryViewModel> MarkierungenFilter { get; private set; }
+        public int LoadSize { get { return 100; } }
+
+
+        private bool _markierungInverted;
+        /// <summary>
+        /// Gets or sets the MarkierungInverted.
+        /// </summary>
+        /// <value>
+        /// The MarkierungInverted.
+        /// </value>
+        public bool MarkierungInverted
+        {
+            get { return _markierungInverted; }
+            set
+            {
+                if (_markierungInverted != value)
+                {
+                    _markierungInverted = value;
+                }
+            }
+        }
+
+        #region Commands
+        public DelegateCommand<ArticleViewModel> SelectArtikel { get; set; }
+        public DelegateCommand<CategoryListEntryViewModel> SelectCategoryCommand { get; private set; }
+        public DelegateCommand<SeriesListEntryViewModel> SelectSeriesCommand { get; private set; }
+        public DelegateCommand<MarkingListEntryViewModel> SelectMarkingCommand { get; set; }
+        public DelegateCommand<ArticleViewModel> DeleteArtikel { get; }
+        public DelegateCommand SearchArticlesCommand { get; private set; }
+        public DelegateCommand ResetFiltersCommand { get; private set; }
+        public DelegateCommand LoadMoreArticlesCommand { get; private set; }
+        public DelegateCommand AddNewArticleCommand { get; private set; }
+        public DelegateCommand<string> FilterInitialsCommand { get; private set; }
+        public DelegateCommand<string> FilterCategoryInitialsCommand { get; private set; }
         #endregion
+
+        #endregion Properties
+
+        #region Public Methods
+
         public async void LoadData()
         {
             BusyMessage = "Lade Grunddaten...";
@@ -116,6 +200,9 @@ namespace AvonManager.ArtikelModule.ViewModels
             await BuildMarkingsList();
             await BuildSeriesList();
         }
+        #endregion
+
+        #region Callbacks/Event handler
 
         private async Task BuildMarkingsList()
         {
@@ -194,90 +281,6 @@ namespace AvonManager.ArtikelModule.ViewModels
             }
         }
 
-        #region Properties
-
-        /// <summary>
-        /// Todo Context fixen
-        /// </summary>
-        public List<SeriesListEntryViewModel> SerienFilter { get; private set; }
-
-        private List<SeriesListEntryViewModel> _filteredSeriesFilter;
-        /// <summary>
-        /// Gets or sets the FilteredSeriesFilter.
-        /// </summary>
-        /// <value>
-        /// The FilteredSeriesFilter.
-        /// </value>
-        public List<SeriesListEntryViewModel> FilteredSeriesFilter
-        {
-            get { return _filteredSeriesFilter; }
-            set { SetProperty(ref _filteredSeriesFilter, value); }
-        }
-
-        private List<CategoryListEntryViewModel> _filteredCategoryFilter;
-        /// <summary>
-        /// Gets or sets the FilteredCategoryFilter.
-        /// </summary>
-        /// <value>
-        /// The FilteredCategoryFilter.
-        /// </value>
-        public List<CategoryListEntryViewModel> FilteredCategoryFilter
-        {
-            get { return _filteredCategoryFilter; }
-            set { SetProperty(ref _filteredCategoryFilter, value); }
-        }
-        /// <summary>
-        /// Gets or sets the KategorienFilter.
-        /// </summary>
-        /// <value>
-        /// Todo The KategorienFilter.
-        /// </value>
-        public List<CategoryListEntryViewModel> KategorienFilter { get; private set; }
-        public ObservableCollection<MarkingListEntryViewModel> MarkierungenFilter { get; private set; }
-        public int LoadSize { get { return 100; } }
-
-
-        private bool _markierungInverted;
-        /// <summary>
-        /// Gets or sets the MarkierungInverted.
-        /// </summary>
-        /// <value>
-        /// The MarkierungInverted.
-        /// </value>
-        public bool MarkierungInverted
-        {
-            get { return _markierungInverted; }
-            set
-            {
-                if (_markierungInverted != value)
-                {
-                    _markierungInverted = value;
-                }
-            }
-        }
-
-        #region Commands
-        public DelegateCommand<ArticleViewModel> SelectArtikel { get; set; }
-        public DelegateCommand<CategoryListEntryViewModel> SelectCategoryCommand { get; private set; }
-        public DelegateCommand<SeriesListEntryViewModel> SelectSeriesCommand { get; private set; }
-        public DelegateCommand<MarkingListEntryViewModel> SelectMarkingCommand { get; set; }
-        public DelegateCommand<ArticleViewModel> DeleteArtikel { get; }
-        public DelegateCommand SearchArticlesCommand { get; private set; }
-        public DelegateCommand ResetFiltersCommand { get; private set; }
-        public DelegateCommand LoadMoreArticlesCommand { get; private set; }
-        public DelegateCommand AddNewArticleCommand { get; private set; }
-        public DelegateCommand<string> FilterInitialsCommand { get; private set; }
-        public DelegateCommand<string> FilterCategoryInitialsCommand { get; private set; }
-        #endregion
-
-        #endregion Properties
-
-        #region Constructors
-
-        #endregion Constructors
-
-
-        #region Callbacks/Event handler
         private async void RefreshArticle(ArticleChangedEventArgs args)
         {
             var art = ArtikelListe.FirstOrDefault(x => x.ArtikelId == args.Article.ArtikelId);
@@ -298,12 +301,14 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
+
         private void SearchArticlesAction()
         {
             _page = 1;
             ArtikelListe.Clear();
             LoadArticlesPage();
         }
+
         private async void LoadArticlesPage()
         {
             BusyMessage = "Suche Artikel...";
@@ -323,6 +328,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
+
         private async void AddArticlesToList(List<ArtikelDto> list, bool insertAtTop = false)
         {
             foreach (ArtikelDto artikel in list)
@@ -335,6 +341,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 await DecorateArticle(vm);
             }
         }
+
         private async Task DecorateArticle(ArticleViewModel article)
         {
             try
@@ -354,6 +361,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 ShowException(ex);
             }
         }
+
         private async void FilterSeriesInitialsAction(string initial)
         {
             if (initial == "#")
@@ -365,6 +373,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 FilteredSeriesFilter = SerienFilter.Where(x => x.Name.StartsWith(initial)).ToList();
             }
         }
+
         private void ResetFilterAction()
         {
             ArtikelListe.Clear();
@@ -377,6 +386,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             _page++;
             LoadArticlesPage();
         }
+
         private void SelectCategoryAction(CategoryListEntryViewModel category)
         {
             _page = 1;
@@ -392,6 +402,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             }
             LoadArticlesPage();
         }
+
         private void SelectSeriesAction(SeriesListEntryViewModel series)
         {
             _page = 1;
@@ -407,6 +418,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             }
             LoadArticlesPage();
         }
+
         private void SelectMarkingAction(MarkingListEntryViewModel marking)
         {
             _page = 1;
@@ -421,6 +433,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             }
             LoadArticlesPage();
         }
+
         private void SelectArtikelAction(ArticleViewModel artikel)
         {
             NavigationParameters pars = new NavigationParameters();
@@ -428,6 +441,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             var moduleAWorkspace = new Uri("ArtikelDetailsWorkspace", UriKind.Relative);
             _regionManager.RequestNavigate(RegionNames.ArticleDetailsRegion, moduleAWorkspace, pars);
         }
+
         private void DeleteArtikelAction(ArticleViewModel artikel)
         {
             DeleteConfirmation deleteConfirmation = new DeleteConfirmation()
@@ -438,6 +452,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             };
             DeleteEntityRequest.Raise(deleteConfirmation, DeleteArticleFromDb);
         }
+
         private void DeleteArticleFromDb(DeleteConfirmation confirmation)
         {
             if (confirmation?.Confirmed == true)
@@ -469,6 +484,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
+
         private void AddNewArticleAction()
         {
             ArtikelDto newArticle = new ArtikelDto()
@@ -490,6 +506,6 @@ namespace AvonManager.ArtikelModule.ViewModels
                 ShowException(ex);
             }
         }
-        #endregion Private helper methods
+        #endregion 
     }
 }

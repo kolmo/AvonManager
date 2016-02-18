@@ -15,11 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <local:SvgButton x:Name="buttonDelete" Grid.Row="1" Child="{StaticResource TidyMan}" Width="30" VerticalAlignment="Center">
+        <local:SvgButton x:Name="buttonDelete" Child="{StaticResource ResetCross}" Width="20" VerticalAlignment="Bottom" ToolTipService.ToolTip="Löschen">
         </local:SvgButton>
     </Grid>
 </UserControl>

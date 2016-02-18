@@ -115,7 +115,11 @@
     <Compile Include="BestellungenModule.cs" />
     <Compile Include="Common\Commands\DeleteEntityCommand.cs" />
     <Compile Include="Common\CustomerListEntry.cs" />
+    <Compile Include="Common\NewOrderConfirmation.cs" />
     <Compile Include="Constants\OrderStates.cs" />
+    <Compile Include="Presentation\Controls\ConfirmNewOrderControl.xaml.cs">
+      <DependentUpon>ConfirmNewOrderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Controls\OrderModulTaskButtonViewModel.cs" />
     <Compile Include="Presentation\Controls\OrderModuleTaskButton.xaml.cs">
       <DependentUpon>OrderModuleTaskButton.xaml</DependentUpon>
@@ -140,6 +144,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Presentation\Controls\ConfirmNewOrderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Controls\OrderModuleTaskButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

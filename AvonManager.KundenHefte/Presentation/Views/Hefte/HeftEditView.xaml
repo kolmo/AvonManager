@@ -41,7 +41,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <GroupBox Header="Titel" >
-                            <TextBox Text="{Binding Titel, Mode=TwoWay}"/>
+                            <TextBox Text="{Binding Titel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
                         </GroupBox>
                         <GroupBox  Header="Jahr" Grid.Column="1" >
                             <xceed:IntegerUpDown Value="{Binding Jahr, Mode=TwoWay}" Maximum="10000" Minimum="1900" HorizontalAlignment="Left" />

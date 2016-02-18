@@ -3,7 +3,6 @@
     public class OrderSearchCriteria : SearchCriteriaBase, AvonManager.Interfaces.IOrderSearchCriteria
     {
 
-
         private string _articleNumber;
         /// <summary>
         /// Gets or sets the ArticleNumber.
@@ -16,8 +15,6 @@
             get { return _articleNumber; }
             set { SetProperty(ref _articleNumber, value); }
         }
-
-
 
         private string _campaign;
         /// <summary>
@@ -32,8 +29,6 @@
             set { SetProperty(ref _campaign, value); }
         }
 
-
-
         private int[] _customerIds;
         /// <summary>
         /// Gets or sets the CustomerId.
@@ -47,22 +42,18 @@
             set { SetProperty(ref _customerIds, value); }
         }
 
-
-
-        private bool? _deletionReserved;
+        private bool _activeCustomersOnly;
         /// <summary>
-        /// Gets or sets the DeletionReserved.
+        /// Gets or sets the ActiveCustomersOnly.
         /// </summary>
         /// <value>
-        /// The DeletionReserved.
+        /// The ActiveCustomersOnly.
         /// </value>
-        public bool? DeletionReserved
+        public bool ActiveCustomersOnly
         {
-            get { return _deletionReserved; }
-            set { SetProperty(ref _deletionReserved, value); }
+            get { return _activeCustomersOnly; }
+            set { SetProperty(ref _activeCustomersOnly, value); }
         }
-
-
 
         private string _fullText;
         /// <summary>
@@ -90,12 +81,11 @@
             set { SetProperty(ref _orderYears, value); }
         }
 
-
         public override void Reset()
         {
             FullText = null;
             CustomerIds = null;
-            DeletionReserved = null;
+            ActiveCustomersOnly = true;
             Campaign = null;
             ArticleNumber = null;
             OrderYears = null;

@@ -18,6 +18,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
 {
     public class OrderSearchViewModel : ErrorAwareBaseViewModel
     {
+        #region Private fields
         private const string LOAD = "LOAD";
         private IOrderDataProvider _orderDataProvider;
         private readonly IKundenDataProvider _customerDataProvider;
@@ -26,20 +27,25 @@ namespace AvonManager.Bestellungen.Presentation.Views
         private string _currentInitial;
         IRegionManager _regionManager;
         int _page = 0;
+
+        #endregion
+
+
+        #region Constructor
         public OrderSearchViewModel(IOrderDataProvider orderDataProvider,
-            IKundenDataProvider customerDataProvider,
-            IRegionManager regionManager,
-            ICustomerSearchCriteria customerSearchCriteria,
-            IOrderSearchCriteria orderSearchCriteria,
-            IEventAggregator eventAggregator,
-            BusyFlagsManager busyFlagsManager) : base(busyFlagsManager, eventAggregator)
+    IKundenDataProvider customerDataProvider,
+    IRegionManager regionManager,
+    ICustomerSearchCriteria customerSearchCriteria,
+    IOrderSearchCriteria orderSearchCriteria,
+    IEventAggregator eventAggregator,
+    BusyFlagsManager busyFlagsManager) : base(busyFlagsManager, eventAggregator)
         {
             _orderSearchCriteria = orderSearchCriteria;
             _orderDataProvider = orderDataProvider;
             _customerDataProvider = customerDataProvider;
             _regionManager = regionManager;
             _customerSearchCriteria = customerSearchCriteria;
-            StarSearchCommand = new DelegateCommand(StartSearch);
+            StartSearchCommand = new DelegateCommand(StartSearch);
             ResetSearchCommand = new DelegateCommand(ResetSearchAction);
             SelectInitialCommand = new DelegateCommand<string>(LoadCustomersByInital);
             SelectCommand = new DelegateCommand<CustomerListEntry>(SelectCustomerAction);
@@ -47,7 +53,11 @@ namespace AvonManager.Bestellungen.Presentation.Views
             EditOrderCommand = new DelegateCommand<OrderViewModel>(EditOrderAction);
             DeleteOrderCommand = new DelegateCommand<OrderViewModel>(DeleteOrderAction);
             _customerSearchCriteria.ActiveCustomersOnly = true;
+            _orderSearchCriteria.ActiveCustomersOnly = true;
         }
+
+        #endregion
+
         #region Properties
 
         private ObservableCollection<string> _customerInitialsList;
@@ -64,15 +74,14 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
 
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
-        public ICommand StarSearchCommand { get; private set; }
+        public InteractionRequest<NewOrderConfirmation> NewOrderRequest { get; } = new InteractionRequest<NewOrderConfirmation>();
+        public ICommand StartSearchCommand { get; private set; }
         public ICommand ResetSearchCommand { get; private set; }
         public ObservableCollection<OrderViewModel> AllOrders { get; } = new ObservableCollection<OrderViewModel>();
         public DelegateCommand<CustomerListEntry> SelectCommand { get; private set; }
         public DelegateCommand<CustomerListEntry> CreateOrderCommand { get; private set; }
         public DelegateCommand<OrderViewModel> EditOrderCommand { get; private set; }
         public DelegateCommand<OrderViewModel> DeleteOrderCommand { get; private set; }
-
-
         public ObservableCollection<CustomerListEntry> CustomersWithOrders { get; } = new ObservableCollection<CustomerListEntry>();
         public IOrderSearchCriteria Criteria { get { return _orderSearchCriteria; } }
 
@@ -92,18 +101,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
             }
         }
 
-        private CustomerListEntry _currentCustomer;
-        /// <summary>
-        /// Gets or sets the CurrentCustomer.
-        /// </summary>
-        /// <value>
-        /// The CurrentCustomer.
-        /// </value>
-        public CustomerListEntry CurrentCustomer
-        {
-            get { return _currentCustomer; }
-            set { SetProperty(ref _currentCustomer, value); }
-        }
         private bool _withInactiveCustomers;
         /// <summary>
         /// Gets or sets the WithInactiveCustomers.
@@ -118,10 +115,14 @@ namespace AvonManager.Bestellungen.Presentation.Views
             {
                 SetProperty(ref _withInactiveCustomers, value);
                 _customerSearchCriteria.ActiveCustomersOnly = !_withInactiveCustomers;
+                _orderSearchCriteria.ActiveCustomersOnly = _customerSearchCriteria.ActiveCustomersOnly;
                 LoadCustomersByInital(_currentInitial);
+                AllOrders.Clear();
+                StartSearch();
             }
         }
         #endregion
+
         #region Public methods
         public async void LoadSupplementData()
         {
@@ -144,9 +145,10 @@ namespace AvonManager.Bestellungen.Presentation.Views
             }
         }
         #endregion
+
         #region Private methods
 
-        private async void LoadCustomersByInital(string initial)
+        private async void LoadCustomersByInital(string initial = "#")
         {
             BusyFlagsMgr.IncBusyFlag(LOAD);
             _currentInitial = initial;
@@ -183,7 +185,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             _page++;
             try
             {
-                var result = await _orderDataProvider.SearchOrders(_orderSearchCriteria, page: _page);
+                var result = await _orderDataProvider.SearchOrders(_orderSearchCriteria);
                 AddOrdersToList(result);
             }
             catch (Exception ex)
@@ -196,19 +198,26 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
-        private void AddOrdersToList(List<BestellungDto> orders)
+        private async void AddOrdersToList(List<BestellungDto> orders)
         {
             foreach (BestellungDto bestellung in orders)
             {
-                OrderViewModel vm = new OrderViewModel(bestellung, CurrentCustomer.Customer);
+                var customer = CustomersWithOrders.FirstOrDefault(x => x.ID == bestellung.KundenId.Value)?.Customer;
+                if (customer == null)
+                {
+                  customer = (await _customerDataProvider.LoadCustomers(new int[] { bestellung.KundenId.Value })).First();
+                }
+                OrderViewModel vm = new OrderViewModel(bestellung, customer);
                 AllOrders.Add(vm);
             }
         }
         private void ResetSearchAction()
         {
             AllOrders.Clear();
-            CustomersWithOrders.ToList().ForEach(x => x.IsSelected = false);
             _orderSearchCriteria.Reset();
+            _customerSearchCriteria.ActiveCustomersOnly = true;
+            SetProperty(ref _withInactiveCustomers, false, nameof(WithInactiveCustomers));
+            LoadCustomersByInital();
             _page = 0;
         }
         private void EditOrderAction(OrderViewModel order)
@@ -216,7 +225,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             NavigationParameters pars = new NavigationParameters();
             pars.Add("orders", order);
             var moduleAWorkspace = new Uri("OrderEditView", UriKind.Relative);
-            _regionManager.RequestNavigate("OrderDetailsRegion", moduleAWorkspace, pars);
+            _regionManager.RequestNavigate(AvonManager.Common.RegionNames.OrderDetailsRegion, moduleAWorkspace, pars);
         }
         private void LoadMoreAction()
         {
@@ -271,8 +280,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
         private void SelectCustomerAction(CustomerListEntry customer)
         {
-            ResetSearchAction();
-            CurrentCustomer = customer;
+            AllOrders.Clear();
             _orderSearchCriteria.CustomerIds = new int[] { customer.ID };
             StartSearch();
         }
@@ -280,11 +288,24 @@ namespace AvonManager.Bestellungen.Presentation.Views
         {
             if (customer != null)
             {
-                BestellungDto order = new BestellungDto() { KundenId = customer.ID, Datum = DateTime.Now, StatusId = 1 };
+                NewOrderConfirmation newOrderConfirmation = new NewOrderConfirmation()
+                {
+                    Title = "Nachfrage",
+                    Content = $"Soll eine neue Bestellung für '{customer.DisplayName}' angelegt werden?",
+                    Customer = customer
+                };
+                NewOrderRequest.Raise(newOrderConfirmation, CreateOrder);
+            }
+        }
+        private void CreateOrder(NewOrderConfirmation confirmation)
+        {
+            if (confirmation.Confirmed)
+            {
+                BestellungDto order = new BestellungDto() { KundenId = confirmation.Customer.ID, Datum = DateTime.Now, StatusId = 1 };
                 try
                 {
                     order.BestellId = _orderDataProvider.AddOrder(order);
-                    OrderViewModel vm = new OrderViewModel(order, customer.Customer);
+                    OrderViewModel vm = new OrderViewModel(order, confirmation.Customer.Customer);
                     AllOrders.Insert(0, vm);
                     EditOrderAction(vm);
                 }
