@@ -16,6 +16,7 @@ using AvonManager.Common.Base;
 using Microsoft.Practices.Prism.PubSubEvents;
 using AvonManager.Common.Events;
 using System;
+using System.Threading.Tasks;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
@@ -60,6 +61,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             _kategorienProvider = kategProvider;
             RaiseMarkierungenSelectionCommand = new DelegateCommand(RaiseMarkierungenSelection);
             RaiseKategorienSelectionCommand = new DelegateCommand(RaiseKategorienSelection);
+            EventAggregator.GetEvent<SeriesChangedEvent>().Subscribe(UpdateSeriesList);
         }
 
         #endregion
@@ -232,20 +234,23 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
         public async void Initialize()
         {
-            try
+            if (!AlleSerien.Any())
             {
-                var serien = await _seriendataProvider.ListAllSerien();
-                AlleSerien.Clear();
-                AlleSerien.Add(new SeriesListEntryViewModel(null));
-                if (serien != null)
+                try
                 {
-                    serien.OrderBy(x=>x.Name).ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                    var serien = await _seriendataProvider.ListAllSerien();
+                    AlleSerien.Clear();
+                    AlleSerien.Add(new SeriesListEntryViewModel(null));
+                    if (serien != null)
+                    {
+                        serien.OrderBy(x => x.Name).ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Current.Write(ex);
-                ShowException(ex);
+                catch (Exception ex)
+                {
+                    Logger.Current.Write(ex);
+                    ShowException(ex);
+                }
             }
         }
         #endregion
@@ -405,6 +410,14 @@ namespace AvonManager.ArtikelModule.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             ;
+        }
+        private void UpdateSeriesList(SeriesChangedEventArgs e)
+        {
+            var series = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
+            if (series!= null)
+            {
+                series.Name = e.Series.Name;
+            }
         }
         private void RaiseMarkierungenSelection()
         {

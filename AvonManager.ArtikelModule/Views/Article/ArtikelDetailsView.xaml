@@ -11,7 +11,6 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignData Source=/DesignTimeData/ArtikelDesignTimeData.xaml}"
              d:DesignHeight="471" d:DesignWidth="628">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -64,7 +63,8 @@
                             <ComboBox Margin="3"
         						ItemsSource="{Binding AlleSerien}"
         						SelectedValue="{Binding SerienId, Mode=TwoWay}"
-        						SelectedValuePath="SerienId" VerticalAlignment="Center" />
+        						SelectedValuePath="SerienId" VerticalAlignment="Center" 
+                                      DisplayMemberPath="Name"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Row="2" Header="Beschreibung" >

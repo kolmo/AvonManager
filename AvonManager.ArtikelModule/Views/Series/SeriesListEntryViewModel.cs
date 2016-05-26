@@ -14,13 +14,21 @@ namespace AvonManager.ArtikelModule.Views
             _serie = serie;
         }
         public SeriesListEntryViewModel(SerieDto serie, Action<SeriesListEntryViewModel> editAction, Action<SeriesListEntryViewModel> deleteAction)
-            :base(editAction, deleteAction)
+            : base(editAction, deleteAction)
         {
             _serie = serie;
         }
         public string Name
         {
             get { return _serie != null ? _serie.Name : "<Keine Serie>"; }
+            set
+            {
+                if (_serie != null)
+                {
+                    _serie.Name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
         }
         public int? SerienId { get { return _serie?.SerienId; } }
         public override string ToString()

@@ -1,7 +1,9 @@
 ﻿using AvonManager.BusinessObjects;
+using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -20,9 +22,11 @@ namespace AvonManager.ArtikelModule.Views
         private BackingFields clone;
         ISerienDataProvider _seriesProvider;
         private SerieDto _series;
+        private IEventAggregator _eventAggregator;
         #endregion
-        public SeriesEditViewModel(SerieDto series, ISerienDataProvider provider)
+        public SeriesEditViewModel(SerieDto series, ISerienDataProvider provider, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _seriesProvider = provider;
             _series = series;
             InitProperties();
@@ -86,6 +90,7 @@ namespace AvonManager.ArtikelModule.Views
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
             SaveSeries();
+            _eventAggregator.GetEvent<SeriesChangedEvent>().Publish(new SeriesChangedEventArgs { Series = _series, ChangedType = ChangedType.Update });
             return ok;
         }
 
@@ -108,6 +113,7 @@ namespace AvonManager.ArtikelModule.Views
                 {
                     _seriesProvider.SaveSerie(_series);
                     clone = bFields;
+                    
                 }
                 catch (Exception ex)
                 {

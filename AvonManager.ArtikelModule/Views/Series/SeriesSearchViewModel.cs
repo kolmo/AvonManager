@@ -81,7 +81,7 @@ namespace AvonManager.ArtikelModule.Views
                 _seriesList = new List<SeriesEditViewModel>();
                 foreach (var item in liste.OrderBy(x => x.Name))
                 {
-                    _seriesList.Add(new SeriesEditViewModel(item, _serienDataProvider));
+                    _seriesList.Add(new SeriesEditViewModel(item, _serienDataProvider, EventAggregator));
                 }
                 FilteredSeries = new ObservableCollection<SeriesEditViewModel>(_seriesList);
                 var idArray = liste.Select(x => x.SerienId).ToArray();
@@ -109,7 +109,7 @@ namespace AvonManager.ArtikelModule.Views
             try
             {
                 neueSerie.SerienId = _serienDataProvider.AddSerie(neueSerie);
-                SeriesEditViewModel vm = new SeriesEditViewModel(neueSerie, _serienDataProvider);
+                SeriesEditViewModel vm = new SeriesEditViewModel(neueSerie, _serienDataProvider, EventAggregator);
                 FilteredSeries.Insert(0, vm);
             }
             catch (Exception ex)
