@@ -4,6 +4,7 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using System;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Windows;
 
 namespace AvonManager.Desktop
@@ -18,7 +19,21 @@ namespace AvonManager.Desktop
         IEventAggregator _eventAggregator;
         public Shell()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.MainWindowBounds))
+            {
+                try
+                {
+                    Rect restoreBounds = Rect.Parse(Properties.Settings.Default.MainWindowBounds);
+                    this.Left = restoreBounds.Left;
+                    this.Top = restoreBounds.Top;
+                    this.Width = restoreBounds.Width;
+                    this.Height = restoreBounds.Height;
+                }
+                catch (Exception)
+                {                  
+                }
+            }
         }
         public Shell(IUnityContainer container)
             :this()
@@ -44,6 +59,12 @@ namespace AvonManager.Desktop
         {
             var uri = new Uri("HomeView", UriKind.Relative);
             _regionManager.RequestNavigate(Common.RegionNames.MainRegion, uri);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MainWindowBounds = this.RestoreBounds.ToString(CultureInfo.InvariantCulture);
+            Properties.Settings.Default.Save();
         }
     }
 }

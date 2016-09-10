@@ -32,5 +32,17 @@ namespace AvonManager.Desktop.Properties {
                 return ((string)(this["AvDBaseConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MainWindowBounds {
+            get {
+                return ((string)(this["MainWindowBounds"]));
+            }
+            set {
+                this["MainWindowBounds"] = value;
+            }
+        }
     }
 }

@@ -7,8 +7,8 @@
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:common="clr-namespace:AvonManager.Common;assembly=AvonManager.Common"
     xmlns:commonControls="clr-namespace:AvonManager.Common.Controls;assembly=AvonManager.Common"
-        Title="AVON Manager" Height="700" Width="1100" MinHeight="600" MinWidth="800"
-    Language="de-DE" Icon="Assets/Images/lipstick.ico">
+        Title="AVON Manager" Height="800" Width="1300" MinHeight="600" MinWidth="800"
+    Language="de-DE" Icon="Assets/Images/lipstick.ico" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
