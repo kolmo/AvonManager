@@ -389,8 +389,8 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ArtikelListe.Clear();
-            Criteria.Series = null;
-            if (category.KategorieId >= 1)
+            Criteria.Reset();
+            if (category.KategorieId >= 0)
             {
                 Criteria.Categories = new int[] { category.KategorieId };
             }
@@ -406,7 +406,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ArtikelListe.Clear();
-            Criteria.Categories = null;
+            Criteria.Reset();
             if (series.SerienId >= 0)
             {
                 _selectedSeries = series;
