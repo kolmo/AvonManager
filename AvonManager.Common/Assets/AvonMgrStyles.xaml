@@ -47,6 +47,14 @@ xmlns:Custom="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:System="clr-names
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="TextBlockHighliteAsBoldStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="16"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="FontWeight" Value="Bold" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="FilterButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -106,6 +114,7 @@ xmlns:Custom="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:System="clr-names
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0:0:0.3" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Frame"/>
+                                        <DoubleAnimation Duration="0:0:0.3" To="2" Storyboard.TargetProperty="StrokeThickness" Storyboard.TargetName="Frame"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed"/>
@@ -120,7 +129,7 @@ xmlns:Custom="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:System="clr-names
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0.2" Fill="White" StrokeThickness="0"/>
+                        <Ellipse x:Name="Frame"  IsHitTestVisible="false" Opacity="0.2" Fill="White" StrokeThickness="0" Stroke="{StaticResource AvonRosaBrush}"/>
                         <Viewbox>
                             <ContentPresenter ContentTemplate="{TemplateBinding Child}"/>
                         </Viewbox>

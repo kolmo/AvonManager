@@ -26,7 +26,6 @@ namespace AvonManager.ArtikelModule.ViewModels
         private const string LOAD = "LOAD";
         int _page = 0;
         private SeriesListEntryViewModel _selectedSeries;
-        private CategoryListEntryViewModel _selectedCategory;
         private List<MarkierungDto> _allMarkings;
         IArtikelDataProvider _dataProvider;
         IMarkierungenDataProvider _markierungenDataProvider;
@@ -65,7 +64,6 @@ namespace AvonManager.ArtikelModule.ViewModels
             FilterInitialsCommand = new DelegateCommand<string>(FilterSeriesInitialsAction);
             SelectCategoryCommand = new DelegateCommand<CategoryListEntryViewModel>(SelectCategoryAction);
             SelectSeriesCommand = new DelegateCommand<SeriesListEntryViewModel>(SelectSeriesAction);
-            SelectMarkingCommand = new DelegateCommand<MarkingListEntryViewModel>(SelectMarkingAction);
             EventAggregator.GetEvent<ArticleChangedEvent>().Subscribe(RefreshArticle);
             EventAggregator.GetEvent<SeriesChangedEvent>().Subscribe(async x => await BuildSeriesList());
             EventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(async x => await BuildCategoriesList());
@@ -111,8 +109,6 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
-        public List<string> SeriesInitialsList { get; private set; }
-        public List<string> CategoryInitialsList { get; private set; }
 
         /// <summary>
         /// Todo Context fixen
@@ -178,7 +174,6 @@ namespace AvonManager.ArtikelModule.ViewModels
         public DelegateCommand<ArticleViewModel> SelectArtikel { get; set; }
         public DelegateCommand<CategoryListEntryViewModel> SelectCategoryCommand { get; private set; }
         public DelegateCommand<SeriesListEntryViewModel> SelectSeriesCommand { get; private set; }
-        public DelegateCommand<MarkingListEntryViewModel> SelectMarkingCommand { get; set; }
         public DelegateCommand<ArticleViewModel> DeleteArtikel { get; }
         public DelegateCommand SearchArticlesCommand { get; private set; }
         public DelegateCommand ResetFiltersCommand { get; private set; }
@@ -235,14 +230,13 @@ namespace AvonManager.ArtikelModule.ViewModels
             {
                 var serien = await _seriendataProvider.ListAllSerien();
                 SerienFilter = new List<SeriesListEntryViewModel>();
+                // Fuege NULL-Serie hinzu
+                SerienFilter.Add(new SeriesListEntryViewModel(new SerieDto { SerienId = -1, Name = "<Keine serie>" }));
                 foreach (var item in serien.OrderBy(x => x.Name))
                 {
                     var vm = new SeriesListEntryViewModel(item);
                     SerienFilter.Add(vm);
                 }
-                SeriesInitialsList = serien.Where(x => x.Name?.Trim().Length > 0).Select(x => x.Name.Trim().ToUpper().Substring(0, 1)).Distinct().OrderBy(x => x).ToList();
-                SeriesInitialsList.Insert(0, "#");
-                OnPropertyChanged(nameof(SeriesInitialsList));
                 FilteredSeriesFilter = SerienFilter;
             }
             catch (Exception ex)
@@ -263,6 +257,8 @@ namespace AvonManager.ArtikelModule.ViewModels
             {
                 var kategorien = await _kategorienDataProvider.ListAllKategorien();
                 KategorienFilter = new List<CategoryListEntryViewModel>();
+                // Add NULL-Kategorie
+                KategorienFilter.Add(new CategoryListEntryViewModel(new KategorieDto { KategorieId = -1, Name = "<Keine Kategorie>" }));
                 foreach (KategorieDto item in kategorien)
                 {
                     var vm = new CategoryListEntryViewModel(item);
@@ -306,6 +302,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             _page = 1;
             ArtikelListe.Clear();
+            SetMarkingFilter();
             LoadArticlesPage();
         }
 
@@ -377,6 +374,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         private void ResetFilterAction()
         {
             ArtikelListe.Clear();
+            MarkierungenFilter.ToList().ForEach(x => x.IsSelected = false);
             Criteria.Reset();
             _selectedSeries = null;
         }
@@ -390,9 +388,9 @@ namespace AvonManager.ArtikelModule.ViewModels
         private void SelectCategoryAction(CategoryListEntryViewModel category)
         {
             _page = 1;
-            ResetFilterAction();
-            _selectedCategory = category;
-            if (category != null)
+            ArtikelListe.Clear();
+            Criteria.Series = null;
+            if (category.KategorieId >= 1)
             {
                 Criteria.Categories = new int[] { category.KategorieId };
             }
@@ -400,38 +398,32 @@ namespace AvonManager.ArtikelModule.ViewModels
             {
                 Criteria.WithoutCategory = true;
             }
+            SetMarkingFilter();
             LoadArticlesPage();
         }
 
         private void SelectSeriesAction(SeriesListEntryViewModel series)
         {
             _page = 1;
-            ResetFilterAction();
-            _selectedSeries = series;
-            if (series != null)
+            ArtikelListe.Clear();
+            Criteria.Categories = null;
+            if (series.SerienId >= 0)
             {
+                _selectedSeries = series;
                 Criteria.Series = new int[] { series.SerienId.Value };
             }
             else
             {
+                _selectedSeries = null;
                 Criteria.WithoutSeries = true;
             }
+            SetMarkingFilter();
             LoadArticlesPage();
         }
 
-        private void SelectMarkingAction(MarkingListEntryViewModel marking)
+        private void SetMarkingFilter()
         {
-            _page = 1;
-            ResetFilterAction();
-            if (marking != null)
-            {
-                Criteria.Markups = new int[] { marking.MarkierungId };
-            }
-            else
-            {
-                Criteria.WithoutMarkups = true;
-            }
-            LoadArticlesPage();
+            Criteria.Markups = MarkierungenFilter.Where(x => x.IsSelected).Select(x => x.MarkierungId).ToArray();
         }
 
         private void SelectArtikelAction(ArticleViewModel artikel)
