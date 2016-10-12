@@ -52,7 +52,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="0"  Header="Name" >
-                        <TextBox Text="{Binding Artikelname, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="24"/>
+                        <TextBox Text="{Binding Artikelname, Delay=500, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="24" MaxLength="50"/>
                     </GroupBox>
                     <GroupBox Grid.Row="1" Header="Serie" >
                         <Grid >
@@ -68,7 +68,7 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Row="2" Header="Beschreibung" >
-                        <TextBox Text="{Binding Beschreibung, Delay=500, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Text="{Binding Beschreibung, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" MaxLength="255"/>
                     </GroupBox>
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
@@ -76,11 +76,11 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="Artikel-Nr."  >
-                            <TextBox Text="{Binding Nummer}"/>
+                        <GroupBox Header="Artikel-Nr. (max 10 Stellen)"  >
+                            <TextBox Text="{Binding Nummer, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" MaxLength="10"/>
                         </GroupBox>
                         <GroupBox  Header="Inhalt"  Grid.Column="1" >
-                            <TextBox Text="{Binding Inhalt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Inhalt, Mode=TwoWay, Delay=500, UpdateSourceTrigger=PropertyChanged}" MaxLength="50"/>
                         </GroupBox>
                     </Grid>
                     <Grid Grid.Row="4">
