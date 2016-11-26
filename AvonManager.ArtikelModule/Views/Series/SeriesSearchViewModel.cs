@@ -111,6 +111,7 @@ namespace AvonManager.ArtikelModule.Views
                 neueSerie.SerienId = _serienDataProvider.AddSerie(neueSerie);
                 SeriesEditViewModel vm = new SeriesEditViewModel(neueSerie, _serienDataProvider, EventAggregator);
                 FilteredSeries.Insert(0, vm);
+                EventAggregator.GetEvent<SeriesChangedEvent>().Publish(new SeriesChangedEventArgs { Series = neueSerie, ChangedType = ChangedType.Create });
             }
             catch (Exception ex)
             {
@@ -136,6 +137,7 @@ namespace AvonManager.ArtikelModule.Views
                 {
                     _serienDataProvider.DeleteSerie(vm.SeriesId);
                     FilteredSeries.Remove(vm);
+                    EventAggregator.GetEvent<SeriesChangedEvent>().Publish(new SeriesChangedEventArgs { Series = vm.DTO, ChangedType = ChangedType.Delete });
                 }
                 catch (Exception ex)
                 {

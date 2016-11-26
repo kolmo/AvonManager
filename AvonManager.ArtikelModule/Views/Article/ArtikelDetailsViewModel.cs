@@ -243,7 +243,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                     AlleSerien.Add(new SeriesListEntryViewModel(null));
                     if (serien != null)
                     {
-                        serien.OrderBy(x => x.Name).ToList().ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
+                        serien.ForEach(x => AlleSerien.Add(new SeriesListEntryViewModel(x)));
                     }
                 }
                 catch (Exception ex)
@@ -413,10 +413,33 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
         private void UpdateSeriesList(SeriesChangedEventArgs e)
         {
-            var series = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
-            if (series!= null)
+            switch (e.ChangedType)
             {
-                series.Name = e.Series.Name;
+                case ChangedType.None:
+                    break;
+                case ChangedType.Create:
+                    AlleSerien.Add(new SeriesListEntryViewModel(e.Series));
+                    break;
+                case ChangedType.Update:
+                    var series = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
+                    if (series != null)
+                    {
+                        series.Name = e.Series.Name;
+                    }
+                    break;
+                case ChangedType.Delete:
+                    var seriesToDelete = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
+                    if (seriesToDelete != null)
+                    {
+                        if (seriesToDelete.SerienId == SerienId)
+                        {
+                            SerienId = null;
+                        }
+                        AlleSerien.Remove(seriesToDelete);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         private void RaiseMarkierungenSelection()

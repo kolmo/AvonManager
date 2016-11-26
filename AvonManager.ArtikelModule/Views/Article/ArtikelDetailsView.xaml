@@ -10,6 +10,7 @@
              xmlns:commonHelper="clr-namespace:AvonManager.ArtikelModule.Helpers"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="471" d:DesignWidth="628">
     <i:Interaction.Triggers>
@@ -31,6 +32,12 @@
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <commonHelper:CategoryCollectionToStringConverter x:Key="coll2string"/>
+            <CollectionViewSource Source="{Binding AlleSerien}" x:Key="cvs">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Name"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
         </ResourceDictionary>
     </UserControl.Resources>
     <xceed:BusyIndicator IsBusy="{Binding Path=BusyFlagsMgr.BusyFlags, Converter={StaticResource BFlagConverter}, ConverterParameter='LOAD'}" BusyContent="Lade Daten" >
@@ -61,7 +68,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <ComboBox Margin="3"
-        						ItemsSource="{Binding AlleSerien}"
+        						ItemsSource="{Binding Source={StaticResource cvs}}"
         						SelectedValue="{Binding SerienId, Mode=TwoWay}"
         						SelectedValuePath="SerienId" VerticalAlignment="Center" 
                                       DisplayMemberPath="Name"/>

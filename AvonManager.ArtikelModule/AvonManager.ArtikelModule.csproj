@@ -132,7 +132,6 @@
     <Compile Include="Views\Category\CategoryListEntryViewModel.cs" />
     <Compile Include="ViewModels\MarkierungenSelectViewModel.cs" />
     <Compile Include="Views\Marking\MarkingListEntryViewModel.cs" />
-    <Compile Include="ViewModels\SerienAdminViewModel.cs" />
     <Compile Include="Views\Series\SeriesListEntryViewModel.cs" />
     <Compile Include="Views\Article\ArtikelDetailsView.xaml.cs">
       <DependentUpon>ArtikelDetailsView.xaml</DependentUpon>

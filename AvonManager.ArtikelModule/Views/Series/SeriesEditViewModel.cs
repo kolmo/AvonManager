@@ -33,7 +33,7 @@ namespace AvonManager.ArtikelModule.Views
         }
 
         #region Properties
-
+        public SerieDto DTO { get { return _series; } }
         /// <summary>
         /// Gets or sets the Name.
         /// </summary>

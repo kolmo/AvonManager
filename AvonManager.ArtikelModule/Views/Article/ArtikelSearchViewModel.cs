@@ -287,9 +287,11 @@ namespace AvonManager.ArtikelModule.ViewModels
                     var dto = await _dataProvider.LoadArtikel(art.ArtikelId);
                     ArticleViewModel vm = new ArticleViewModel(dto);
                     int idx = ArtikelListe.IndexOf(art);
-                    ArtikelListe[idx] = vm;
-                    await DecorateArticle(vm);
-                }
+                    if (idx>=0)
+                    {
+                        ArtikelListe[idx] = vm;
+                        await DecorateArticle(vm);
+                    }                }
                 catch (Exception ex)
                 {
                     Logger.Current.Write(ex);
