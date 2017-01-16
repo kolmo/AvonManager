@@ -98,6 +98,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebcamControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\WebcamControl.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Xceed.Wpf.Toolkit">
@@ -240,10 +244,6 @@
     <Resource Include="Assets\Images\ClipBoard64.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WebCamClient\WebCamClient.Library\WebCamClient.Library.csproj">
-      <Project>{f315447f-543d-4a0f-be76-0d693fce8350}</Project>
-      <Name>WebCamClient.Library</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AvonManager.BusinessObjects\AvonManager.BusinessObjects.csproj">
       <Project>{0a681fbe-e84b-403d-8f55-23281a882a8a}</Project>
       <Name>AvonManager.BusinessObjects</Name>

@@ -60,10 +60,10 @@
     <ApplicationIcon>Assets\Images\lipstick.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>766E40F96984D559998CE4ACD89509A06C020736</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>82ED1EC56480DED00E22D907C76BBB437A057EEC</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AvonManager.Desktop_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AvonManager.Desktop_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -266,6 +266,7 @@
     <None Include="Assets\SQL\Sqlbackup.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="AvonManager.Desktop_1_TemporaryKey.pfx" />
     <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -279,7 +280,6 @@
       <DependentUpon>app.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="AvonManager.Desktop_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
