@@ -1,1 +1,1 @@
-﻿sqlcmd -S Gerda-Pc\SQLEXPRESS -E -Q "EXEC sp_BackupDatabases @backupLocation='C:\SQLBackups\', @databaseName=’AvonDatabase’, @backupType='F'"
+﻿sqlcmd -S Gerda-Pc\SQLEXPRESS -d AvonDatabaseProd -E -i UpdateAvonDb20170520.sql
