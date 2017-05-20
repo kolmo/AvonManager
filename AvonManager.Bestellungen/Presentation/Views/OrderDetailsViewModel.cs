@@ -17,6 +17,8 @@ namespace AvonManager.Bestellungen.Presentation.Views
             public string Artikelbeschreibung;
             public string FDG;
             public decimal? Einzelpreis;
+            public int? Position;
+            public string Bemerkung;
         }
         private Backingfields bFields;
         private Backingfields clone;
@@ -32,6 +34,19 @@ namespace AvonManager.Bestellungen.Presentation.Views
 
         #region Properties
         public int OrderDetailId { get { return _orderDetail.DetailId; } }
+
+        /// <summary>
+        /// Gets or sets the Position.
+        /// </summary>
+        /// <value>
+        /// The Position.
+        /// </value>
+        public int? Position
+        {
+            get { return bFields.Position; }
+            set { SetProperty(ref bFields.Position, value); }
+        }
+
         /// <summary>
         /// Gets or sets the Einzelpreis.
         /// </summary>
@@ -72,6 +87,17 @@ namespace AvonManager.Bestellungen.Presentation.Views
             set { SetProperty(ref bFields.Artikelbeschreibung, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the bemerkung.
+        /// </summary>
+        /// <value>
+        /// The bemerkung.
+        /// </value>
+        public string Bemerkung
+        {
+            get { return bFields.Bemerkung; }
+            set { SetProperty(ref bFields.Bemerkung, value); }
+        }
         /// <summary>
         /// Gets or sets the Seite.
         /// </summary>
@@ -169,11 +195,13 @@ namespace AvonManager.Bestellungen.Presentation.Views
             {
                 bFields.Artikelbeschreibung = _orderDetail.Artikelbeschreibung;
                 bFields.Artikelnummer = _orderDetail.Artikelnummer;
+                bFields.Bemerkung = _orderDetail.Bemerkung;
                 bFields.Campagne = _orderDetail.Campagne;
                 bFields.Einzelpreis = _orderDetail.Einzelpreis;
                 bFields.FDG = _orderDetail.FDG;
                 bFields.Jahr = _orderDetail.Jahr.HasValue ? _orderDetail.Jahr.Value : 1900;
                 bFields.Menge = _orderDetail.Menge;
+                bFields.Position = _orderDetail.Position;
                 bFields.Seite = _orderDetail.Seite;
                 clone = bFields;
             }
@@ -182,11 +210,13 @@ namespace AvonManager.Bestellungen.Presentation.Views
         {
             _orderDetail.Artikelbeschreibung = Artikelbeschreibung;
             _orderDetail.Artikelnummer = Artikelnummer;
+            _orderDetail.Bemerkung = Bemerkung;
             _orderDetail.Campagne = Campagne;
             _orderDetail.Einzelpreis = Einzelpreis;
             _orderDetail.FDG = FDG;
             _orderDetail.Jahr = Jahr;
             _orderDetail.Menge = Menge;
+            _orderDetail.Position = Position;
             _orderDetail.Seite = Seite;
             _orderDataProvider.UpdateOrderDetail(_orderDetail);
             clone = bFields;

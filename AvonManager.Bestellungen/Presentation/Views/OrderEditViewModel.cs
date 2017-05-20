@@ -346,6 +346,12 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 detail.Jahr = DateTime.Now.Year;
                 detail.Menge = 1;
             }
+            detail.Position = GetNextPositionOfDetails();
+        }
+        private int GetNextPositionOfDetails()
+        {
+            int? highestPosition = OrderDetails.Max(x => x.Position);
+            return highestPosition.HasValue ? highestPosition.Value + 1 : 1;
         }
         #endregion
     }

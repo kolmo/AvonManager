@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AvonDatabase" Class="AvonDatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=AvonDatabase;Integrated Security=True" SettingsObjectName="AvonManager.Data.Properties.Settings" SettingsPropertyName="AvDBaseConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ZEUS;Initial Catalog=AvonDatabaseProd;Integrated Security=True" SettingsObjectName="AvonManager.Data.Properties.Settings" SettingsPropertyName="AvDBaseConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Artikel" Member="Artikels">
     <Type Name="Artikel">
       <Column Name="ArtikelId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -122,7 +122,7 @@
       <Column Name="BestellId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="KundenId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Datum" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Bemerkung" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="StatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Loeschvormerkung" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="ChangedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="false" />
@@ -143,6 +143,8 @@
       <Column Name="Artikelbeschr" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="FGD" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Einzelpreis" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="Position" Type="System.Int32" DbType="int" CanBeNull="true" />
+      <Column Name="Bemerkung" Type="System.String" DbType="nvarchar(255)" CanBeNull="true" />
       <Association Name="Bestellung_Bestelldetail" Member="Bestellung" ThisKey="BestellId" OtherKey="BestellId" Type="Bestellung" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>

@@ -269,8 +269,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
-                    <Border BorderBrush="Black"
-                            BorderThickness="0,1">
+                    <Border BorderBrush="#4C000000"
+                            BorderThickness="0,1,1,0">
                         <Border.Resources>
                             <Style x:Key="ColumnHeaderGripperStyle"
                                    TargetType="Thumb">

@@ -368,6 +368,9 @@
   <ItemGroup>
     <Resource Include="ReleaseNotes.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\SQL\UpdateAvonDb20170520.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

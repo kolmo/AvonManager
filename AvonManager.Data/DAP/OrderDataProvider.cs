@@ -248,11 +248,13 @@ namespace AvonManager.Data
                 var detail = database.Bestelldetails.Single(x => x.DetailId == orderDetail.DetailId);
                 detail.Artikelbeschr = orderDetail.Artikelbeschreibung;
                 detail.ArtikelNr = orderDetail.Artikelnummer;
+                detail.Bemerkung = orderDetail.Bemerkung;
                 detail.Campagne = orderDetail.Campagne;
                 detail.Einzelpreis = orderDetail.Einzelpreis;
                 detail.FGD = orderDetail.FDG;
                 detail.Jahr = orderDetail.Jahr;
                 detail.Menge = orderDetail.Menge;
+                detail.Position = orderDetail.Position;
                 detail.Seite = orderDetail.Seite;
                 database.SubmitChanges();
             };

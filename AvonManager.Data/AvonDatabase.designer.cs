@@ -2745,7 +2745,7 @@ namespace AvonManager.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bemerkung", DbType="NVarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bemerkung", DbType="NVarChar(255)")]
 		public string Bemerkung
 		{
 			get
@@ -2969,6 +2969,10 @@ namespace AvonManager.Data
 		
 		private System.Nullable<decimal> _Einzelpreis;
 		
+		private System.Nullable<int> _Position;
+		
+		private string _Bemerkung;
+		
 		private EntityRef<Bestellung> _Bestellung;
 		
     #region Extensibility Method Definitions
@@ -2995,6 +2999,10 @@ namespace AvonManager.Data
     partial void OnFGDChanged();
     partial void OnEinzelpreisChanging(System.Nullable<decimal> value);
     partial void OnEinzelpreisChanged();
+    partial void OnPositionChanging(System.Nullable<int> value);
+    partial void OnPositionChanged();
+    partial void OnBemerkungChanging(string value);
+    partial void OnBemerkungChanged();
     #endregion
 		
 		public Bestelldetail()
@@ -3203,6 +3211,46 @@ namespace AvonManager.Data
 					this._Einzelpreis = value;
 					this.SendPropertyChanged("Einzelpreis");
 					this.OnEinzelpreisChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="int")]
+		public System.Nullable<int> Position
+		{
+			get
+			{
+				return this._Position;
+			}
+			set
+			{
+				if ((this._Position != value))
+				{
+					this.OnPositionChanging(value);
+					this.SendPropertyChanging();
+					this._Position = value;
+					this.SendPropertyChanged("Position");
+					this.OnPositionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Bemerkung", DbType="nvarchar(255)")]
+		public string Bemerkung
+		{
+			get
+			{
+				return this._Bemerkung;
+			}
+			set
+			{
+				if ((this._Bemerkung != value))
+				{
+					this.OnBemerkungChanging(value);
+					this.SendPropertyChanging();
+					this._Bemerkung = value;
+					this.SendPropertyChanged("Bemerkung");
+					this.OnBemerkungChanged();
 				}
 			}
 		}

@@ -63,7 +63,7 @@
                     			SelectedValue="{Binding StatusId, Mode=TwoWay}" DisplayMemberPath="Status" SelectedValuePath="StatusId"/>
                         </GroupBox>
                         <GroupBox  Header="Bemerkung" Grid.Row="3" >
-                            <TextBox Text="{Binding Bemerkung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsOrderReadOnly}"/>
+                            <TextBox Text="{Binding Bemerkung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding Path=IsOrderReadOnly}" MaxLength="255"/>
                         </GroupBox>
                     </Grid>
                     <GroupBox Grid.Row="2" >
@@ -78,6 +78,7 @@
                             <DataGrid ItemsSource="{Binding OrderDetails}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
                 			 Grid.Row="0" SelectionMode="Single"  IsReadOnly="{Binding Path=IsOrderReadOnly}">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Pos." Binding="{Binding Position, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Header="Camp." Binding="{Binding Campagne, Mode=TwoWay}"/>
                                     <DataGridTemplateColumn Header="Jahr">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -92,6 +93,7 @@
                                     <DataGridTextColumn Header="Mg" Binding="{Binding Menge, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <DataGridTextColumn Header="Beschreibung" Binding="{Binding Artikelbeschreibung, Mode=TwoWay}" Width="2*"/>
                                     <DataGridTextColumn Header="FGD" Binding="{Binding FDG, Mode=TwoWay}" Width="*"/>
+                                    <DataGridTextColumn Header="Bemerkung" Binding="{Binding Bemerkung, Mode=TwoWay}"/>
                                     <DataGridTextColumn Header="Preis" Binding="{Binding Einzelpreis, Mode=TwoWay, StringFormat=C2}"/>
                                     <DataGridTextColumn Header="Gesamt" Binding="{Binding Detailwert, Mode=OneWay, StringFormat=C2}"/>
                                     <DataGridTemplateColumn Width="32">

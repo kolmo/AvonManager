@@ -17,5 +17,7 @@ namespace AvonManager.BusinessObjects
         public string Artikelbeschreibung { get; set; }
         public string FDG { get; set; }
         public decimal? Einzelpreis { get; set; }
+        public string Bemerkung { get; set; }
+        public int? Position { get; set; }
     }
 }

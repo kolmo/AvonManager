@@ -117,12 +117,14 @@ namespace AvonManager.Data.Helpers
                 Artikelbeschreibung = source.Artikelbeschr,
                 Artikelnummer = source.ArtikelNr,
                 BestellId = source.BestellId,
+                Bemerkung=source.Bemerkung,
                 Campagne = source.Campagne,
                 DetailId = source.DetailId,
                 Einzelpreis = source.Einzelpreis,
                 FDG = source.FGD,
                 Jahr = source.Jahr,
                 Menge = source.Menge,
+                Position=source.Position,
                 Seite = source.Seite
             };
             return target;
@@ -165,6 +167,7 @@ namespace AvonManager.Data.Helpers
             {
                 Artikelbeschr = source.Artikelbeschreibung,
                 ArtikelNr = source.Artikelnummer,
+                Bemerkung=source.Bemerkung,
                 BestellId = source.BestellId,
                 Campagne = source.Campagne,
                 DetailId = source.DetailId,
@@ -172,6 +175,7 @@ namespace AvonManager.Data.Helpers
                 FGD = source.FDG,
                 Jahr = source.Jahr,
                 Menge = source.Menge,
+                Position=source.Position,
                 Seite = source.Seite
             };
             return target;
