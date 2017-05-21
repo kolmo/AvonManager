@@ -1,0 +1,1 @@
+sqlcmd -S Gerda-Pc\SQLEXPRESS -d AvonDatabaseProd -E -i UpdateAvonDb20170520.sql
