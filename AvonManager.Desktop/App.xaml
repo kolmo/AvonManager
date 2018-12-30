@@ -1,12 +1,11 @@
 ﻿<Application x:Class="AvonManager.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:helpers="clr-namespace:AvonManager.Helpers"
              >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="{ThemeDictionary AssemblyName=AvonManager.Theme}"/>
+                <!--<ResourceDictionary Source="{ThemeDictionary AssemblyName=AvonManager.Theme}"/>-->
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/ImagesDic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AvonManager.Common;component/Assets/AvonMgrStyles.xaml"/>
            </ResourceDictionary.MergedDictionaries>

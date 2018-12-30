@@ -4,12 +4,13 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using AvonManager.Common.Base;
+using System.Linq;
 
 namespace AvonManager.Common.Controls
 {
     public partial class FileLoader : UserControl
     {
-
+        private const string CasioPath = @"DCIM\100CASIO";
         public InteractionRequest<TakePictureConfirmation> TakeSnapshotRequest { get; } = new InteractionRequest<TakePictureConfirmation>();
         public InteractionRequest<Notification> PreviewPictureRequest { get; } = new InteractionRequest<Notification>();
         #region Constructors
@@ -37,6 +38,12 @@ namespace AvonManager.Common.Controls
         private void openFileDialog_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            var removableDrive = DriveInfo.GetDrives().FirstOrDefault(x => x.DriveType == DriveType.Removable);
+            if (removableDrive != null)
+            {
+                var initDir = Path.Combine(removableDrive.RootDirectory.FullName, CasioPath);
+                ofd.InitialDirectory = Directory.Exists(initDir) ? initDir : removableDrive.RootDirectory.FullName;
+            }
             if (ofd.ShowDialog() == true)
             {
                 this.FileData = ReadFileBytes(new FileInfo(ofd.FileName));
@@ -96,7 +103,7 @@ namespace AvonManager.Common.Controls
         }
 
         public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(byte[]), typeof(FileLoader), new PropertyMetadata(null, (d, args)=>
+            DependencyProperty.Register("Data", typeof(byte[]), typeof(FileLoader), new PropertyMetadata(null, (d, args) =>
             {
                 (d as FileLoader).FileData = args.NewValue as byte[];
             }));
