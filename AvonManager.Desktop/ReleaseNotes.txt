@@ -1,2 +1,4 @@
-﻿12.02.2016
+﻿15.08.2023
+Migration auf neues Framework Prism 7.1
+12.02.2016
 In der Bestellungsverwaltung können nun auch inaktive Kunden angezeigt werden. Hierzu gibt es analog zur Kundenverwaltung am Ende der Kundenliste eine Checkbox, mit der das entsprechende Kriterium zugeschaltet wird.
