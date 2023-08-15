@@ -62,7 +62,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             set
             {
                 SetProperty(ref bFields.Einzelpreis, value);
-                OnPropertyChanged(nameof(Detailwert));
+                RaisePropertyChanged(nameof(Detailwert));
             }
         }
 
@@ -138,7 +138,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             set
             {
                 SetProperty(ref bFields.Menge, value);
-                OnPropertyChanged(nameof(Detailwert));
+                RaisePropertyChanged(nameof(Detailwert));
             }
         }
 

@@ -104,7 +104,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 if (_artikelListe != value)
                 {
                     _artikelListe = value;
-                    OnPropertyChanged(() => this.ArtikelListe);
+                    RaisePropertyChanged(nameof(ArtikelListe));
                 }
             }
         }

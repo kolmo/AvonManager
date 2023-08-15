@@ -88,7 +88,7 @@ namespace AvonManager.ArtikelModule.Views
                 if (_articleCount != value)
                 {
                     _articleCount = value;
-                    OnPropertyChanged(nameof(ArticleCount));
+                    RaisePropertyChanged(nameof(ArticleCount));
                 }
             }
         }

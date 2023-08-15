@@ -26,7 +26,7 @@ namespace AvonManager.ArtikelModule.Views
                 if (_serie != null)
                 {
                     _serie.Name = value;
-                    OnPropertyChanged(nameof(Name));
+                    RaisePropertyChanged(nameof(Name));
                 }
             }
         }

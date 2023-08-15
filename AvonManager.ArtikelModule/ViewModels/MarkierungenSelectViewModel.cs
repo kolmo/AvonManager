@@ -40,8 +40,8 @@ namespace AvonManager.ArtikelModule.ViewModels
                         AlleMarkierungen.Add(x);
                     });
                     
-                    OnPropertyChanged(() => Notification);
-                    OnPropertyChanged(() => SortedListe);
+                    RaisePropertyChanged(nameof(Notification));
+                    RaisePropertyChanged(nameof(SortedListe));
                 }
             }
         }

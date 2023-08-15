@@ -74,11 +74,15 @@ namespace AvonManager.ArtikelModule.ViewModels
 
         public InteractionRequest<AssignmentSelectionNotification> ArtikelAssignmentSelectionRequest { get; } = new InteractionRequest<AssignmentSelectionNotification>();
         public List<ArticleMarkingViewModel> ArticleMarkingSelectionList { get; } = new List<ArticleMarkingViewModel>();
+
         public List<ArticleMarkingViewModel> ArticleMarkingAssignments
         { get { return ArticleMarkingSelectionList.Where(x => x.IsAssigned).ToList(); } }
+
         public List<ArticleCategoryViewModel> ArticleCategorySelectionList { get; } = new List<ArticleCategoryViewModel>();
+
         public List<ArticleCategoryViewModel> ArticleCategoryAssignments
         { get { return ArticleCategorySelectionList.Where(x => x.IsAssigned).ToList(); } }
+
         public ObservableCollection<SeriesListEntryViewModel> AlleSerien { get; } = new ObservableCollection<SeriesListEntryViewModel>();
         public ObservableCollection<CategoryListEntryViewModel> Kategorien { get; } = new ObservableCollection<CategoryListEntryViewModel>();
 
@@ -229,13 +233,11 @@ namespace AvonManager.ArtikelModule.ViewModels
             set
             {
                 this.resultMessage = value;
-                this.OnPropertyChanged("InteractionResultMessage");
+                this.RaisePropertyChanged(nameof(InteractionResultMessage));
             }
         }
 
         #endregion Properties
-
-
 
         #region Public Methods
 
@@ -364,7 +366,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                     }
                     ArticleMarkingSelectionList.Add(new ArticleMarkingViewModel(_artikel, marking, hkd, _markierungenDataProvider, isAssigned));
                 }
-                OnPropertyChanged(() => ArticleMarkingAssignments);
+                RaisePropertyChanged(nameof(ArticleMarkingAssignments));
                 EventAggregator.GetEvent<ArticleChangedEvent>().Publish(new ArticleChangedEventArgs { Article = _artikel, ChangedType = ChangedType.Update });
             }
             catch (Exception ex)
@@ -395,7 +397,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                     }
                     ArticleCategorySelectionList.Add(new ArticleCategoryViewModel(_artikel, category, hkd, _kategorienProvider, isAssigned));
                 }
-                OnPropertyChanged(nameof(ArticleCategoryAssignments));
+                RaisePropertyChanged(nameof(ArticleCategoryAssignments));
             }
             catch (Exception ex)
             {

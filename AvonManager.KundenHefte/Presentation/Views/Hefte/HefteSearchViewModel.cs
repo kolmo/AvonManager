@@ -67,7 +67,7 @@ namespace AvonManager.KundenHefte.ViewModels
                 if (_alleHefte != value)
                 {
                     _alleHefte = value;
-                    OnPropertyChanged(() => this.AlleHefte);
+                    RaisePropertyChanged(nameof(AlleHefte));
                 }
             }
         }

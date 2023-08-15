@@ -241,7 +241,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                     vm.PropertyChanged += Vm_PropertyChanged;
                     OrderDetails.Add(vm);
                 }
-                OnPropertyChanged(nameof(Bestellwert));
+                RaisePropertyChanged(nameof(Bestellwert));
             }
             catch (Exception ex)
             {
@@ -258,7 +258,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         {
             if (e.PropertyName.Equals("Menge") || e.PropertyName.Equals("Einzelpreis"))
             {
-                OnPropertyChanged(nameof(Bestellwert));
+                RaisePropertyChanged(nameof(Bestellwert));
             }
         }
 
@@ -267,7 +267,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             if (_currentOrder != null)
             {
                 _isInitializing = true;
-                OnPropertyChanged(nameof(CustomerName));
+                RaisePropertyChanged(nameof(CustomerName));
                 Datum = _currentOrder.Datum;
                 Bemerkung = _currentOrder.Bemerkung;
                 Loeschvormerkung = _currentOrder.Loeschvormerkung;
