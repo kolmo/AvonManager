@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.PubSubEvents;
+﻿
+using Prism.Events;
 
 namespace AvonManager.KundenHefte.Common
 {

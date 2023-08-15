@@ -1,7 +1,7 @@
 ﻿using AvonManager.BusinessObjects;
 using AvonManager.Common.Base;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 using System;
 
 namespace AvonManager.ArtikelModule.Views

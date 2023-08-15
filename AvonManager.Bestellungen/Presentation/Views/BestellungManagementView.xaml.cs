@@ -1,7 +1,8 @@
 ﻿using System.Windows.Controls;
 using System;
-using Microsoft.Practices.Prism.Regions;
+
 using AvonManager.Common;
+using Prism.Regions;
 
 namespace AvonManager.Bestellungen.Views
 {

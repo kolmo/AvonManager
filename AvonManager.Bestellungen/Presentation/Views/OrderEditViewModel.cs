@@ -1,20 +1,16 @@
 ﻿using AvonManager.BusinessObjects;
+using AvonManager.Common.Base;
+using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using AvonManager.Common.Helpers;
-using AvonManager.Common.Base;
-using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace AvonManager.Bestellungen.Presentation.Views
 {
@@ -27,6 +23,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             public int? StatusId;
             public bool? Loeschvormerkung;
         }
+
         private const string LOAD = "LOAD";
         private Backingfields bFields, clone;
         private readonly IOrderDataProvider _orderDataProvider;
@@ -34,6 +31,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         private BestellungDto _currentOrder;
         private KundeDto _orderCustomer;
         private readonly IKundenDataProvider _customerDataProvider;
+
         public OrderEditViewModel(IOrderDataProvider orderDataProvider,
             IKundenDataProvider customerDataProvider,
             IEventAggregator eventAggregator
@@ -46,17 +44,22 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
 
         #region Properties
+
         #region Commands
+
         public DelegateCommand AddDetail { get; }
         public DelegateCommand<object> RemoveDetail { get; }
-        #endregion
+
+        #endregion Commands
+
         public ObservableCollection<OrderDetailsViewModel> OrderDetails { get; } = new ObservableCollection<OrderDetailsViewModel>();
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
 
-        public string CustomerName { get { return $"{_orderCustomer?.Vorname} {_orderCustomer?.Nachname}"; } }
-
+        public string CustomerName
+        { get { return $"{_orderCustomer?.Vorname} {_orderCustomer?.Nachname}"; } }
 
         private List<BestellstatusDto> _statusList;
+
         /// <summary>
         /// Gets or sets the StatusList.
         /// </summary>
@@ -141,6 +144,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
 
         private bool _isOrderReadOnly;
+
         /// <summary>
         /// Gets or sets the IsOrderReadOnly.
         /// </summary>
@@ -158,9 +162,10 @@ namespace AvonManager.Bestellungen.Presentation.Views
             }
         }
 
-        #endregion
+        #endregion Properties
 
         #region Overrides
+
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
@@ -171,9 +176,10 @@ namespace AvonManager.Bestellungen.Presentation.Views
             return ok;
         }
 
-        #endregion
+        #endregion Overrides
 
         #region Public methods
+
         public async void LoadSupplementData()
         {
             _isInitializing = true;
@@ -188,7 +194,9 @@ namespace AvonManager.Bestellungen.Presentation.Views
             }
             _isInitializing = false;
         }
-        #endregion
+
+        #endregion Public methods
+
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
@@ -215,6 +223,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
 
         #region Private helper methods
+
         private async void LoadCurrentOrder(int orderId)
         {
             BusyFlagsMgr.IncBusyFlag(LOAD);
@@ -244,6 +253,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
+
         private void Vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("Menge") || e.PropertyName.Equals("Einzelpreis"))
@@ -251,6 +261,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 OnPropertyChanged(nameof(Bestellwert));
             }
         }
+
         private void InitProperties()
         {
             if (_currentOrder != null)
@@ -267,6 +278,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 _isInitializing = false;
             }
         }
+
         private void SaveOrder()
         {
             _currentOrder.Bemerkung = Bemerkung;
@@ -283,6 +295,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 ShowException(ex);
             }
         }
+
         private void AddDetailAction()
         {
             if (_currentOrder != null)
@@ -306,6 +319,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 }
             }
         }
+
         private void RemoveDetailAction(object obj)
         {
             DeleteConfirmation deleteConfirmation = new DeleteConfirmation()
@@ -316,6 +330,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             };
             DeleteEntityRequest.Raise(deleteConfirmation, DeleteDetailFromDb);
         }
+
         private void DeleteDetailFromDb(DeleteConfirmation confirmation)
         {
             if (confirmation.Confirmed && _currentOrder != null)
@@ -333,6 +348,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 }
             }
         }
+
         private void PrefillDetails(BestelldetailDto detail)
         {
             if (OrderDetails.Any())
@@ -348,11 +364,13 @@ namespace AvonManager.Bestellungen.Presentation.Views
             }
             detail.Position = GetNextPositionOfDetails();
         }
+
         private int GetNextPositionOfDetails()
         {
             int? highestPosition = OrderDetails.Max(x => x.Position);
             return highestPosition.HasValue ? highestPosition.Value + 1 : 1;
         }
-        #endregion
+
+        #endregion Private helper methods
     }
 }

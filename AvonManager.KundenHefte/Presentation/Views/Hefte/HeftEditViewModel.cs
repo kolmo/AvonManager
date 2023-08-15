@@ -4,8 +4,8 @@ using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
 using AvonManager.KundenHefte.Presentation.Views;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,13 +20,14 @@ namespace AvonManager.KundenHefte.ViewModels
         private HeftDto _currentHeft;
         private IHefteDataProvider _dataProvider;
         private bool isInitialized = false;
-        IKundenDataProvider _kundenDataProvider;
-        ICustomerSearchCriteria _customercriteria;
-        public HeftEditViewModel(IHefteDataProvider dataProvider, 
+        private IKundenDataProvider _kundenDataProvider;
+        private ICustomerSearchCriteria _customercriteria;
+
+        public HeftEditViewModel(IHefteDataProvider dataProvider,
             IKundenDataProvider kundenDataProvider,
             ICustomerSearchCriteria criteria,
             IEventAggregator eventAggregator
-             , BusyFlagsManager bFlagsManager):base(bFlagsManager, eventAggregator)
+             , BusyFlagsManager bFlagsManager) : base(bFlagsManager, eventAggregator)
         {
             _dataProvider = dataProvider;
             _kundenDataProvider = kundenDataProvider;
@@ -34,9 +35,11 @@ namespace AvonManager.KundenHefte.ViewModels
         }
 
         #region Properties
+
         public ObservableCollection<HeftKundeViewModel> KundenListe { get; private set; } = new ObservableCollection<HeftKundeViewModel>();
 
         private IEnumerable<HeftKundeViewModel> _sortedCustomerList;
+
         /// <summary>
         /// Gets or sets the SortedCustomerList.
         /// </summary>
@@ -49,8 +52,10 @@ namespace AvonManager.KundenHefte.ViewModels
             set { SetProperty(ref _sortedCustomerList, value); }
         }
 
-        public int HeftId { get { return _currentHeft.HeftId; } }
+        public int HeftId
+        { get { return _currentHeft.HeftId; } }
         private string _titel;
+
         public string Titel
         {
             get { return _titel; }
@@ -59,7 +64,9 @@ namespace AvonManager.KundenHefte.ViewModels
                 SetProperty(ref _titel, value);
             }
         }
+
         private int? _jahr;
+
         public int? Jahr
         {
             get { return _jahr; }
@@ -68,7 +75,9 @@ namespace AvonManager.KundenHefte.ViewModels
                 SetProperty(ref _jahr, value);
             }
         }
+
         private string _beschreibung;
+
         public string Beschreibung
         {
             get { return _beschreibung; }
@@ -77,7 +86,9 @@ namespace AvonManager.KundenHefte.ViewModels
                 SetProperty(ref _beschreibung, value);
             }
         }
+
         private byte[] _bild;
+
         public byte[] Bild
         {
             get { return _bild; }
@@ -87,7 +98,7 @@ namespace AvonManager.KundenHefte.ViewModels
             }
         }
 
-        #endregion
+        #endregion Properties
 
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
@@ -96,6 +107,7 @@ namespace AvonManager.KundenHefte.ViewModels
                 EndEdit();
             return ok;
         }
+
         public async void LoadCurrentHeft(int heftId)
         {
             BusyFlagsMgr.IncBusyFlag(LOAD);
@@ -133,7 +145,6 @@ namespace AvonManager.KundenHefte.ViewModels
             }
             isInitialized = true;
             BusyFlagsMgr.DecBusyFlag(LOAD);
-
         }
 
         private void RefreshSorting()

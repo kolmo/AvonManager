@@ -167,8 +167,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.UnityExtensions">
-      <Version>5.0.1</Version>
+    <PackageReference Include="Prism.Unity">
+      <Version>7.1.0.431</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

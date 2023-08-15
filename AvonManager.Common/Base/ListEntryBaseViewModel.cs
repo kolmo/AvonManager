@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Mvvm;
+﻿using Prism.Commands;
 using System;
 
 namespace AvonManager.Common.Base

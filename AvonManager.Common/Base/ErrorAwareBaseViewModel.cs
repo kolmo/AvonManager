@@ -1,7 +1,7 @@
 ﻿using AvonManager.Common.Helpers;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Mvvm;
 using System;
 
 namespace AvonManager.Common.Base

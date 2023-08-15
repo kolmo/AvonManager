@@ -1,28 +1,27 @@
-﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.Regions;
-using System.Runtime.CompilerServices;
-using System.Linq;
+﻿using AvonManager.ArtikelModule.Notifications;
+using AvonManager.ArtikelModule.Views;
+using AvonManager.BusinessObjects;
+using AvonManager.Common.Base;
+using AvonManager.Common.Events;
+using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using AvonManager.ArtikelModule.Notifications;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
-using AvonManager.Common.Helpers;
-using AvonManager.ArtikelModule.Views;
-using AvonManager.Common.Base;
-using Microsoft.Practices.Prism.PubSubEvents;
-using AvonManager.Common.Events;
-using System;
-using System.Threading.Tasks;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
     public class ArtikelDetailsViewModel : ErrorAwareBaseViewModel, INavigationAware
     {
         private const string LOAD = "LOAD";
+
         private struct BackingFields
         {
             public int ArtikelId;
@@ -35,6 +34,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             public int? SerienId;
             public byte[] Bild;
         }
+
         private BackingFields bFields;
         private BackingFields clone;
         private string resultMessage;
@@ -42,12 +42,16 @@ namespace AvonManager.ArtikelModule.ViewModels
         private bool _isInitializing = false;
         private List<MarkierungDto> _allMarkings;
         private List<KategorieDto> _allCategories;
-        IArtikelDataProvider _dataProvider;
-        IMarkierungenDataProvider _markierungenDataProvider;
-        ISerienDataProvider _seriendataProvider;
-        IKategorieProvider _kategorienProvider;
+        private IArtikelDataProvider _dataProvider;
+        private IMarkierungenDataProvider _markierungenDataProvider;
+        private ISerienDataProvider _seriendataProvider;
+        private IKategorieProvider _kategorienProvider;
+
         #region Constructors
-        public ArtikelDetailsViewModel() { }
+
+        public ArtikelDetailsViewModel()
+        { }
+
         public ArtikelDetailsViewModel(IArtikelDataProvider dataProvider
             , IMarkierungenDataProvider markierungenDataProvider
             , ISerienDataProvider seriendataProvider
@@ -64,16 +68,20 @@ namespace AvonManager.ArtikelModule.ViewModels
             EventAggregator.GetEvent<SeriesChangedEvent>().Subscribe(UpdateSeriesList);
         }
 
-        #endregion
+        #endregion Constructors
+
         #region Properties
 
         public InteractionRequest<AssignmentSelectionNotification> ArtikelAssignmentSelectionRequest { get; } = new InteractionRequest<AssignmentSelectionNotification>();
         public List<ArticleMarkingViewModel> ArticleMarkingSelectionList { get; } = new List<ArticleMarkingViewModel>();
-        public List<ArticleMarkingViewModel> ArticleMarkingAssignments { get { return ArticleMarkingSelectionList.Where(x => x.IsAssigned).ToList(); } }
+        public List<ArticleMarkingViewModel> ArticleMarkingAssignments
+        { get { return ArticleMarkingSelectionList.Where(x => x.IsAssigned).ToList(); } }
         public List<ArticleCategoryViewModel> ArticleCategorySelectionList { get; } = new List<ArticleCategoryViewModel>();
-        public List<ArticleCategoryViewModel> ArticleCategoryAssignments { get { return ArticleCategorySelectionList.Where(x => x.IsAssigned).ToList(); } }
+        public List<ArticleCategoryViewModel> ArticleCategoryAssignments
+        { get { return ArticleCategorySelectionList.Where(x => x.IsAssigned).ToList(); } }
         public ObservableCollection<SeriesListEntryViewModel> AlleSerien { get; } = new ObservableCollection<SeriesListEntryViewModel>();
         public ObservableCollection<CategoryListEntryViewModel> Kategorien { get; } = new ObservableCollection<CategoryListEntryViewModel>();
+
         /// <summary>
         /// Gets or sets the Beschreibung.
         /// </summary>
@@ -208,8 +216,10 @@ namespace AvonManager.ArtikelModule.ViewModels
                 SetProperty(ref bFields.Name, value);
             }
         }
+
         public ICommand RaiseMarkierungenSelectionCommand { get; }
         public ICommand RaiseKategorienSelectionCommand { get; }
+
         public string InteractionResultMessage
         {
             get
@@ -222,16 +232,18 @@ namespace AvonManager.ArtikelModule.ViewModels
                 this.OnPropertyChanged("InteractionResultMessage");
             }
         }
-        #endregion
 
-        #region Private Props
+        #endregion Properties
 
-        #endregion
+
+
         #region Public Methods
+
         public void LoadData()
         {
             Initialize();
         }
+
         public async void Initialize()
         {
             if (!AlleSerien.Any())
@@ -253,7 +265,9 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
-        #endregion
+
+        #endregion Public Methods
+
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
@@ -261,7 +275,9 @@ namespace AvonManager.ArtikelModule.ViewModels
                 SaveArtikel();
             return ok;
         }
+
         #region Private Methods
+
         private void InitProperties()
         {
             ArtikelId = _artikel.ArtikelId;
@@ -275,6 +291,7 @@ namespace AvonManager.ArtikelModule.ViewModels
             SerienId = _artikel.SerienId;
             clone = bFields;
         }
+
         private void SaveArtikel()
         {
             if (_artikel != null)
@@ -299,6 +316,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
+
         private async void LoadArtikel(int? artikelId)
         {
             if (artikelId.HasValue)
@@ -324,6 +342,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
             }
         }
+
         private async void LoadMarkierungen()
         {
             try
@@ -347,7 +366,6 @@ namespace AvonManager.ArtikelModule.ViewModels
                 }
                 OnPropertyChanged(() => ArticleMarkingAssignments);
                 EventAggregator.GetEvent<ArticleChangedEvent>().Publish(new ArticleChangedEventArgs { Article = _artikel, ChangedType = ChangedType.Update });
-
             }
             catch (Exception ex)
             {
@@ -355,6 +373,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 ShowException(ex);
             }
         }
+
         private async void LoadKategorien()
         {
             try
@@ -384,6 +403,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                 ShowException(ex);
             }
         }
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             BusyFlagsMgr.ResetBusyflag(LOAD);
@@ -411,15 +431,18 @@ namespace AvonManager.ArtikelModule.ViewModels
         {
             ;
         }
+
         private void UpdateSeriesList(SeriesChangedEventArgs e)
         {
             switch (e.ChangedType)
             {
                 case ChangedType.None:
                     break;
+
                 case ChangedType.Create:
                     AlleSerien.Add(new SeriesListEntryViewModel(e.Series));
                     break;
+
                 case ChangedType.Update:
                     var series = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
                     if (series != null)
@@ -427,6 +450,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                         series.Name = e.Series.Name;
                     }
                     break;
+
                 case ChangedType.Delete:
                     var seriesToDelete = AlleSerien.FirstOrDefault(x => x.SerienId == e.Series.SerienId);
                     if (seriesToDelete != null)
@@ -438,13 +462,14 @@ namespace AvonManager.ArtikelModule.ViewModels
                         AlleSerien.Remove(seriesToDelete);
                     }
                     break;
+
                 default:
                     break;
             }
         }
+
         private void RaiseMarkierungenSelection()
         {
-
             AssignmentSelectionNotification notification = new AssignmentSelectionNotification(ArticleMarkingSelectionList);
 
             notification.Title = "Markierungen";
@@ -463,6 +488,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                     }
                 });
         }
+
         private void RaiseKategorienSelection()
         {
             AssignmentSelectionNotification notification = new AssignmentSelectionNotification(ArticleCategorySelectionList);
@@ -483,6 +509,7 @@ namespace AvonManager.ArtikelModule.ViewModels
                     }
                 });
         }
-        #endregion
+
+        #endregion Private Methods
     }
 }

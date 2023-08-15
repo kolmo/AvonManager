@@ -1,31 +1,30 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace AvonManager.Bestellungen
 {
     public class BestellungenModule : IModule
     {
         private readonly IRegionManager _regionManager;
-       IUnityContainer _container;
-        public BestellungenModule(IRegionManager regionManager, IUnityContainer container)
+
+        public BestellungenModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            _container = container;
         }
-        public void Initialize()
+
+        public void OnInitialized(IContainerProvider containerProvider)
         {
-            _container.RegisterType<object, Views.BestellungManagementView>("OrderModuleWorkspace");
-            _container.RegisterType<object, Views.OrderEditView>("OrderEditView");
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
                 typeof(Controls.OrderModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.OrderButtonRegion, typeof(Controls.OrderModuleTaskButton));
             _regionManager.RegisterViewWithRegion("OrderSearchRegion", typeof(Views.OrderSearchView));
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<object, Views.BestellungManagementView>("OrderModuleWorkspace");
+            containerRegistry.Register<object, Views.OrderEditView>("OrderEditView");
         }
     }
 }

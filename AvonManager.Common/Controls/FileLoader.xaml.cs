@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+﻿using Prism.Interactivity.InteractionRequest;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;

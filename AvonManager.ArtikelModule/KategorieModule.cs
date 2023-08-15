@@ -1,20 +1,20 @@
 ﻿using AvonManager.ArtikelModule.Views;
-using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace AvonManager.ArtikelModule
 {
     public class KategorieModule : IModule
     {
         private readonly IRegionManager regionManager;
-        private readonly IUnityContainer _container;
-        public KategorieModule(IRegionManager regionManager, IUnityContainer container)
+
+        public KategorieModule(IRegionManager regionManager)
         {
             this.regionManager = regionManager;
-            _container = container;
         }
-        public void Initialize()
+
+        public void OnInitialized(IContainerProvider containerProvider)
         {
             regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
                  typeof(Controls.KategorieModuleTaskButton));
@@ -22,7 +22,11 @@ namespace AvonManager.ArtikelModule
             regionManager.RegisterViewWithRegion("CategorySearchRegion", typeof(CategorySearchView));
             regionManager.RegisterViewWithRegion("SeriesSearchRegion", typeof(SeriesSearchView));
             regionManager.RegisterViewWithRegion("MarkingSearchRegion", typeof(MarkingSearchView));
-            _container.RegisterType<object, Views.ArticleClassificationPage>("ArticleClassificationModuleWorkspace");
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<object, Views.ArticleClassificationPage>("ArticleClassificationModuleWorkspace");
         }
     }
 }

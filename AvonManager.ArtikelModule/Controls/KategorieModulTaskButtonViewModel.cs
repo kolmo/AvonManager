@@ -1,7 +1,7 @@
 ﻿using AvonManager.Common.Events;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Windows.Input;
 

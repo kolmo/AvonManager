@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+﻿
+using Prism.Interactivity.InteractionRequest;
 
 namespace AvonManager.Bestellungen.Common
 {

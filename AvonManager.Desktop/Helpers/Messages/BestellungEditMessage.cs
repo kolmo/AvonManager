@@ -1,5 +1,5 @@
 ﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Events;
 
 namespace AvonManager.Helpers.Messages
 {

@@ -2,8 +2,8 @@
 using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Events;
+using Prism.Mvvm;
 using System;
 using System.Runtime.CompilerServices;
 

@@ -93,7 +93,6 @@
     <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.Expression.Encoder.Api2, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualStudio.ExtensibilityHosting, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -295,18 +294,7 @@
   <ItemGroup>
     <Resource Include="Assets\Images\lipstick.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <PublishFile Include="Microsoft.VisualStudio.ExtensibilityHosting">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Assets\SQL\UpdateAvonDb.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -325,8 +313,11 @@
     <PackageReference Include="EnterpriseLibrary.Logging">
       <Version>6.0.1304</Version>
     </PackageReference>
-    <PackageReference Include="Prism.UnityExtensions">
-      <Version>5.0.1</Version>
+    <PackageReference Include="Prism.Unity">
+      <Version>7.1.0.431</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Wpf">
+      <Version>7.1.0.431</Version>
     </PackageReference>
     <PackageReference Include="SlowCheetah">
       <Version>2.5.15</Version>

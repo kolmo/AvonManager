@@ -1,11 +1,11 @@
 ﻿using AvonManager.Common.Events;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+using Prism.Events;
+using Prism.Regions;
 using System;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
+using Unity;
 
 namespace AvonManager.Desktop
 {
@@ -15,8 +15,9 @@ namespace AvonManager.Desktop
     [Export]
     public partial class Shell : Window
     {
-        IRegionManager _regionManager;
-        IEventAggregator _eventAggregator;
+        private IRegionManager _regionManager;
+        private IEventAggregator _eventAggregator;
+
         public Shell()
         {
             InitializeComponent();
@@ -31,17 +32,17 @@ namespace AvonManager.Desktop
                     this.Height = restoreBounds.Height;
                 }
                 catch (Exception)
-                {                  
+                {
                 }
             }
         }
+
         public Shell(IUnityContainer container)
-            :this()
+            : this()
         {
             _regionManager = container.Resolve<IRegionManager>();
             _eventAggregator = container.Resolve<IEventAggregator>();
             _eventAggregator.GetEvent<ModuleChangedEvent>().Subscribe(ModuleChangedEventHandler);
- 
         }
 
         private void ModuleChangedEventHandler(ModuleChangedEventArgs obj)

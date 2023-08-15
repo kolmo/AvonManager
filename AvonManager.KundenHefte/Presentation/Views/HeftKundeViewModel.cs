@@ -1,12 +1,8 @@
 ﻿using AvonManager.BusinessObjects;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvonManager.KundenHefte.Presentation.Views
 {
@@ -15,7 +11,8 @@ namespace AvonManager.KundenHefte.Presentation.Views
         private KundeDto _kunde;
         private HeftDto _heft;
         private HeftKundeDto _heftKunde;
-        IHefteDataProvider _dataProvider;
+        private IHefteDataProvider _dataProvider;
+
         public HeftKundeViewModel(KundeDto kunde, HeftDto heft, HeftKundeDto heftKunde, IHefteDataProvider provider, bool isAssigned)
         {
             _kunde = kunde;
@@ -27,8 +24,10 @@ namespace AvonManager.KundenHefte.Presentation.Views
             _hasOrdered = _heftKunde.HasOrdered;
         }
 
-        public string Brochure { get { return _heft.Titel; } }
+        public string Brochure
+        { get { return _heft.Titel; } }
         private bool _received;
+
         /// <summary>
         /// Gets or sets the Received.
         /// </summary>
@@ -51,6 +50,7 @@ namespace AvonManager.KundenHefte.Presentation.Views
             _heftKunde.ReceivedAt = ReceivedAt;
             _dataProvider.SaveHeftKunde(_heftKunde);
         }
+
         private void AddOrDeleteData()
         {
             try
@@ -69,6 +69,7 @@ namespace AvonManager.KundenHefte.Presentation.Views
                 Logger.Current.Write(ex);
             }
         }
+
         /// <summary>
         /// Gets or sets the Customer.
         /// </summary>
@@ -81,6 +82,7 @@ namespace AvonManager.KundenHefte.Presentation.Views
         }
 
         private DateTime? _receivedAt;
+
         /// <summary>
         /// Gets or sets the ReceivedAt.
         /// </summary>
@@ -98,6 +100,7 @@ namespace AvonManager.KundenHefte.Presentation.Views
         }
 
         private bool _hasOrdered;
+
         /// <summary>
         /// Gets or sets the HasOrdered.
         /// </summary>

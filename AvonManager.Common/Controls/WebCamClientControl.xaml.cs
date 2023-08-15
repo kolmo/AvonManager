@@ -1,5 +1,5 @@
 ﻿using Microsoft.Expression.Encoder.Devices;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+using Prism.Interactivity.InteractionRequest;
 using System.Windows;
 using System.Windows.Controls;
 using System;

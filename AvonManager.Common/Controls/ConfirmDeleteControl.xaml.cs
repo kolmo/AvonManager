@@ -1,5 +1,5 @@
 ﻿using AvonManager.Common.Base;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+using Prism.Interactivity.InteractionRequest;
 using System;
 using System.Windows;
 using System.Windows.Controls;

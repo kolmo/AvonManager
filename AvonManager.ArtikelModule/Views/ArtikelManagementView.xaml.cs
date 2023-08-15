@@ -1,7 +1,5 @@
 ﻿using AvonManager.Common;
-using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+using Prism.Regions;
 using System;
 using System.Windows.Controls;
 
@@ -12,8 +10,9 @@ namespace AvonManager.ArtikelModule.Views
     /// </summary>
     public partial class ArtikelManagementView : UserControl
     {
-        IRegionManager _regionManager;
-        bool _placeHolderShown;
+        private IRegionManager _regionManager;
+        private bool _placeHolderShown;
+
         public ArtikelManagementView()
         {
             InitializeComponent();
@@ -21,10 +20,11 @@ namespace AvonManager.ArtikelModule.Views
         }
 
         public ArtikelManagementView(IRegionManager regionManager)
-            :this()
+            : this()
         {
             _regionManager = regionManager;
         }
+
         private void ArtikelManagementView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if (!_placeHolderShown)
@@ -34,6 +34,5 @@ namespace AvonManager.ArtikelModule.Views
                 _placeHolderShown = true;
             }
         }
-
     }
 }

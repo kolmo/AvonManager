@@ -1,24 +1,22 @@
 ﻿<!-- ModulesCatalog.xaml -->
-<Modularity:ModuleCatalog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                          xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-                          xmlns:Modularity="clr-namespace:Microsoft.Practices.Prism.Modularity;assembly=Microsoft.Practices.Prism.Composition">
-    <Modularity:ModuleInfo 
-        ModuleName="DataModule" 
+<Modularity:ModuleCatalog   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:Modularity="clr-namespace:Prism.Modularity;assembly=Prism.Wpf">
+    <Modularity:ModuleInfo
+        ModuleName="DataModule"
         ModuleType="AvonManager.Data.DataProviderModule, AvonManager.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
-        ModuleName="BestellungModule" 
+    <Modularity:ModuleInfo
+        ModuleName="BestellungModule"
         ModuleType="AvonManager.Bestellungen.BestellungenModule, AvonManager.Bestellungen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
-        ModuleName="ArtikelModule" 
+    <Modularity:ModuleInfo
+        ModuleName="ArtikelModule"
        ModuleType="AvonManager.ArtikelModule.ArtikelModule, AvonManager.ArtikelModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
-        ModuleName="KundenModule" 
+    <Modularity:ModuleInfo
+        ModuleName="KundenModule"
         ModuleType="AvonManager.KundenHefte.CustomerModule, AvonManager.KundenHefte, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
-        ModuleName="BrochureModule" 
+    <Modularity:ModuleInfo
+        ModuleName="BrochureModule"
         ModuleType="AvonManager.KundenHefte.BrochureModule, AvonManager.KundenHefte, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Modularity:ModuleInfo 
-        ModuleName="KategorieModule" 
+    <Modularity:ModuleInfo
+        ModuleName="KategorieModule"
        ModuleType="AvonManager.ArtikelModule.KategorieModule, AvonManager.ArtikelModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-
 </Modularity:ModuleCatalog>

@@ -1,26 +1,31 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+﻿
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
+using Unity;
 
 namespace AvonManager.KundenHefte
 {
     public class BrochureModule : IModule
     {
         private readonly IRegionManager _regionManager;
-        private readonly IUnityContainer _container;
-        public BrochureModule(IRegionManager regionManager, IUnityContainer container)
+        public BrochureModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            _container = container;
         }
-        public void Initialize()
+      
+        public void OnInitialized(IContainerProvider containerProvider)
         {
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
                typeof(Controls.BrochureModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.BrochureButtonRegion, typeof(Controls.BrochureModuleTaskButton));
-            _container.RegisterType<object, Presentation.Views.BrochureManagementView>("BrochureModuleWorkspace");
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.BrochureSearchRegion, typeof(Views.HefteSearchView));
-            _container.RegisterType<object, Views.HeftEditView>("HeftEditView");
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<object, Presentation.Views.BrochureManagementView>("BrochureModuleWorkspace");
+            containerRegistry.Register<object, Views.HeftEditView>("HeftEditView");
         }
     }
 }

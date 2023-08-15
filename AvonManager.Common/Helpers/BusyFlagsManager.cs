@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +82,7 @@ namespace AvonManager.Common.Helpers
                         _busyFlagsCounters[key]++;
                     }
                 }
-                OnPropertyChanged(() => BusyFlags);
+                RaisePropertyChanged(nameof(BusyFlags));
             }
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace AvonManager.Common.Helpers
                         }
                     }
                 }
-                OnPropertyChanged(() => BusyFlags);
+                RaisePropertyChanged(nameof(BusyFlags));
             }
         }
 
@@ -117,7 +117,7 @@ namespace AvonManager.Common.Helpers
             if (_busyFlagsCounters.ContainsKey(key))
             {
                 _busyFlagsCounters[key] = 0;
-                OnPropertyChanged(() => BusyFlags);
+                RaisePropertyChanged(nameof(BusyFlags));
             }
         }
         /// <summary>
@@ -130,7 +130,7 @@ namespace AvonManager.Common.Helpers
             {
                 _busyFlagsCounters[key] = 0;
             }
-            OnPropertyChanged(() => BusyFlags);
+            RaisePropertyChanged(nameof(BusyFlags));
         }
         #endregion
     }

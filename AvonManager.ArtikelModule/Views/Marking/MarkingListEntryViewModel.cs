@@ -1,23 +1,18 @@
 ﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using AvonManager.Interfaces;
 using AvonManager.Common.Base;
+using System;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {
     public class MarkingListEntryViewModel : ListEntryBaseViewModel<MarkingListEntryViewModel>
     {
         private MarkierungDto _markierung;
+
         public MarkingListEntryViewModel(MarkierungDto markierung)
         {
             _markierung = markierung;
         }
+
         public MarkingListEntryViewModel(MarkierungDto markierung, Action<MarkingListEntryViewModel> editAction, Action<MarkingListEntryViewModel> deleteAction)
             : base(editAction, deleteAction)
         {
@@ -58,6 +53,7 @@ namespace AvonManager.ArtikelModule.ViewModels
         }
 
         private int _articleCount;
+
         /// <summary>
         /// Gets or sets the ArticleCount.
         /// </summary>
@@ -69,10 +65,10 @@ namespace AvonManager.ArtikelModule.ViewModels
             get { return _articleCount; }
             set { SetProperty(ref _articleCount, value); }
         }
+
         public int MarkierungId
         {
             get { return _markierung.MarkierungId; }
-
         }
     }
 }

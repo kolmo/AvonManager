@@ -1,25 +1,28 @@
 ﻿using AvonManager.Desktop;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Unity;
+using System;
 using System.Windows;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Prism.Regions;
 
 namespace AvonManager
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override Window CreateShell() => Container.Resolve<Shell>();
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            base.OnStartup(e);
-            Bootstrapper bootstrapper = new Bootstrapper();
-            bootstrapper.Run();
-            IRegionManager regionManager = bootstrapper.Container.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion(Common.RegionNames.MainRegion, typeof(MainView));
-            bootstrapper.Container.RegisterType<object, MainView>("HomeView");
-            bootstrapper.Container.RegisterType<object, Common.Controls.NoSelectionPlaceHolderView>("NoSelectionPlaceHolderView");
+            containerRegistry.Register<object, Common.Controls.NoSelectionPlaceHolderView>("NoSelectionPlaceHolderView");
+            containerRegistry.Register<object, MainView>("HomeView");
         }
-       
+
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            return ModuleCatalog.CreateFromXaml(new Uri("/AvonManager.Desktop;component/ModulesCatalog.xaml", UriKind.Relative));
+        }
     }
 }

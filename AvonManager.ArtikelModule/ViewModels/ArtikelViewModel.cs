@@ -1,5 +1,5 @@
 ﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 using System.Collections.ObjectModel;
 
 namespace AvonManager.ArtikelModule.ViewModels

@@ -1,6 +1,6 @@
 ﻿using AvonManager.BusinessObjects;
 using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
+using Prism.Mvvm;
 
 namespace AvonManager.ArtikelModule.ViewModels
 {

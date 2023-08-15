@@ -1,37 +1,37 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using AvonManager.Bestellungen.Common;
+using AvonManager.BusinessObjects;
+using AvonManager.Common.Base;
+using AvonManager.Common.Helpers;
+using AvonManager.Interfaces;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using AvonManager.Interfaces;
-using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using AvonManager.Common.Base;
-using AvonManager.Common.Helpers;
-using AvonManager.Bestellungen.Common;
-using Microsoft.Practices.Prism.PubSubEvents;
-using AvonManager.Common.Events;
 
 namespace AvonManager.Bestellungen.Presentation.Views
 {
     public class OrderSearchViewModel : ErrorAwareBaseViewModel
     {
         #region Private fields
+
         private const string LOAD = "LOAD";
         private IOrderDataProvider _orderDataProvider;
         private readonly IKundenDataProvider _customerDataProvider;
         private readonly ICustomerSearchCriteria _customerSearchCriteria;
         private readonly IOrderSearchCriteria _orderSearchCriteria;
         private string _currentInitial;
-        IRegionManager _regionManager;
-        int _page = 0;
+        private IRegionManager _regionManager;
+        private int _page = 0;
 
-        #endregion
-
+        #endregion Private fields
 
         #region Constructor
+
         public OrderSearchViewModel(IOrderDataProvider orderDataProvider,
     IKundenDataProvider customerDataProvider,
     IRegionManager regionManager,
@@ -56,11 +56,12 @@ namespace AvonManager.Bestellungen.Presentation.Views
             _orderSearchCriteria.ActiveCustomersOnly = true;
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Properties
 
         private ObservableCollection<string> _customerInitialsList;
+
         /// <summary>
         /// Gets or sets the CustomerInitialsList.
         /// </summary>
@@ -83,9 +84,12 @@ namespace AvonManager.Bestellungen.Presentation.Views
         public DelegateCommand<OrderViewModel> EditOrderCommand { get; private set; }
         public DelegateCommand<OrderViewModel> DeleteOrderCommand { get; private set; }
         public ObservableCollection<CustomerListEntry> CustomersWithOrders { get; } = new ObservableCollection<CustomerListEntry>();
-        public IOrderSearchCriteria Criteria { get { return _orderSearchCriteria; } }
+
+        public IOrderSearchCriteria Criteria
+        { get { return _orderSearchCriteria; } }
 
         private ICommand _selectInitialCommand;
+
         /// <summary>
         /// Gets or sets the IsSelected.
         /// </summary>
@@ -102,6 +106,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
         }
 
         private bool _withInactiveCustomers;
+
         /// <summary>
         /// Gets or sets the WithInactiveCustomers.
         /// </summary>
@@ -121,9 +126,11 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 StartSearch();
             }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Public methods
+
         public async void LoadSupplementData()
         {
             BusyFlagsMgr.ResetAllBusyFlags();
@@ -144,7 +151,8 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
-        #endregion
+
+        #endregion Public methods
 
         #region Private methods
 
@@ -198,6 +206,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 BusyFlagsMgr.DecBusyFlag(LOAD);
             }
         }
+
         private async void AddOrdersToList(List<BestellungDto> orders)
         {
             foreach (BestellungDto bestellung in orders)
@@ -205,12 +214,13 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 var customer = CustomersWithOrders.FirstOrDefault(x => x.ID == bestellung.KundenId.Value)?.Customer;
                 if (customer == null)
                 {
-                  customer = (await _customerDataProvider.LoadCustomers(new int[] { bestellung.KundenId.Value })).First();
+                    customer = (await _customerDataProvider.LoadCustomers(new int[] { bestellung.KundenId.Value })).First();
                 }
                 OrderViewModel vm = new OrderViewModel(bestellung, customer);
                 AllOrders.Add(vm);
             }
         }
+
         private void ResetSearchAction()
         {
             AllOrders.Clear();
@@ -220,6 +230,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             LoadCustomersByInital();
             _page = 0;
         }
+
         private void EditOrderAction(OrderViewModel order)
         {
             NavigationParameters pars = new NavigationParameters();
@@ -227,11 +238,13 @@ namespace AvonManager.Bestellungen.Presentation.Views
             var moduleAWorkspace = new Uri("OrderEditView", UriKind.Relative);
             _regionManager.RequestNavigate(AvonManager.Common.RegionNames.OrderDetailsRegion, moduleAWorkspace, pars);
         }
+
         private void LoadMoreAction()
         {
             _page++;
             LoadOrderPage();
         }
+
         private void DeleteOrderAction(OrderViewModel order)
         {
             DeleteConfirmation deleteConfirmation = new DeleteConfirmation()
@@ -242,6 +255,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             };
             DeleteEntityRequest.Raise(deleteConfirmation, DeleteOrderFromDb);
         }
+
         private void DeleteOrderFromDb(DeleteConfirmation confirmation)
         {
             if (confirmation?.Confirmed == true)
@@ -278,12 +292,14 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 }
             }
         }
+
         private void SelectCustomerAction(CustomerListEntry customer)
         {
             AllOrders.Clear();
             _orderSearchCriteria.CustomerIds = new int[] { customer.ID };
             StartSearch();
         }
+
         private void CreateNewOrderForCustomerAction(CustomerListEntry customer)
         {
             if (customer != null)
@@ -297,6 +313,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 NewOrderRequest.Raise(newOrderConfirmation, CreateOrder);
             }
         }
+
         private void CreateOrder(NewOrderConfirmation confirmation)
         {
             if (confirmation.Confirmed)
@@ -316,6 +333,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 }
             }
         }
-        #endregion
+
+        #endregion Private methods
     }
 }

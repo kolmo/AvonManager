@@ -1,5 +1,5 @@
 ﻿using AvonManager.Common;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Regions;
 using System;
 using System.Windows.Controls;
 

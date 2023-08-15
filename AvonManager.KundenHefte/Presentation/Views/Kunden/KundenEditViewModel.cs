@@ -4,15 +4,11 @@ using AvonManager.Common.Events;
 using AvonManager.Common.Helpers;
 using AvonManager.Interfaces;
 using AvonManager.KundenHefte.ViewModels;
-using Microsoft.Practices.Prism.Mvvm;
-using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
+using Prism.Events;
+using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvonManager.KundenHefte.Views.Kunden
 {
@@ -37,18 +33,21 @@ namespace AvonManager.KundenHefte.Views.Kunden
             public byte[] Bild;
             public bool Inaktiv;
         }
+
         private const string LOAD = "LOAD";
         private BackingFields bFields;
         private BackingFields clone;
-        IKundenDataProvider _kundenDataProvider;
+        private IKundenDataProvider _kundenDataProvider;
         private bool _isInitializing = false;
-        KundeDto _currentCustomer;
+        private KundeDto _currentCustomer;
+
         public KundenEditViewModel(IKundenDataProvider kundenDataProvider
             , IEventAggregator eventAggregator
-            , BusyFlagsManager bFlagsManager):base(bFlagsManager, eventAggregator)
+            , BusyFlagsManager bFlagsManager) : base(bFlagsManager, eventAggregator)
         {
             _kundenDataProvider = kundenDataProvider;
         }
+
         #region Properties
 
         /// <summary>
@@ -242,7 +241,8 @@ namespace AvonManager.KundenHefte.Views.Kunden
             get { return bFields.KundenId; }
             set { SetProperty(ref bFields.KundenId, value); }
         }
-        #endregion
+
+        #endregion Properties
 
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
@@ -251,7 +251,6 @@ namespace AvonManager.KundenHefte.Views.Kunden
                 SaveCustomer();
             return ok;
         }
-
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -279,6 +278,7 @@ namespace AvonManager.KundenHefte.Views.Kunden
         }
 
         #region Private methods
+
         private void InitProperties()
         {
             _isInitializing = true;
@@ -301,6 +301,7 @@ namespace AvonManager.KundenHefte.Views.Kunden
             clone = bFields;
             _isInitializing = false;
         }
+
         private void SaveCustomer()
         {
             if (_currentCustomer != null)
@@ -334,6 +335,7 @@ namespace AvonManager.KundenHefte.Views.Kunden
                 }
             }
         }
+
         public async void LoadCurrentKunde(int kundenId)
         {
             BusyFlagsMgr.IncBusyFlag(LOAD);
@@ -351,8 +353,8 @@ namespace AvonManager.KundenHefte.Views.Kunden
             }
             _isInitializing = false;
             BusyFlagsMgr.DecBusyFlag(LOAD);
-
         }
-        #endregion
+
+        #endregion Private methods
     }
 }

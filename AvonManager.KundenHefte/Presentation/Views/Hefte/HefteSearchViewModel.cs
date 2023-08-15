@@ -1,36 +1,40 @@
-﻿using System.Linq;
-using System.Collections.ObjectModel;
-using AvonManager.BusinessObjects;
-using AvonManager.Interfaces;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Regions;
-using System;
-using AvonManager.Interfaces.Criteria;
-using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+﻿using AvonManager.BusinessObjects;
 using AvonManager.Common.Base;
-using AvonManager.Common.Helpers;
 using AvonManager.Common.Events;
-using Microsoft.Practices.Prism.PubSubEvents;
+using AvonManager.Common.Helpers;
+using AvonManager.Interfaces;
+using AvonManager.Interfaces.Criteria;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
+using Prism.Regions;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace AvonManager.KundenHefte.ViewModels
 {
     public class HefteSearchViewModel : ErrorAwareBaseViewModel
     {
         #region Private fields
+
         private const string LOAD = "LOAD";
-        IHefteDataProvider _dataProvider;
+        private IHefteDataProvider _dataProvider;
         private ObservableCollection<HeftViewModel> _alleHefte;
         private IRegionManager _regionManager;
         private readonly IBrochureSearchCriteria _brochureSearchCriteria;
-        #endregion
+
+        #endregion Private fields
+
         public HefteSearchViewModel()
         {
         }
+
         public HefteSearchViewModel(IHefteDataProvider dataProvider, IRegionManager regionManager,
             IBrochureSearchCriteria brochureSearchCriteria,
              IEventAggregator eventAggregator,
-            BusyFlagsManager busyFlagsManager):base(busyFlagsManager, eventAggregator)
+            BusyFlagsManager busyFlagsManager) : base(busyFlagsManager, eventAggregator)
         {
             _dataProvider = dataProvider;
             _regionManager = regionManager;
@@ -39,12 +43,16 @@ namespace AvonManager.KundenHefte.ViewModels
             AddBrochureCommand = new DelegateCommand(AddBrochureAction);
             EventAggregator.GetEvent<BrochureChangedEvent>().Subscribe(RefreshHeft);
         }
+
         #region Properties
+
         public InteractionRequest<DeleteConfirmation> DeleteEntityRequest { get; } = new InteractionRequest<DeleteConfirmation>();
-        public IBrochureSearchCriteria Criteria { get { return _brochureSearchCriteria; } }
+        public IBrochureSearchCriteria Criteria
+        { get { return _brochureSearchCriteria; } }
         public ICommand StarSearchCommand { get; private set; }
         public ICommand ResetSearchCommand { get; private set; }
         public DelegateCommand AddBrochureCommand { get; private set; }
+
         /// <summary>
         /// Gets or sets the AlleKategorien.
         /// </summary>
@@ -63,7 +71,8 @@ namespace AvonManager.KundenHefte.ViewModels
                 }
             }
         }
-        #endregion
+
+        #endregion Properties
 
         #region Public methods
 
@@ -71,9 +80,11 @@ namespace AvonManager.KundenHefte.ViewModels
         {
             StartSearch();
         }
-        #endregion
+
+        #endregion Public methods
 
         #region Private Methods
+
         private async void RefreshHeft(BrochureChangedEventArgs args)
         {
             var brochure = AlleHefte.FirstOrDefault(x => x.HeftId == args.Brochure.HeftId);
@@ -93,7 +104,9 @@ namespace AvonManager.KundenHefte.ViewModels
                 }
             }
         }
-        #endregion
+
+        #endregion Private Methods
+
         private async void StartSearch()
         {
             BusyFlagsMgr.ResetAllBusyFlags();
@@ -126,6 +139,7 @@ namespace AvonManager.KundenHefte.ViewModels
             var moduleAWorkspace = new Uri("HeftEditView", UriKind.Relative);
             _regionManager.RequestNavigate(AvonManager.Common.RegionNames.BrochureDetailsRegion, moduleAWorkspace, pars);
         }
+
         private void DeleteBrochureAction(HeftViewModel brochure)
         {
             if (brochure != null)
@@ -139,6 +153,7 @@ namespace AvonManager.KundenHefte.ViewModels
                 DeleteEntityRequest.Raise(deleteConfirmation, DeleteBrochureFromDb);
             }
         }
+
         private void DeleteBrochureFromDb(DeleteConfirmation confirmation)
         {
             if (confirmation?.Confirmed == true)

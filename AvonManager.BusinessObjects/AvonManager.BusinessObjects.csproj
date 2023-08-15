@@ -83,6 +83,9 @@
     <PackageReference Include="EnterpriseLibrary.Logging">
       <Version>6.0.1304</Version>
     </PackageReference>
+    <PackageReference Include="Prism.Unity">
+      <Version>7.1.0.431</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

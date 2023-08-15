@@ -1,26 +1,30 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+﻿using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace AvonManager.KundenHefte
 {
     public class CustomerModule : IModule
     {
         private readonly IRegionManager _regionManager;
-        private readonly IUnityContainer _container;
-        public CustomerModule(IRegionManager regionManager, IUnityContainer container)
+
+        public CustomerModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            _container = container;
         }
-        public void Initialize()
+
+        public void OnInitialized(IContainerProvider containerProvider)
         {
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.TaskButtonRegion,
                 typeof(Controls.KundenModuleTaskButton));
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerButtonRegion, typeof(Controls.KundenModuleTaskButton));
-            _container.RegisterType<object, Views.KundenHefteManagementView>("KundenModuleWorkspace");
             _regionManager.RegisterViewWithRegion(AvonManager.Common.RegionNames.CustomerSearchRegion, typeof(Views.KundenSearchView));
-            _container.RegisterType<object, Views.KundenEditView>("KundenEditView");
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<object, Views.KundenHefteManagementView>("KundenModuleWorkspace");
+            containerRegistry.Register<object, Views.KundenEditView>("KundenEditView");
         }
     }
 }

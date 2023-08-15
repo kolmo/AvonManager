@@ -1,10 +1,5 @@
 ﻿using AvonManager.ArtikelModule.ViewModels;
-using AvonManager.Interfaces;
-using Microsoft.Practices.Prism.Mvvm;
-using System.ComponentModel.Composition;
-using System.Windows;
 using System.Windows.Controls;
-using System;
 
 namespace AvonManager.ArtikelModule.Views
 {

@@ -1,7 +1,7 @@
 ﻿using AvonManager.BusinessObjects;
-using Microsoft.Practices.Prism.Mvvm;
-using System.Runtime.CompilerServices;
 using AvonManager.Interfaces;
+using Prism.Mvvm;
+using System.Runtime.CompilerServices;
 
 namespace AvonManager.Bestellungen.Presentation.Views
 {
@@ -20,10 +20,12 @@ namespace AvonManager.Bestellungen.Presentation.Views
             public int? Position;
             public string Bemerkung;
         }
+
         private Backingfields bFields;
         private Backingfields clone;
         private BestelldetailDto _orderDetail;
         private readonly IOrderDataProvider _orderDataProvider;
+
         public OrderDetailsViewModel(BestelldetailDto orderDetails, IOrderDataProvider orderDataProvider)
         {
             _orderDetail = orderDetails;
@@ -31,9 +33,10 @@ namespace AvonManager.Bestellungen.Presentation.Views
             InitProperties();
         }
 
-
         #region Properties
-        public int OrderDetailId { get { return _orderDetail.DetailId; } }
+
+        public int OrderDetailId
+        { get { return _orderDetail.DetailId; } }
 
         /// <summary>
         /// Gets or sets the Position.
@@ -98,6 +101,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             get { return bFields.Bemerkung; }
             set { SetProperty(ref bFields.Bemerkung, value); }
         }
+
         /// <summary>
         /// Gets or sets the Seite.
         /// </summary>
@@ -161,6 +165,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
             get { return bFields.Campagne; }
             set { SetProperty(ref bFields.Campagne, value); }
         }
+
         /// <summary>
         /// Wert eines Postens Menge X Einzelpreis
         /// </summary>
@@ -179,19 +184,25 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 return wert;
             }
         }
-        #endregion
+
+        #endregion Properties
+
         #region Overrides
+
         protected override bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             bool ok = base.SetProperty<T>(ref storage, value, propertyName);
             SaveOrderDetail();
             return ok;
         }
-        #endregion
+
+        #endregion Overrides
+
         #region Private methods
+
         private void InitProperties()
         {
-            if (_orderDetail!= null)
+            if (_orderDetail != null)
             {
                 bFields.Artikelbeschreibung = _orderDetail.Artikelbeschreibung;
                 bFields.Artikelnummer = _orderDetail.Artikelnummer;
@@ -206,6 +217,7 @@ namespace AvonManager.Bestellungen.Presentation.Views
                 clone = bFields;
             }
         }
+
         private void SaveOrderDetail()
         {
             _orderDetail.Artikelbeschreibung = Artikelbeschreibung;
@@ -222,6 +234,6 @@ namespace AvonManager.Bestellungen.Presentation.Views
             clone = bFields;
         }
 
-        #endregion
+        #endregion Private methods
     }
 }
