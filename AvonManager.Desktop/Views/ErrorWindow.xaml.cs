@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using Xceed.Wpf.Toolkit;
 
 namespace AvonManager
 {
@@ -30,6 +28,7 @@ namespace AvonManager
             InitializeComponent();
             ErrorTextBox.Text = message + Environment.NewLine + Environment.NewLine + details;
         }
+
         public ErrorWindow(string title, string message, string details)
         {
             InitializeComponent();

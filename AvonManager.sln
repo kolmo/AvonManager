@@ -32,7 +32,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{F2D83ED2-13A4-4395-BDE8-3D9CDD103280}"
 	ProjectSection(SolutionItems) = preProject
 		Library\WebcamControl.dll = Library\WebcamControl.dll
-		Library\Xceed.Wpf.Toolkit.dll = Library\Xceed.Wpf.Toolkit.dll
 	EndProjectSection
 EndProject
 Global

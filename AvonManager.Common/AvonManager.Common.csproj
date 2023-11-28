@@ -74,10 +74,6 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Messages1.Designer.cs">
@@ -241,6 +237,9 @@
     </PackageReference>
     <PackageReference Include="EnterpriseLibrary.Logging">
       <Version>6.0.1304</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>3.8.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity">
       <Version>7.1.0.431</Version>
